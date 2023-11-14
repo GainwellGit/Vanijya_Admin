@@ -1,0 +1,255 @@
+/*Quiz list*/
+
+.btn-error {
+	background-color: #FF3F3F;
+	border-color: #FF3F3F;
+	color: #fff;
+}
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    padding: 6px 0px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.42857;
+}
+.btnsub { 
+    display: inline-block;
+    margin: 0px 5px 0 0 !important;
+} 
+.mdl-close {
+    position: absolute;
+    right: 15px;
+    top: 20px;
+}
+.box_new{border: 1px solid #eee;padding: 15px 0 25px;}
+.box_new1{background: #eaeaea;margin-bottom:15px;}
+.box_new2{padding:10; margin-bottom:5; max-height: 215px;
+    overflow-y: auto;
+    overflow-x: hidden;}
+.box_new3{padding:0;}
+.box_new4{background: #eaeaea;margin-bottom:15px;}
+.chk_option{ width: 10%; padding:20px;}
+.point-box{border-right: 1px solid #eee}
+.downloadcss{margin-top: 10px !important;}
+
+.checkbox, .radio{margin-top: 0;}
+input[type='checkbox'] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 1%;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #00717f;
+  transition: 0.2s all linear;
+  outline: none;
+  margin-right: 15px;
+ 
+  position: relative !important;
+  top: 0px;
+  vertical-align: bottom;
+  
+}
+
+input[type='checkbox']:checked {
+  border: 1px solid #00717f;
+  outline: none;
+}
+input[type='checkbox']:checked::after{display: block;}
+input[type='checkbox']::after
+{   left: 6px;
+    top: 1px;
+    width: 6px; 
+    height: 14px;
+    border: solid #f00;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);display: none;
+    content: "";position: relative;
+  }
+.modal.left.quiz .modal-dialog{
+    position: fixed;
+    margin: auto;
+    width: 40%;
+    height:80%;
+    -webkit-transform: translate3d(0%, 0, 0);
+        -ms-transform: translate3d(0%, 0, 0);
+         -o-transform: translate3d(0%, 0, 0);
+            transform: translate3d(0%, 0, 0);
+            
+             
+  }
+
+  .modal.left.quiz .modal-content
+  {
+    /*height: auto; overflow-y: auto;*/
+        height: 590px;
+    overflow-y: scroll;
+   
+  }
+  
+  .modal.left.quiz .modal-body
+  {
+    padding: 15px 15px 15px;
+  }
+
+/*Left*/
+  .modal.left.quiz.fade .modal-dialog{
+    left: -320px;
+    -webkit-transition: opacity 0.3s linear, left 0.3s ease-out;
+       -moz-transition: opacity 0.3s linear, left 0.3s ease-out;
+         -o-transition: opacity 0.3s linear, left 0.3s ease-out;
+            transition: opacity 0.3s linear, left 0.3s ease-out;
+  }
+  
+  .modal.left.quiz.fade.in .modal-dialog{
+    left: 0;
+    right:25px;
+    margin-top:0px;
+  }
+   div#exampleModal {
+    margin-top: 5%;
+}    
+.help-error{
+  color:#e73d4a;
+} 
+.label-success {
+    background-color: #5cb85c;
+}
+.btn-circle {
+    width: 23px;
+    height: 23px;
+    padding: 0px 0px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.42857;
+}
+
+.form-control.form-control1 {
+   /* height: auto !important;*/
+    min-height: 100px;
+}
+/*#dvLoading {
+    background: #fff url(/assets/image/download.gif) no-repeat center center;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    margin: 0;
+}
+.dvLoading1{
+   background: #fff url(/assets/image/download.gif) no-repeat center center;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 9996;
+    left: 0;
+    top: 0;
+    margin: 0;
+}*/
+.bootbox .modal-content {
+    margin-left: 160px;
+    width: 55%;
+}
+.page-header.navbar {
+    background-color: #3976bf !important;
+}
+.page-logo > h3 {
+    color: #fff;
+    margin-top: 10px;
+    font-family: initial;
+}
+.username {
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 300;
+    font-family: initial;
+    color: #fff !important;
+}
+.page-sidebar, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover {
+    background-color: #7d9ecc;
+}
+body {
+    background-color: #7d9ecc;
+}
+.nav-link > .title {
+    width: 25%;
+    color: #fff;
+}
+.page-footer .page-footer-inner {
+    color: #f0f2f5;
+}
+.page-sidebar .page-sidebar-menu > li > a, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li > a {
+    border-top: 1px solid #a2bede;
+    color: #c6cfdb;
+}
+.page-sidebar .page-sidebar-menu > li.active.open > a, .page-sidebar .page-sidebar-menu > li.active > a, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active.open > a, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active > a {
+    background: #5b87c3;
+    border-top-color: transparent;
+    color: #fff;
+}
+.dtime {
+    margin-top: 13px;
+    display: inline-block;
+    color: #fff;
+    padding-right: 49px;
+}
+.page-header.navbar .top-menu .navbar-nav > li.dropdown-user .dropdown-toggle > .username {
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.modal.left.prize  .modal-dialog{
+    position: fixed;
+    margin: auto;
+    width: 320px;
+    -webkit-transform: translate3d(0%, 0, 0);
+        -ms-transform: translate3d(0%, 0, 0);
+         -o-transform: translate3d(0%, 0, 0);
+            transform: translate3d(0%, 0, 0);
+            
+             
+  }
+
+  
+  .modal.left.prize  .modal-body
+  {
+    padding: 15px 15px 30px;
+  }
+  .modal.left.prize .modal-content
+  {
+    height: 100%; overflow-y: auto;
+   
+  }
+  
+/*Left*/
+  .modal.left.prize.fade .modal-dialog{
+    left: -320px;
+    -webkit-transition: opacity 0.3s linear, left 0.3s ease-out;
+       -moz-transition: opacity 0.3s linear, left 0.3s ease-out;
+         -o-transition: opacity 0.3s linear, left 0.3s ease-out;
+            transition: opacity 0.3s linear, left 0.3s ease-out;
+  }
+  
+  .modal.left.prize.fade.in .modal-dialog{
+    left: 0;
+    right:25px;
+  }
+   div#prizeModal {
+    margin-top: 5%;
+}    
+
+.select2.select2-container.select2-container--bootstrap {
+    width: 100% !important;
+}
+
+@media only screen and (max-width: 769px) {
+    body {
+        background-color: lightblue;
+    }
+}
