@@ -1,0 +1,419 @@
+<html>
+<head>
+     <style>
+        .btn-error {
+            background-color: #FF3F3F;
+            border-color: #FF3F3F;
+            color: #fff;
+        }
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    padding: 6px 0px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.42857;
+}
+.btnsub {
+    padding: 3px 5px 10px;
+    display: inline-block;
+    margin: 5px 5px 0 0 !important;
+    width: 35%;
+    border-radius: 4px;
+} 
+.addbtnsub {
+/*    padding: 3px 5px 10px;*/
+    display: inline-block;
+    margin: 5px 5px 0 0 !important;
+   /* width: 100%;*/
+    border-radius: 4px;
+} 
+.box_new{border: 1px solid #eee;padding: 15px 0 25px;}
+.box_new1{margin-bottom:10px;}
+.box_new2{border: 1px solid #eee;padding:10px;margin-bottom:5px;}
+.box_new3{border: 1px solid #eee;padding:10px;}
+.chk_option{ width: 10%; padding:20px;}
+.point-box{border-right: 1px solid #eee}
+.checkbox, .radio{margin-top: 0;}
+input[type='checkbox'] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 1%;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #00717f;
+  transition: 0.2s all linear;
+  outline: none;
+  margin-right: 15px;
+ 
+  position: relative !important;
+  top: 0px;
+  vertical-align: bottom;
+  
+}
+
+input[type='checkbox']:checked {
+  border: 1px solid #00717f;
+  outline: none;
+}
+input[type='checkbox']:checked::after{display: block;}
+input[type='checkbox']::after
+{   left: 6px;
+    top: 1px;
+    width: 6px; 
+    height: 14px;
+    border: solid #f00;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);display: none;
+    content: "";position: relative;
+  }
+.modal.left .modal-dialog{
+    position: fixed;
+    margin: auto;
+    width: 28%;
+    -webkit-transform: translate3d(0%, 0, 0);
+        -ms-transform: translate3d(0%, 0, 0);
+         -o-transform: translate3d(0%, 0, 0);
+            transform: translate3d(0%, 0, 0);
+            
+             
+  }
+
+  
+  .modal.left .modal-body
+  {
+    padding: 15px 15px 30px;
+  }
+
+/*Left*/
+  .modal.left.fade .modal-dialog{
+    left: -320px;
+    -webkit-transition: opacity 0.3s linear, left 0.3s ease-out;
+       -moz-transition: opacity 0.3s linear, left 0.3s ease-out;
+         -o-transition: opacity 0.3s linear, left 0.3s ease-out;
+            transition: opacity 0.3s linear, left 0.3s ease-out;
+  }
+  
+  .modal.left.fade.in .modal-dialog{
+    left: 0;
+    right:25px;
+  }
+   div#exampleModal1 {
+    margin-top: 5%;
+}    
+.help-error{
+  color:#e73d4a;
+} 
+.label-success {
+    background-color: #5cb85c;
+}
+.btn-circle {
+    width: 23px;
+    height: 23px;
+    padding: 0px 0px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.42857;
+}
+
+.file-upload {
+    position: absolute;
+    display: inline-block;
+    top: 20px;
+    width: 115px;
+    height: 115px;
+    margin: 20px auto;
+    left: 0;
+    right: 0;
+    border-radius: 50%;
+    overflow: hidden;
+    opacity: 0;
+}
+
+.file-upload__label {
+    display: block;
+    padding: 0;
+    color: #fff;
+    background: #222;
+    transition: background .3s;
+    width: 100%;
+    height: 100%;
+}
+.file-upload__label:hover {
+  cursor: pointer;
+}
+.edit_profle {
+    position: absolute;
+    top: 33px;
+    color: #fff;
+    right: 84px;
+    font-size: 21px;
+}
+.file-upload__input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  font-size: 1;
+  width: 0;
+  height: 100%;
+  opacity: 0;
+}
+.edit_form > form > .form-group > label {
+    font-size: 17px;
+    font-weight: normal;
+    color: #003367;
+    line-height: 35px;
+}
+.edit_form {
+    margin: 20px;
+}
+.form-control.form_modify {
+    border-radius: 0;
+    box-shadow: none;
+    border-color: #787878;
+}
+.profile-icon {
+  width: 115px;
+  height: 115px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 20px auto;
+}
+.profile_name > p {
+  color: #fff;
+  text-align: center;
+  font-size: 16px;
+}
+#image_upload_preview {
+    width: 100%;
+    height: 100%;
+}
+
+#btn_subm {
+    width: 26%;
+    margin-left: 18px;
+    margin-top: 25px;
+    padding: 10px;
+    border-radius: 3px !important;
+    border: 0;
+}
+
+.popup_heading_text{font-weight:600; float:left;}
+.title_text{ text-align:right; margin-top:5px;}
+.bootbox .modal-content {
+    margin-left: 160px;
+    width: 55%;
+}
+</style>
+<script src="<?php echo base_url(); ?>assets/js/quizset.js"></script>
+</head>
+ <!-- BEGIN CONTENT -->
+        <div class="page-content-wrapper">
+                <!-- BEGIN CONTENT BODY -->
+        <div class="page-content">
+          <!-- BEGIN PAGE HEADER--> 
+          <?php //print_r($user_details); ?>
+          <!-- BEGIN PAGE BAR -->
+          <?php $CI = & get_instance(); if($CI->session->flashdata('success')){ ?>
+          <div class="alert alert-success fade in alert-dismissable" style="margin-top:18px;"> <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a> <?php echo $CI->session->flashdata('success') ?> </div>
+          <?php }else if($CI->session->flashdata('error')){?>
+          <div class="alert alert-danger fade in alert-dismissable"> <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a> <?php echo $CI->session->flashdata('error') ?> </div>
+          <?php }?>
+          <div class="alert alert-success alert-dismissable error_msg" style="display: none;"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a></div>
+          <div class="page-bar">
+          <ul class="page-breadcrumb">
+          <li>
+          <a href="">Home</a>
+          <i class="fa fa-angle-right"></i>
+          </li>
+          <li>
+          <span>QuizSet List</span>
+          </li>
+          </ul>
+          </div>
+          <div class="content">
+             
+          <div class="row" style="margin-bottom:20px; ">
+            <div class="col-xs-12">
+            <div class="form-group pull-right">
+              <div class="col-xs-2">
+              <button type="button" class="btn btn-primary addbtnsub btn_show" id="btn_click" name="btn_save">Add New</button>
+              </div>
+      		</div>
+               <!--<div class="box_new">
+              <div class="row">
+                <div class="form-group text-right">
+          <div class="col-xs-2 col-xs-offset-8">
+          <label><strong>Menu:-</strong></label>
+          </div>
+          <div class="col-xs-2">
+          <select name="ussdcode" class="form-control" id="ussdcode">
+          <option value="1" selected>*500*69#</option>
+          </select> 
+          </div>
+       </div>
+       <div class="form-group text-right">
+          <div class="col-xs-2 col-xs-offset-8">
+          </div>
+          <div class="col-xs-2">
+          <button type="button" class="btn btn-primary addbtnsub btn_show" id="btn_click" name="btn_save">Add New
+        </button>
+          </div>
+       </div>
+              </div>
+            </div>-->
+          </div>
+          </div>
+       
+         <div class="box" style="border:1px solid #eee; padding:15px">
+
+            <div class="box-header">
+            </div>
+            <div class="box-content">          
+     <div class="table-responsive">
+     <table id="UsrTable" class="display cell-border" style="display:none;">
+    <thead>
+     
+     
+      <tr>
+        <th style="text-align:center;">Serial No</th>
+     
+        <th style="text-align:center;">Title</th>
+        <th style="text-align:center;">Image</th>
+      
+        <th style="text-align:center;">Status</th>
+        <th style="text-align:center;">Date Created</th>
+        <th style="text-align:center;">Action</th>
+        </tr>
+
+
+    </thead>
+    <tbody>
+    <?php
+          $cnt=1;
+	if(isset($quizset_list) && !empty($quizset_list)){
+     foreach($quizset_list as $qset_list)
+      {
+        ?>
+        <tr>
+        <td style="text-align:center;"><?php echo $cnt; ?></td>
+         <td style="text-align:center;"><?php echo ucfirst($qset_list->title);?></td>
+        <td style="text-align:center; width:15%"><img src="<?php  echo base_url().'assets/uploads/logo/'.$qset_list->title_image;?>" class="img-responsive" style="margin:auto; width:38%"></td>
+         <td style="text-align:center;"><?php //echo $qset_list->is_active;?>
+          <label>
+            <input type="checkbox" data-toggle="toggle" quizsetid="<?php echo $qset_list->id;?>" class="quizset_status_chk" value="<?php echo ($qset_list->is_active == 1) ? 1 : 0?>" <?php echo ($qset_list->is_active == 1) ? "checked='checked'" : '' ?>>
+          </label>
+         </td>
+        <td style="text-align:center;">
+		<?php 
+			$date = date_create($qset_list->date_created);
+			echo date_format($date,"Y-m-d");?></td>
+        <td style="text-align:center;">
+<a href="<?= base_url().'admin/Quizset/Quizsetdetails/'.$qset_list->id ?>"><button edit_ques_id="<?php echo $qset_list->id;?>"  class="btn btn-primary btn-xs btn1_edit1" data-title="Edit"><span class="glyphicon glyphicon-pencil"></span></button></a>
+<button delete_ques_id="<?php echo $qset_list->id;?>" class="btn btn-danger btn-xs quizset_delete" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button>
+        </td>
+        </tr>
+           <?php 
+          $cnt++;
+         } } ?>
+    </tbody>
+</table>
+</div>
+
+
+            </div>
+            </div>
+            </div>
+    
+            
+           <!-- END PAGE BAR -->
+                    <!-- END PAGE HEADER-->
+                  
+                </div>
+                <!-- END CONTENT BODY -->
+            </div>
+            <!-- END CONTENT -->
+   
+    
+        <!-- END CONTAINER -->
+
+        <!--Modal show  -->
+       <div class="modal left fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title popup_heading_text" id="exampleModalLabel">Add Quiz Set</h5>
+        <div style="margin-top:6px;">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div id="dvLoading" style="display: none;"></div>
+
+      <form name="quesset_add" id="quesset_add" action="<?php echo base_url('/admin/Quizset/addquizset'); ?>" method="post" enctype="multipart/form-data">
+        <div class="box_new1">
+        <div class="row">
+           <div class="form-group">
+          <div class="col-xs-12">
+
+          <div class="user_profile relative">
+          
+                  <div class="profile-icon "> <img src="<?php echo base_url();?>/assets/image/images.png" title="Change Your Profile Image" class="img-responsive" alt="" id="image_upload_preview">
+                    <div class="edit_profle"><i class="fa fa-pencil" title="To Change Image Click On Your Image" data-toggle="tooltip" data-placement="bottom"></i></div>
+                  </div>
+                  <div class="file-upload">
+                    <label for="inputFile_image" class="file-upload__label"></label>
+                    <input id="inputFile_image" class="file-upload__input" type="file" name="imgInp" >
+                  </div>
+                    <div class="image-error-div" style="text-align:center;margin-bottom:5px ; ">
+                      <label>Upload Quiz Set Image</label>
+                      <div id="image-error" style="text-align:center;" class="help-error"></div>
+                    </div>
+                    
+                </div>
+              </div>
+          </div>
+        </div>
+        </div>
+        <div class="">
+           <div class="row" style="margin-top:20px;">
+              <div class="form-group">
+                <div class="col-xs-2 text-right">
+                  <label for="questiontitle" class="title_text">Title:</label>
+                </div>
+                <div class="col-xs-10 title-error-div">
+                  <input type="text" name="q_settitle" class="form-control" id="q_settitle">
+                  <span id="title-error" class="help-error" style="text-align:center;"></span>
+                </div>
+              </div>
+        </div>
+        </div>
+       <div class="">
+        <div class="row">
+        <div class="col-xs-12">
+        <div class="text-right">
+          <button id="btn_subm" type="submit" class="btn btn-primary" name="btn_sub">SAVE</button>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+       </div>
+    </form>
+  </div>
+    </div>
+  </div>
+</div>
+
+  
+ 
+   
+ 
+
+
