@@ -1,0 +1,106 @@
+<wsdl:definitions name="SI_PMK_PlaceOrder_Out" targetNamespace="urn:tipl.com:001:PMKPlaceOrder" xmlns:p1="urn:tipl.com:001:PMKPlaceOrder" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+   <wsdl:documentation/>
+   <wsp:UsingPolicy wsdl:required="true"/>
+   <wsp:Policy wsu:Id="OP_SI_PMK_PlaceOrder_Out"/>
+   <wsdl:types>
+      <xsd:schema targetNamespace="urn:tipl.com:001:PMKPlaceOrder" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:tipl.com:001:PMKPlaceOrder">
+         <xsd:element name="MT_PlaceOrders" type="DT_PlaceOrders"/>
+         <xsd:complexType name="DT_PlaceOrders">
+            <xsd:annotation>
+               <xsd:appinfo source="http://sap.com/xi/VersionID">5d48ac6a684211eb97fd0000004bed4e</xsd:appinfo>
+            </xsd:annotation>
+            <xsd:sequence>
+               <xsd:element name="Request" type="DT_PlaceOrder_request" minOccurs="0"/>
+               <xsd:element name="Response" type="DT_PlaceOrder_response" minOccurs="0"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="DT_PlaceOrder_response">
+            <xsd:annotation>
+               <xsd:appinfo source="http://sap.com/xi/VersionID">bedda30161fd11eb95390000004bed4e</xsd:appinfo>
+            </xsd:annotation>
+            <xsd:sequence>
+               <xsd:element name="DOC_DATE" type="xsd:string" minOccurs="0"/>
+               <xsd:element name="DOC_NO" type="xsd:string" minOccurs="0"/>
+               <xsd:element name="DOC_TIME" type="xsd:string" minOccurs="0"/>
+               <xsd:element name="ERROR_CODE" type="xsd:string" minOccurs="0"/>
+               <xsd:element name="ERROR_MESSAGE" type="xsd:string" minOccurs="0"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="DT_PlaceOrder_request">
+            <xsd:annotation>
+               <xsd:appinfo source="http://sap.com/xi/VersionID">bec80ea161fd11ebb73f0000004bed4e</xsd:appinfo>
+            </xsd:annotation>
+            <xsd:sequence>
+               <xsd:element name="CUST_NO" type="xsd:string" minOccurs="0"/>
+               <xsd:element name="MODEL" type="xsd:string" minOccurs="0"/>
+               <xsd:element name="PART_INFO" minOccurs="0" maxOccurs="unbounded">
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <xsd:element name="ORD_QTY" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="PART_NUMBER" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="PROMO_CODE" type="xsd:string" minOccurs="0"/>
+                     </xsd:sequence>
+                  </xsd:complexType>
+               </xsd:element>
+               <xsd:element name="Header_Disc" minOccurs="0" maxOccurs="unbounded">
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <xsd:element name="ConditionType" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="DiscountAmount" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="DiscountPercentage" type="xsd:string" minOccurs="0"/>
+                     </xsd:sequence>
+                  </xsd:complexType>
+               </xsd:element>
+               <xsd:element name="Item_Disc" minOccurs="0" maxOccurs="unbounded">
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <xsd:element name="LineitemNo" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="Conditiontype" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="DiscountAmt" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="discountPercentage" type="xsd:string" minOccurs="0"/>
+                     </xsd:sequence>
+                  </xsd:complexType>
+               </xsd:element>
+               <xsd:element name="PO_NUMBER" type="xsd:string" minOccurs="0"/>
+               <xsd:element name="SERIAL_NO" type="xsd:string" minOccurs="0"/>
+               <xsd:element name="PLANT_CODE" type="xsd:string" minOccurs="0"/>
+            </xsd:sequence>
+         </xsd:complexType>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="MT_PlaceOrders">
+      <wsdl:documentation/>
+      <wsdl:part name="MT_PlaceOrders" element="p1:MT_PlaceOrders"/>
+   </wsdl:message>
+   <wsdl:portType name="SI_PMK_PlaceOrder_Out">
+      <wsdl:documentation/>
+      <wsdl:operation name="SI_PMK_PlaceOrder_Out">
+         <wsdl:documentation/>
+         <wsp:Policy>
+            <wsp:PolicyReference URI="#OP_SI_PMK_PlaceOrder_Out"/>
+         </wsp:Policy>
+         <wsdl:input message="p1:MT_PlaceOrders"/>
+         <wsdl:output message="p1:MT_PlaceOrders"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:binding name="SI_PMK_PlaceOrder_OutBinding" type="p1:SI_PMK_PlaceOrder_Out">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+      <wsdl:operation name="SI_PMK_PlaceOrder_Out">
+         <soap:operation soapAction="http://sap.com/xi/WebService/soap1.1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+   <wsdl:service name="SI_PMK_PlaceOrder_OutService">
+      <wsdl:port name="HTTP_Port" binding="p1:SI_PMK_PlaceOrder_OutBinding">
+         <soap:address location="http://dx1tipl.tiplindia.com:50000/XISOAPAdapter/MessageServlet?senderParty=&amp;senderService=BC_TIPL_PMK&amp;receiverParty=&amp;receiverService=&amp;interface=SI_PMK_PlaceOrder_Out&amp;interfaceNamespace=urn%3Atipl.com%3A001%3APMKPlaceOrder" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+      </wsdl:port>
+      <wsdl:port name="HTTPS_Port" binding="p1:SI_PMK_PlaceOrder_OutBinding">
+         <soap:address location="https://dx1tipl.tiplindia.com:50001/XISOAPAdapter/MessageServlet?senderParty=&amp;senderService=BC_TIPL_PMK&amp;receiverParty=&amp;receiverService=&amp;interface=SI_PMK_PlaceOrder_Out&amp;interfaceNamespace=urn%3Atipl.com%3A001%3APMKPlaceOrder" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+      </wsdl:port>
+   </wsdl:service>
+</wsdl:definitions>
