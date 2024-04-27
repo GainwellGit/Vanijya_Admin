@@ -1,11 +1,5 @@
 <?php
-phpinfo();
-die();
 ob_start();
-
-
-
-
 /**
  * CodeIgniter
  *
