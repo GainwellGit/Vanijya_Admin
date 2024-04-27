@@ -1,0 +1,542 @@
+<?php
+if (!defined('BASEPATH')) exit ('No direct script access allowed');
+
+class Quizset_model extends CI_Model {
+	public function __construct() {
+		parent::__construct();
+		$this->table = 'quiz_set';
+		$this->column_order = array(null, 'title','description','title_image','is_active','no_of_question','id'); //set column field database for datatable orderable
+		$this->column_search = array('title'); //set column field database for datatable searchable 
+		$this->order = array('id' => 'desc'); // default order 
+	}
+	
+	private function _get_datatables_query()
+	{
+		 $this->db->from($this->table);
+        
+		$i = 0;
+	
+		foreach ($this->column_search as $item) // loop column 
+		{
+			if($_POST['search']['value']) // if datatable send POST for search
+			{
+				
+				if($i===0) // first loop
+				{
+					$this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
+					$this->db->like($item, $_POST['search']['value']);
+				}
+				else
+				{
+					$this->db->or_like($item, $_POST['search']['value']);
+				}
+
+				if(count($this->column_search) - 1 == $i) //last loop
+					$this->db->group_end(); //close bracket
+			}
+			$i++;
+		}
+		
+		if(isset($_POST['order'])) // here order processing
+		{
+			$this->db->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+		} 
+		else if(isset($this->order))
+		{
+			$order = $this->order;
+			$this->db->order_by(key($order), $order[key($order)]);
+		}
+	}
+
+	function get_datatables()
+	{
+		$this->_get_datatables_query();
+		if($_POST['length'] != -1)
+		$this->db->limit($_POST['length'], $_POST['start']);
+		$query = $this->db->get();
+
+		//print_r($query->result());die;
+		return $query->result();
+	}
+
+	function count_filtered()
+	{
+		$this->_get_datatables_query();
+		$query = $this->db->get();
+		return $query->num_rows();
+	}
+
+	public function count_all()
+	{
+		$this->db->from($this->table);
+		return $this->db->count_all_results();
+	}
+
+	public function addsetdata($data)
+	{
+		$this->db->insert('quiz_set',$data);
+		if($this->db->affected_rows()>0)
+		{
+			return $this->db->insert_id();
+		}else{
+			return false;
+		}
+	}
+
+	public function getsetdetails($id)
+	{
+		$this->db->select('*');
+		$this->db->from('quiz_set');
+		$this->db->where('id',$id);
+		$query=$this->db->get();
+		if($query->num_rows() >0)
+		{
+			return $query->row();
+		}
+		else{
+			return false; 
+		}
+	}
+
+	public function getquizlist()
+	{
+		$this->db->select('*');
+		$this->db->from('ussd_quiz');
+		
+		$query=$this->db->get();
+		if($query->num_rows() >0)
+		{
+			return $query->result();
+		}
+		else{
+			return false; 
+		}
+	}
+
+	public function getsetquizlist($id='')
+	{
+		$result = array();
+		$this->db->select('quiz_id');
+		$this->db->from('quizset_question');
+		$this->db->where('quiz_set_id',$id);
+
+		$query=$this->db->get();
+		if($query->num_rows() >0)
+		{
+			$result = $query->result_array();
+			foreach ($result as $key => $value) {
+				$result[$key] = $value['quiz_id'];
+			}
+			return $result ;
+		}
+		else{
+			return $result ;
+		}
+	}
+
+	public function getsetquizlistdetails($id='')
+	{
+		$result = array();
+		$this->db->select('ussd_quiz.*');
+		$this->db->from('quizset_question');
+		$this->db->join('ussd_quiz', 'quizset_question.quiz_id = ussd_quiz.id');
+		$this->db->where('quizset_question.quiz_set_id',$id);
+		$this->db->order_by('quizset_question.id','DESC');
+
+		$query=$this->db->get();
+		if($query->num_rows() >0)
+		{
+			$result = $query->result();
+			return $result;
+		}
+		else{
+			return $result; 
+		}
+	}
+
+	public function getTotalQuestion($id)
+	{
+        $this->db->select('no_of_question');
+		$query=$this->db->get_where('quiz_set',array('id'=>$id));
+		if($query->num_rows() >0)
+		{
+			$result = $query->row();
+			return $result->no_of_question;
+		}
+		return null;
+	}
+
+	public function setqset($data)
+	{
+		$this->db->insert('quizset_question',$data);
+		if($this->db->affected_rows()>0)
+		{
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	public function unsetqset($data)
+	{
+		$this->db->delete('quizset_question', array('quiz_set_id' => $data['quiz_set_id'] , 'quiz_id' => $data['quiz_id'])); 
+		
+		if($this->db->affected_rows() > 0){
+			$this->db->delete('ussd_quiz_options', array('quiz_id' => $data['quiz_id'])); 
+			$this->db->delete('ussd_quiz', array('id' => $data['quiz_id'])); 
+
+			return TRUE;
+		}else{
+			return FALSE;
+		}
+	}
+	
+	public function getUncheckedQuestions($quizset_id){
+		$query = $this->db->get_where('quizset_question',array('quiz_set_id'=>$quizset_id));
+		if($query->num_rows() > 0){
+			$questionsAdded=$query->result();
+			if(!empty($questionsAdded)){
+				foreach($questionsAdded as $questions){
+					$quesIds[] = $questions->quiz_id;
+				}
+			}
+		}
+		
+		$allquiz = $this->getquizlist();
+		if(!empty($allquiz)){
+			foreach($allquiz as $quiz){
+				if(!empty($quesIds)){
+					if(!in_array($quiz->id,$quesIds)){
+						$result[] = $quiz;
+					}
+				}else{
+					$result[] = $quiz;
+				}
+			}	
+			
+		}
+		
+		return $result;
+	}
+
+	public function getquizsetlist()
+	{
+		$this->db->select('*');
+		$this->db->from('quiz_set');
+		$this->db->order_by('id','DESC'); 
+
+		$query=$this->db->get();
+		if($query->num_rows() >0)
+		 {
+			return $query->result();
+		 }
+		 else{
+			return false; 
+		     }
+	}
+
+	public function quizsetdelete($quizsetid){
+		$this->db->delete('quiz_set', array('id' => $quizsetid)); 		
+		$this->db->delete('quizset_question', array('quiz_set_id' => $quizsetid)); 
+		
+		if($this->db->affected_rows() >= 0){
+			return TRUE;
+		}else{
+			return FALSE;
+		}
+	}
+
+	public function quizsetstatus($data=array()){
+		if($data['status_chk'] == 1){
+			$param['is_active'] = 0;
+		}else if($data['status_chk'] == 0){
+			$param['is_active'] = 1;
+		}
+		
+		
+		$this->db->where('id', $data['quizsetid']);
+		$this->db->update('quiz_set', $param);
+		
+		if($this->db->affected_rows() >= 0){
+			return TRUE;
+		}else{
+			return FALSE;
+		}
+	}
+
+	public function getquizsearchlist($quizset_id, $keyword='')
+	{
+		
+		$query = $this->db->get_where('quizset_question',array('quiz_set_id'=>$quizset_id));
+		if($query->num_rows() > 0){
+			$questionsAdded=$query->result();
+			if(!empty($questionsAdded)){
+				foreach($questionsAdded as $questions){
+					$quesIds[] = $questions->quiz_id;
+				}
+			}
+		}
+		
+		$allquiz = $this->getquizlist();
+		if(!empty($allquiz)){
+			foreach($allquiz as $quiz){
+				if(!empty($quesIds)){
+					if(!in_array($quiz->id,$quesIds)){
+						$result[] = $quiz->id;
+					}
+				}else{
+					$result[] = $quiz->id;
+				}
+			}	
+			
+		}
+		
+		
+			$sql = '';
+			$sql.= "Select * from ussd_quiz where title like '%".$keyword."%'";
+			if(!empty($result)){
+				$sql.= ' AND ( ';
+			$count = count($result);
+			foreach($result as $key=>$res){
+				if(!empty($res)){
+					$sql.= "id = ".$res;
+					if($key < $count -1){
+						$sql.= " or ";
+					}
+				}
+					
+			}	
+			$sql.= ' )';
+			
+			$q = $this->db->query($sql);
+			if($q->num_rows() > 0){
+				return $q->result();
+				
+			}
+			
+		}
+	
+	}
+	
+	public function availableNoOfQuestions($id, $in_level = array()) {
+		$this->db->select('*');
+        $this->db->from('quizset_question');
+        $this->db->where('quiz_set_id', $id);
+        $this->db->join('ussd_quiz','quizset_question.quiz_id=ussd_quiz.id');
+        $this->db->where('ussd_quiz.is_active',1);
+        $this->db->where_in('level', $in_level); 
+        $q=$this->db->get();
+        return $q->num_rows();
+	}
+	public function editsetdata($id,$no_of_question) {
+		$in_easy=array(1,2);
+		$in_medium=array(3,4);
+		$in_hard=array(5);
+
+        $need_no_of_easy_questions = $no_of_question['no_of_question'] * 0.4;
+        $need_no_of_medium_questions = $no_of_question['no_of_question'] * 0.4;
+        $need_no_of_hard_questions = $no_of_question['no_of_question'] * 0.2;
+        
+        $msg = 'you should add more ';
+        $error = false;
+        // Easy Question
+        $available_no_of_easy_questions = $this->availableNoOfQuestions($id, $in_easy);
+
+        // Checking for easy Question
+        if($need_no_of_easy_questions > $available_no_of_easy_questions) {
+        	$error = true;
+        	$msg .= ' Easy: '.($need_no_of_easy_questions-$available_no_of_easy_questions);
+        }
+
+        $available_no_of_medium_questions = $this->availableNoOfQuestions($id, $in_medium);
+
+         // Checking for easy Question
+        if($need_no_of_medium_questions > $available_no_of_medium_questions) {
+        	$error = true;
+        	$msg .= ' Medium: '.($need_no_of_medium_questions-$available_no_of_medium_questions);
+
+        }
+
+        $available_no_of_hard_questions = $this->availableNoOfQuestions($id,  $in_hard);
+
+         // Checking for easy Question
+        if($need_no_of_hard_questions > $available_no_of_hard_questions) {
+        	$error = true;
+        	$msg .= ' Hard: '.($need_no_of_hard_questions-$available_no_of_hard_questions);
+
+        }
+
+        // print_r($available_no_of_hard_questions);die;
+        /*  echo $msg;
+          die; */     
+
+
+        if(!$error) {
+			$this->db->where('id',$id);
+			$this->db->update('quiz_set',$no_of_question);
+			if($this->db->affected_rows()>0) {
+
+				$data['message']="No of question set successfully";
+        	    $data['success'] = 1;
+				return $data;
+			} else {
+				$data['message']="No of question not set successfully";
+				 $data['success'] = 0;
+				return $data;
+			}
+		} else {
+			$data['message']=$msg;
+			$data['success'] = 0;
+			return $data;
+
+		}
+	}
+
+	
+	public function getQuizSetById($id){
+		$query = $this->db->get_where('quiz_set',array('id'=>$id));
+		if($query->num_rows() > 0){
+			return $query->row();
+		}	
+		return false;
+	}
+
+
+	public function getCategory()
+	{
+		$this->db->select('*');
+		$this->db->from('quiz_set');
+		$query=$this->db->get();
+	    if($query->num_rows() >0)
+	    {
+	    	return $query->result();
+	    }
+	    else
+	    {
+	    	return false;
+	    }
+	}
+	public function quizcatlist($cat_id)
+	{
+		/*$cat_title =implode('',$cat_title);*/
+        $this->db->select('id,title');
+		$this->db->from('quiz_set');
+		/*$this->db->like('title',$cat_title,'both'); */
+		$this->db->where('id',$cat_id);
+		
+		$query=$this->db->get(); 
+	    if($query->num_rows() >0)
+	    {
+	    	return $query->row();
+	    }
+	    else
+	    {
+	    	return false;
+	    }
+	}
+
+	public function quizgrouplist($cat_title,$cat_id)
+	{
+		/*$cat_title =implode('',$cat_title);*/
+		$this->db->distinct();
+		$this->db->select('group_id');
+		$this->db->from('ussd_group_category');
+		$this->db->where('category_id',$cat_id); 
+        $query=$this->db->get(); 
+       $groups=$query->result_array();
+       $data = array();
+       foreach ($groups as  $group) {
+       	$data[]=$group['group_id'];
+       }
+      //  print_r($data);
+      // die;
+        $this->db->select('id,group_name');
+		$this->db->from('ussd_group');
+		$this->db->like('group_name',$cat_title,'both'); 
+		if(count($data))
+			$this->db->where_not_in('id',$data);
+		$query=$this->db->get(); 
+	    if($query->num_rows() >0)
+	    {
+	    	return $query->result();
+	    }
+	    else
+	    {
+	    	return false;
+	    }
+	}
+	public function group_list($id)
+	{
+		$this->db->select('ussd_group_category.id,group_name');
+		$this->db->from('ussd_group_category');
+		$this->db->where('category_id', $id);
+		$this->db->join('ussd_group','ussd_group.id	=ussd_group_category.group_id');
+
+		$query=$this->db->get(); 
+	    if($query->num_rows() >0)
+	    {
+	    	return $query->result();
+	    }
+	    else
+	    {
+	    	return false;
+	    }
+
+	}
+	public function deletegroupbyid($id)
+	{
+
+		$this->db->delete('ussd_group_category', array('id' => $id)); 		
+		
+		if($this->db->affected_rows() >= 0){
+			return TRUE;
+		}else{
+			return FALSE;
+		}
+
+	}
+
+	public function insert_addgroup($data=array())
+	{
+		$this->db->insert_batch('ussd_group_category',$data); 
+		if($this->db->affected_rows()>0)
+		{
+			return true;
+		   }else{
+			return false;
+		 }
+
+	}
+	public function get_search_question($searchItem, $categoryId) {
+		$this->db->select('*');
+		$this->db->from('ussd_quiz');
+		$this->db->join('quizset_question', 'ussd_quiz.id=quizset_question.quiz_id');
+		$this->db->where('quiz_set_id',$categoryId);
+        $this->db->like('title',$searchItem,'both');
+		$result = $this->db->get();
+
+		if($result->num_rows()>0) {
+			return $result->result_array();
+		}
+		return false;
+	}
+
+	 /*public function listgroup($qid) 
+	 {
+	 	$this->db->select();
+	 	$this->db->from('ussd_group_category');
+	 	$this->db->where('category_id',$qid);
+	 	$this->db->join('ussd_group','ussd_group.id=ussd_group_category.group_id');
+	 	$query=$this->db->get();
+	 	if($query->num_rows()>0)
+	 	{
+            print_r($query->result());
+            die;
+	 	}
+	 	else
+	 	{
+	 		return false;
+	 	}
+	 }*/
+}
+?>

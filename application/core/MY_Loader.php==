@@ -1,0 +1,37 @@
+<?php (defined('BASEPATH')) OR exit('No direct script access allowed');
+
+
+
+/* load the MX_Loader class */
+
+require APPPATH."third_party/MX/Loader.php";
+
+
+
+class MY_Loader extends MX_Loader {
+
+	public function template($template_name, $vars = array(), $return = FALSE)
+
+    {
+
+        if(!empty($vars)):
+
+        $this->view('template/header', $vars,$return);
+
+        $this->view($template_name, $vars,$return);
+
+        $this->view('template/footer', $vars,$return);
+
+    else:
+
+        $this->view('template/header', $return);
+
+        $this->view($template_name, $return);
+
+        $this->view('template/footer', $return); 
+
+    endif;
+
+    }
+
+}
