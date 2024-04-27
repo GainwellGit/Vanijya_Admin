@@ -7,8 +7,8 @@ class Welcome extends CI_Controller {
 	{
 		
 
-		//$this->load->view('welcome_message'); 
-		redirect('/admin/authentication/login');
+		$this->load->view('welcome_message'); 
+		//redirect('/admin/authentication/login');
 	}
 	
 	
@@ -29,7 +29,7 @@ class Welcome extends CI_Controller {
 
         $sxe = new SimpleXMLElement('https://qapps.gainwellindia.com/gcpl/pmkit/GCPL_X_RUECustMast.xml', NULL, TRUE);
         $array = json_decode(json_encode((array)$sxe), TRUE);
-print_r($array['ZRUE_INT1'][0]);
+		print_r($array['ZRUE_INT1'][0]);
 
     	//echo $x;
 
