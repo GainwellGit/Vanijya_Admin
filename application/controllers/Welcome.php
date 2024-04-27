@@ -7,8 +7,8 @@ class Welcome extends CI_Controller {
 	{
 		
 
-		$this->load->view('welcome_message'); 
-		//redirect('/admin/authentication/login');
+		//$this->load->view('welcome_message'); 
+		redirect('/admin/authentication/login');
 	}
 	
 	
