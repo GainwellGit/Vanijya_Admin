@@ -25,7 +25,7 @@ date_default_timezone_set('Asia/Kolkata');
 */
 
 
-$config['base_url'] = 'https://appportal.gainwellindia.com/'; 
+$config['base_url'] = 'https://appportal.gainwellindia.com/vanijya/'; 
 
 $config['sap_base_url'] = 'http://10.131.45.4:8080/';
 
