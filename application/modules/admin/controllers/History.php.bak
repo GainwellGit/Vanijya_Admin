@@ -1,0 +1,268 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+class History extends CI_Controller {
+	 	function __construct()
+    	{
+        	parent::__construct();
+				$this->load->model('History_model');
+				$this->load->library('excel');
+				//$this->load->library("nusoap_library");
+				
+				$this->usersessiondata = $this->session->userdata('logged_in'); 		
+				if(empty($this->usersessiondata)){
+					redirect('/admin/authentication/login'); 
+				}
+		}
+	   
+	   	public function index()
+		{
+			$this->load->ftemplate('history');
+		}
+
+		public function order(){
+			$this->load->ftemplate('order_history');
+		}
+		
+		public function payment(){
+			$this->load->ftemplate('payment_history');
+		}
+		
+		
+
+		public function orderSearch(){
+
+			$orderNo=$this->input->post('orderNo');
+			$customer=$this->input->post('customer');
+			$plant=$this->input->post('plant');
+			$status=$this->input->post('status');
+			$reference=$this->input->post('reference');
+			$part=$this->input->post('part');
+			$from_date=$this->input->post('from_date');
+			$to_date=$this->input->post('to_date');
+			$sum = 0;
+
+			$searchResult = $this->History_model->getOrderSearch($orderNo,$customer,$plant,$status,$reference,$part,$from_date,$to_date,$formType);			
+            
+            if(!empty($searchResult)){
+				foreach ($searchResult as $item) {
+				    $sum = $item['total_payment'];
+				}
+            }            
+
+			$data['orderNo'] = $orderNo;
+			$data['customer'] = $customer;
+			$data['plant'] = $plant;
+			$data['status'] = $status;
+			$data['part'] = $part;
+
+			$data['searchResult'] = $searchResult;
+			$data['from_date'] = $from_date;
+            $data['to_date'] = $to_date;
+			$data['sum'] = $sum;
+			
+			$this->load->ftemplate('order_history',$data);			
+		}
+
+		public function paymentSearch(){
+
+			$orderNo=$this->input->post('orderNo');
+			$customer=$this->input->post('customer');
+			$plant=$this->input->post('plant');
+			$status=$this->input->post('status');
+			$reference=$this->input->post('reference');
+			$part=$this->input->post('part');
+			$from_date=$this->input->post('from_date');
+			$to_date=$this->input->post('to_date');
+			$sum = 0;
+
+			$searchResult = $this->History_model->getPaymentSearch($orderNo,$customer,$plant,$status,$reference,$part,$from_date,$to_date,$formType);			
+            
+            if(!empty($searchResult)){
+				foreach ($searchResult as $item) {
+				    $sum = $item['total_payment'];
+				}
+            }            
+
+			$data['orderNo'] = $orderNo;
+			$data['customer'] = $customer;
+			$data['plant'] = $plant;
+			$data['status'] = $status;
+			$data['reference'] = $reference;
+			$data['part'] = $part;
+
+			$data['searchResult'] = $searchResult;
+			$data['from_date'] = $from_date;
+            $data['to_date'] = $to_date;
+			$data['sum'] = $sum;
+			
+			$this->load->ftemplate('payment_history',$data);			
+		}
+
+		public function reconciliation(){			
+		
+			$searchResult = $this->History_model->reconciliationPaymentSearch();		
+            
+            if(!empty($searchResult)){
+				foreach ($searchResult as $item) {
+				    $sum = $item['total_payment'];
+				}
+            }
+			
+			$data['searchResult'] = $searchResult;	
+			$this->load->ftemplate('reconciliation_history',$data);			
+		}		
+
+		public function getsearch()
+		{
+            $category=$this->input->post('category');
+            $type=$this->input->post('type');
+            $from_date=$this->input->post('from_date');
+			$to_date=$this->input->post('to_date');
+			$searchResult = $this->History_model->getSearchResult($category,$type,$from_date,$to_date);
+			$categorydata = $this->History_model->getDataByCatId($category,$to_date,$from_date);
+
+            $data['category'] = $category;
+            $data['type'] = $type;
+            $data['from_date'] = $from_date;
+            $data['to_date'] = $to_date;
+			$data['categorydata'] = $categorydata;
+			$data['searchResult'] = $searchResult;
+			if($category !='' || $type !='')
+			$data['displayResult'] = '1';
+            $this->load->ftemplate('history',$data);
+            
+		}
+		
+		public function updatePaymentStatus()
+		{
+            $status = $this->input->post('status');
+            $order_id = $this->input->post('orderID');
+			
+			$cust_no = $this->input->post('cust_no');
+			$quant = $this->input->post('quant');
+			$part_no = $this->input->post('part_no');
+			$cond_type = $this->input->post('cond_type');
+			$percent = $this->input->post('percent');
+			$po_no = $this->input->post('po_no');
+			$serial_no = $this->input->post('serial_no');
+			$plant_code = $this->input->post('plant_code');
+            
+            //$data = $this->History_model->updatePaymentStatusOrderno($status,$order_id);
+			
+			$xml = '<?xml version="1.0" encoding="UTF-8"?><ns0:MT_PlaceOrder_Request xmlns:ns0="urn:tipl.com:001:PMKPlaceOrder"><CUST_NO>'.$cust_no.'</CUST_NO><PART_INFO><ORD_QTY>'.$quant.'</ORD_QTY><PART_NUMBER>'.$part_no.'</PART_NUMBER></PART_INFO><Header_Disc><ConditionType>'.$cond_type.'</ConditionType><DiscountPercentage>'.$percent.'</DiscountPercentage></Header_Disc><PO_NUMBER>'.$po_no.'</PO_NUMBER><SERIAL_NO>'.$serial_no.'</SERIAL_NO><PLANT_CODE>'.$plant_code.'</PLANT_CODE></ns0:MT_PlaceOrder_Request>';
+			
+			  /*if($data){
+				//Soap API call
+				$api_url = 'GCPLKart.com.gcpl'; // ex. http://www.example.com/index.php/soapserver
+				$api_username = 'e001226';
+				$api_password = 'Tech@321';
+				$service = "addnumbers"; // from my POST <a href="http://www.php-guru.in/2013/soap-server-in-codeigniter-using-nusoap-library/" target="_blank">SOAP Server In CodeIgniter using NuSOAP PHP Toolkit</a>
+				$params = array('a' => 5, 'b' => 10); // input parameters to "addnumbers" medhod
+				if ($api_url != '')
+				{
+				$result = $this->nusoap_library->soaprequest($api_url, $api_username, $api_password, trim($service), $params);
+				if (is_array($result) && count($result) > 0)
+				{
+						print_r($result);
+				}
+				}
+				//End of Soap
+			} */
+			$response_xml = '<?xml version="1.0" encoding="UTF-8"?><nm:MT_PlaceOrder_Response xmlns:prx="urn:sap.com:proxy:PE1:/1SAI/TAS0D6731E843E5F0F70993:702" xmlns:nm="urn:tipl.com:001:PMKPlaceOrder"><DOC_DATE>20221213</DOC_DATE><DOC_NO>0053532575</DOC_NO><DOC_TIME>112806</DOC_TIME><ERROR_MESSAGE>Sales Order created successfully.</ERROR_MESSAGE></nm:MT_PlaceOrder_Response>';
+			
+			$sap_order_id = $this->xmlPursor($response_xml); //'DUMMY#'.rand(4999,9999);
+			$data = $this->History_model->updatePaymentStatusOrderno($status,$order_id,$sap_order_id);
+			
+            echo json_encode($data);
+            
+		}
+
+        public function getDataByCatId()
+		{
+            $data=$this->input->post('id');
+            $end_date=$this->input->post('end_date');
+            $start_date=$this->input->post('start_date');
+            $data = $this->History_model->getDataByCatId($data,$end_date,$start_date);
+
+            echo json_encode($data);
+             
+		}
+
+		public function soapRequest($xmlString){
+			$curl = curl_init();
+			curl_setopt_array($curl, array(
+			CURLOPT_URL => 'http://px1tiplscs.tiplindia.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_TIPL_PMK&receiverParty=&receiverService=&interface=SI_PMK_PlaceOrder_Out&interfaceNamespace=urn:tipl.com:001:PMKPlaceOrder',
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_ENCODING => '',
+			CURLOPT_MAXREDIRS => 10,
+			CURLOPT_TIMEOUT => 0,
+			CURLOPT_FOLLOWLOCATION => true,
+			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			CURLOPT_CUSTOMREQUEST => 'POST',
+			CURLOPT_POSTFIELDS =>$xmlString,
+			CURLOPT_HTTPHEADER => array(
+				'username: e001226',
+				'password: Tech@321',
+				'Content-Type: application/xml'
+			),
+			));
+
+			$response = curl_exec($curl);
+			curl_close($curl);
+			return $response;
+
+		}
+		
+		public function xmlPursor($myXMLData)
+		{
+			libxml_use_internal_errors(true);
+			/* $request = '
+			<?xml version="1.0" encoding="UTF-8"?>
+			<ns0:MT_PlaceOrder_Request xmlns:ns0="urn:tipl.com:001:PMKPlaceOrder">
+				<CUST_NO>0000912992</CUST_NO>
+				<PART_INFO>
+					<ORD_QTY>1</ORD_QTY>
+					<PART_NUMBER>CPI-4402815</PART_NUMBER>
+				</PART_INFO>
+				<PART_INFO>
+					<ORD_QTY>1</ORD_QTY>
+					<PART_NUMBER>PMK-424PM3FLKT</PART_NUMBER>
+				</PART_INFO>
+				<PART_INFO>
+					<ORD_QTY>1</ORD_QTY>
+					<PART_NUMBER>K-82.060.10.0.13</PART_NUMBER>
+				</PART_INFO>
+				<Header_Disc>
+					<ConditionType>ZPHD</ConditionType>
+					<DiscountPercentage>5.0</DiscountPercentage>
+				</Header_Disc>
+				<PO_NUMBER>91299213122022112619</PO_NUMBER>
+				<SERIAL_NO>01-01-S</SERIAL_NO>
+				<PLANT_CODE>3083</PLANT_CODE>
+			</ns0:MT_PlaceOrder_Request>
+			'; */	
+
+			/* $myXMLData =
+			'<?xml version="1.0" encoding="UTF-8"?>
+			<nm:MT_PlaceOrder_Response xmlns:nm="urn:tipl.com:001:PMKPlaceOrder" xmlns:prx="urn:sap.com:proxy:PE1:/1SAI/TAS0D6731E843E5F0F70993:702">
+				<DOC_DATE>20221213</DOC_DATE>
+				<DOC_NO>0053532575</DOC_NO>
+				<DOC_TIME>112806</DOC_TIME>
+				<ERROR_MESSAGE>Sales Order created successfully.</ERROR_MESSAGE>
+			</nm:MT_PlaceOrder_Response>'; */
+
+			$xml = simplexml_load_string($myXMLData);
+			if ($xml === false) {
+				echo "Failed loading XML: ";
+				foreach(libxml_get_errors() as $error) {
+					echo "<br>", $error->message;
+				}
+			} else {
+				return $xml->DOC_NO;
+			}           
+
+		}
+
+	}
+
+	?>
