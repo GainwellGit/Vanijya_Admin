@@ -193,6 +193,9 @@ class History extends CI_Controller {
 
 			$SapOrderData = $this->History_model->addSapOrderVerify($order_id);
 			if (is_array($SapOrderData)) {
+				
+				
+				/*
 				# code...
 				$ticket_id 	  = $SapOrderData['ticket_id'];
 				$order_number = $SapOrderData['order_number'];
@@ -225,7 +228,17 @@ class History extends CI_Controller {
 
 				header('Content-Type: application/json; charset=utf-8');
 				echo $response;
+				*/
 
+				$ticket_id 	  = $SapOrderData['ticket_id'];
+				$order_number = $SapOrderData['order_number'];
+				$sap_base_url = $this->config->item('sap_base_url');
+
+
+				$ret = file_get_contents( $sap_base_url.'getSAPOrderId?ticketId='.$ticket_id.'&orderNumber='.$order_number);
+
+				print_r($ret);
+				
 				return $response;
 			}
 
