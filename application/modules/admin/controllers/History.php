@@ -109,7 +109,7 @@ class History extends CI_Controller {
 		public function reconciliation(){			
 			
 			$searchResult = $this->History_model->reconciliationPaymentSearch();		
-            die('in1');
+            
             if(!empty($searchResult)){
 				foreach ($searchResult as $item) {
 				    $sum = $item['total_payment'];
