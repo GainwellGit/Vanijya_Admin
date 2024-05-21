@@ -235,7 +235,7 @@ class History extends CI_Controller {
 				$sap_base_url = $this->config->item('sap_base_url');
 				
 				$getURL = $sap_base_url.'getSAPOrderId?ticketId='.$ticket_id.'&orderNumber='.$order_number;
-				die($getURL);
+				//die($getURL);
 
 				$ret = file_get_contents( $getURL );
 
