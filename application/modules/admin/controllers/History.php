@@ -198,7 +198,7 @@ class History extends CI_Controller {
 				$order_number = $SapOrderData['order_number'];
 				//http://piqa:50000/XISOAPAdapter/MessageServlet
 				$sap_base_url = $this->config->item('sap_base_url');
-				print_r($sap_base_url);
+				print_r($sap_base_url); die();
 				$curl = curl_init();
 				curl_setopt_array($curl, array(
 				CURLOPT_URL => $sap_base_url.'getSAPOrderId?ticketId='.$ticket_id.'&orderNumber='.$order_number,
