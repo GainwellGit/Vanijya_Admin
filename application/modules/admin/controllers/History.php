@@ -213,6 +213,8 @@ class History extends CI_Controller {
 				 
 				));
 
+				print_r($curl);
+
 				$response = curl_exec($curl);
 
 				print_r($response);
