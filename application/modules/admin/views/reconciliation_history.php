@@ -438,37 +438,40 @@ $(document).ready(function(){
 				method: "POST",
 				url: "<?php echo site_url('/admin/history/updatePaymentStatus'); ?>", //here we are calling our user controller and get_cities method with the country_id
 				data:{
-					orderID: orderID, 
-					status: status,
-					cust_no: cust_no,
-					quant: quant,
-					part_no: part_no,
-					cond_type: cond_type,
-					percent: percent,
-					po_no: po_no,
-					serial_no: serial_no,
-					plant_code: plant_code,
-                    input_sap_order_id:input_sap_order_id
+                        orderID: orderID, 
+                        status: status,
+                        cust_no: cust_no,
+                        quant: quant,
+                        part_no: part_no,
+                        cond_type: cond_type,
+                        percent: percent,
+                        po_no: po_no,
+                        serial_no: serial_no,
+                        plant_code: plant_code,
+                        input_sap_order_id:input_sap_order_id
 					},
 				contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 				datatype : "json",
 				success: function(response) //we're calling the response json array 'states'
 				{
-          if (response.status == 'Failure') {
-              //console.log(response);
-              console.log('Failure');
-
-                toastr["error"]("", "Failure : Payment not done.")
-
-            
-    
-          }else{
-              $('#hide-'+idx).hide();
-          } 
-                    
-                    //$('#hide-'+idx).hide();
-
-					
+                    if (response.status == 'Failure') {
+                        //console.log(response);
+                        console.log('Failure');
+                        toastr["error"]("", "Failure : Payment not done.") 
+                    }else if(response.status == 'Success') {
+                        
+                        console.log(response);                       
+                        $.ajax({
+                            method: "GET",
+                            url: response.url,
+                            success: function(response) //we're calling the response json array 'states'
+				            {
+                                toastr["error"]("", response) 
+                            }
+                        });
+                        
+                        $('#hide-'+idx).hide();
+                    }  
 				},
 				error: function( error )
 				{              
