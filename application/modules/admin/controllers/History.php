@@ -175,6 +175,8 @@ class History extends CI_Controller {
 
 		public function updatePaymentStatus()
 		{	
+			return "Process failed!!";
+
 			$CI =& get_instance();
 
             $status = $this->input->post('status');
