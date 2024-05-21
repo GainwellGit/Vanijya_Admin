@@ -107,7 +107,7 @@ class History extends CI_Controller {
 		}
 
 		public function reconciliation(){			
-		
+			die('in');
 			$searchResult = $this->History_model->reconciliationPaymentSearch();		
             
             if(!empty($searchResult)){
@@ -342,40 +342,40 @@ class History extends CI_Controller {
 				return true;
 		}
 
-	public function reconciliation_test_new(){
+		public function reconciliation_test_new(){
 
-		/*$xml = '<?xml version="1.0" encoding="UTF-8"?><ns0:MT_PlaceOrder_Request xmlns:ns0="urn:tipl.com:001:PMKPlaceOrder"><CUST_NO>'.$cust_no.'</CUST_NO><PART_INFO><ORD_QTY>'.$quant.'</ORD_QTY><PART_NUMBER>'.$part_no.'</PART_NUMBER></PART_INFO><Header_Disc><ConditionType>'.$cond_type.'</ConditionType><DiscountPercentage>'.$percent.'</DiscountPercentage></Header_Disc><PO_NUMBER>'.$po_no.'</PO_NUMBER><SERIAL_NO>'.$serial_no.'</SERIAL_NO><PLANT_CODE>'.$plant_code.'</PLANT_CODE></ns0:MT_PlaceOrder_Request>';*/
-	$xml = '<?xml version="1.0" encoding="UTF-8"?><ns0:MT_PlaceOrder_Request xmlns:ns0="urn:tipl.com:001:PMKPlaceOrder"><CUST_NO>0000994075</CUST_NO><PART_INFO><ORD_QTY>1</ORD_QTY><PART_NUMBER>CPI-4876205</PART_NUMBER></PART_INFO><Header_Disc><ConditionType>ZPHD</ConditionType><DiscountPercentage>5.0</DiscountPercentage></Header_Disc><PO_NUMBER>99407513122022144138</PO_NUMBER><SERIAL_NO>01-01-D</SERIAL_NO><PLANT_CODE>3053</PLANT_CODE></ns0:MT_PlaceOrder_Request>';
-
-
- //$dataFromTheForm = $_POST['fieldName']; // request data from the form
- $api_url = "http://piqa:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_TIPL_PMK&receiverParty=&receiverService=&interface=SI_PMK_PlaceOrder_Out&interfaceNamespace=urn:tipl.com:001:PMKPlaceOrder"; 
-
-		$api_username = 'techbrawn';
-				$api_password = 'Tech@123';
-				$service 	  = "DT_PlaceOrders"; // PMKPlaceOrder  DTStockInfoResponse
-				$params = '';
-				$params = array(
-								'senderParty' => '',
- 								'senderService' => 'BC_TIPL_PMK',
-								'receiverParty' => '',
-								'receiverService' => '',
-								'interface' => 'SI_PMK_PlaceOrder_Out',
-								'interfaceNamespace' => 'urn:tipl.com:001:PMKPlaceOrder'
-								//'namespace' => 'urn:tipl.com:001:PMKPlaceOrder'
-						);  
+			/*$xml = '<?xml version="1.0" encoding="UTF-8"?><ns0:MT_PlaceOrder_Request xmlns:ns0="urn:tipl.com:001:PMKPlaceOrder"><CUST_NO>'.$cust_no.'</CUST_NO><PART_INFO><ORD_QTY>'.$quant.'</ORD_QTY><PART_NUMBER>'.$part_no.'</PART_NUMBER></PART_INFO><Header_Disc><ConditionType>'.$cond_type.'</ConditionType><DiscountPercentage>'.$percent.'</DiscountPercentage></Header_Disc><PO_NUMBER>'.$po_no.'</PO_NUMBER><SERIAL_NO>'.$serial_no.'</SERIAL_NO><PLANT_CODE>'.$plant_code.'</PLANT_CODE></ns0:MT_PlaceOrder_Request>';*/
+			$xml = '<?xml version="1.0" encoding="UTF-8"?><ns0:MT_PlaceOrder_Request xmlns:ns0="urn:tipl.com:001:PMKPlaceOrder"><CUST_NO>0000994075</CUST_NO><PART_INFO><ORD_QTY>1</ORD_QTY><PART_NUMBER>CPI-4876205</PART_NUMBER></PART_INFO><Header_Disc><ConditionType>ZPHD</ConditionType><DiscountPercentage>5.0</DiscountPercentage></Header_Disc><PO_NUMBER>99407513122022144138</PO_NUMBER><SERIAL_NO>01-01-D</SERIAL_NO><PLANT_CODE>3053</PLANT_CODE></ns0:MT_PlaceOrder_Request>';
 
 
-				if ($api_url != '')
-				{
-					$result = $this->nusoap_library->soaprequest($api_url, $api_username, $api_password, trim($service), $params,$xml);
-					echo 'controller-<br>' ; var_dump($result);
-					if (is_array($result) && count($result) > 0)
-						{
-								$response_xml = $result;
-						}
-				}
-	}
+			//$dataFromTheForm = $_POST['fieldName']; // request data from the form
+			$api_url = "http://piqa:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_TIPL_PMK&receiverParty=&receiverService=&interface=SI_PMK_PlaceOrder_Out&interfaceNamespace=urn:tipl.com:001:PMKPlaceOrder"; 
+
+			$api_username = 'techbrawn';
+					$api_password = 'Tech@123';
+					$service 	  = "DT_PlaceOrders"; // PMKPlaceOrder  DTStockInfoResponse
+					$params = '';
+					$params = array(
+									'senderParty' => '',
+									'senderService' => 'BC_TIPL_PMK',
+									'receiverParty' => '',
+									'receiverService' => '',
+									'interface' => 'SI_PMK_PlaceOrder_Out',
+									'interfaceNamespace' => 'urn:tipl.com:001:PMKPlaceOrder'
+									//'namespace' => 'urn:tipl.com:001:PMKPlaceOrder'
+							);  
+
+
+					if ($api_url != '')
+					{
+						$result = $this->nusoap_library->soaprequest($api_url, $api_username, $api_password, trim($service), $params,$xml);
+						echo 'controller-<br>' ; var_dump($result);
+						if (is_array($result) && count($result) > 0)
+							{
+									$response_xml = $result;
+							}
+					}
+		}
 
  }
 
