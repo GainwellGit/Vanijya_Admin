@@ -214,6 +214,9 @@ class History extends CI_Controller {
 				));
 
 				$response = curl_exec($curl);
+
+				print_r($response);
+								
 				curl_close($curl);
 
 				$data = $this->History_model->updatePaymentStatusOrderno($status,$order_number,$sap_order_id);
