@@ -191,11 +191,11 @@ class History extends CI_Controller {
 			$input_sap_order_id = $this->input->post('input_sap_order_id');
             
 			$response = "{}";
-			echo "in";
+			
 
 			$SapOrderData = $this->History_model->addSapOrderVerify($order_id);
 			if (is_array($SapOrderData)) {
-				
+				echo "in";
 				
 				/*
 				# code...
