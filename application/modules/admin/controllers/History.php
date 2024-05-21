@@ -231,21 +231,21 @@ class History extends CI_Controller {
 				header('Content-Type: application/json; charset=utf-8');
 				echo $response;
 				*/
-				echo "in";
+				print_r(  "in" );
 				
 				$ticket_id 	  = $SapOrderData['ticket_id'];
 				$order_number = $SapOrderData['order_number'];
 				$sap_base_url = $this->config->item('sap_base_url');
 				
 				$getURL = $sap_base_url.'getSAPOrderId?ticketId='.$ticket_id.'&orderNumber='.$order_number;
-				echo $getURL;
+				print_r( $getURL );
 				
-				/*die($getURL);
+				die($getURL);
 
 				$ret = file_get_contents( $getURL );
 
 				print_r($ret);
-				*/
+				
 				return $response;
 			}
 
