@@ -240,6 +240,7 @@ class History_model extends CI_Model {
 
             $this->db->group_by('order_master.order_number'); 
             $this->db->where("order_master.payment_status", "N");
+            $this->db->where("order_master.datetime >=", "2024-05-01");
             //$this->db->limit(50, 0);
 
             
