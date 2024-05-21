@@ -467,10 +467,11 @@ $(document).ready(function(){
                             success: function(response) //we're calling the response json array 'states'
 				            {
                                 toastr["error"]("", response) 
+                                $('#hide-'+idx).hide();
                             }
                         });
                         
-                        $('#hide-'+idx).hide();
+                        
                     }  
 				},
 				error: function( error )
