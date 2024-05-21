@@ -242,9 +242,9 @@ class History_model extends CI_Model {
             $this->db->where("order_master.payment_status", "N");
             //$this->db->limit(50, 0);
 
-            print_r($this->db->last_query()); die('in2');
+            
 
-            $fetch_data = $this->db->get();
+            $fetch_data = $this->db->get(); print_r($this->db->last_query()); die('in2');
 
             if(isset($fetch_data) && $fetch_data->num_rows() > 0 ){
             $getcoupon = $fetch_data->result_array();   
