@@ -240,11 +240,9 @@ class History extends CI_Controller {
 				$getURL = $sap_base_url.'getSAPOrderId?ticketId='.$ticket_id.'&orderNumber='.$order_number;
 				//print_r( $getURL );
 
-				$ret = file_get_contents( $getURL );
+				//$ret = file_get_contents( $getURL );
 
-				//$response = json_encode(array("url"=>$getURL, "status"=>"Success"));
-
-				$response = json_encode(array("message"=>$ret, "status"=>"Success"));
+				$response = json_encode(array("url"=>$getURL, "status"=>"Success"));
 
 				header('Content-Type: application/json; charset=utf-8');
 				echo $response;
