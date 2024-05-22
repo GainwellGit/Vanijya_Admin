@@ -459,17 +459,18 @@ $(document).ready(function(){
                         console.log('Failure');
                         toastr["error"]("", "Failure : Payment not done.") 
                     }else if(response.status == 'Success') {
-                        
-                        console.log(response);                       
-                        $.ajax({
-                            method: "GET",
-                            url: response.url,
-                            success: function(response) //we're calling the response json array 'states'
-				            {
-                                toastr["error"]("", response) 
-                                $('#hide-'+idx).hide();
-                            }
-                        });
+                        toastr["error"]("", response.message) 
+                        $('#hide-'+idx).hide();
+                        // console.log(response);                       
+                        // $.ajax({
+                        //     method: "GET",
+                        //     url: response.url,
+                        //     success: function(response) //we're calling the response json array 'states'
+				        //     {
+                        //         toastr["error"]("", response) 
+                        //         $('#hide-'+idx).hide();
+                        //     }
+                        // });
                         
                         
                     }  
