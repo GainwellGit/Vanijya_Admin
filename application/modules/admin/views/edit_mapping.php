@@ -42,7 +42,7 @@
                     <!-- END PAGE BAR -->
                    
                     <!-- END PAGE HEADER-->
-                    <div class="row" style="display: none;" id="pmkitMapping">
+                    <div class="row" id="pmkitMapping">
                         <div class="col-md-12">
                             
                             <!-- BEGIN PORTLET-->
