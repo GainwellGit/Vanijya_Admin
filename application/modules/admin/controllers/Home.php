@@ -46,67 +46,56 @@ class Home extends CI_Controller {
 			$this->load->ftemplate('email_list',$data);
         }
 
-         public function log(){
-
-        	 $dir = 'C:/mobileapp-nodejs-api/';
-        	 $response = array();
-			  // Check if the directory exists
-			  if (file_exists($dir) && is_dir($dir) ) {
-			    
-			      // Get the files of the directory as an array
-			      $scan_arr = scandir($dir);
-			      $files_arr = array_diff($scan_arr, array('.','..') );
-			      // echo "<pre>"; print_r( $files_arr ); echo "</pre>";
-			      // Get each files of our directory with line break
-			      foreach ($files_arr as $file) {
+        public function log() {
+    	 	// $dir = 'C:/mobileapp-nodejs-api/';
+    	 	$dir = '/var/www/html/mobileapp-nodejs-api/';
+    	 	$response = array();
+		  	// Check if the directory exists
+		  	if (file_exists($dir) && is_dir($dir) ) {
+				// Get the files of the directory as an array
+				$scan_arr = scandir($dir);
+				$files_arr = array_diff($scan_arr, array('.','..') );
+				// echo "<pre>"; print_r( $files_arr ); echo "</pre>";
+				// Get each files of our directory with line break
+				foreach ($files_arr as $file) {
 			        //Get the file path
-			        $file_path = "C:/mobileapp-nodejs-api/".$file;
+			        $file_path = $dir.$file;
 			        // Get the file extension
 			        $file_ext = pathinfo($file_path, PATHINFO_EXTENSION);
-			        if ($file_ext=="csv") {
-			          //echo $file.date ("Y-m-d.", filemtime($file_path))."<br/>";
-
-			          $data['file']= $file;
-			          $data['date']=date ("Y-m-d", filemtime($file_path));
-			          $response[]=$data;
+			        if ($file_ext == "csv") {
+						//echo $file.date ("Y-m-d.", filemtime($file_path))."<br/>";
+						$data['file'] = $file;
+						$data['date'] = date ("Y-m-d", filemtime($file_path));
+						$response[] = $data;
 			        }
-			        
-			      }
-			  }
-			  else {
-			    $response[]='';
-			  }
-
-			 
-
+		      	}
+		  	}
+		  	else {
+			    $response[] = '';
+		  	}
             $data['log'] = $response;
-
 			$this->load->ftemplate('log_list',$data);
         }
 
-         public function download_log($file)
-        {
-            $file_url ="C:/mobileapp-nodejs-api/".$file;
+        public function download_log($file) {
+            // $file_url ="C:/mobileapp-nodejs-api/".$file;
+            $file_url ="/var/www/html/mobileapp-nodejs-api/".$file;
             header('Content-Type: application/octet-stream');
             header("Content-Transfer-Encoding: Binary"); 
             header("Content-disposition: attachment; filename=\"" . basename($file_url) . "\""); 
             readfile($file_url);
         }
 		
-		public function filelist(){
-			
-			$allFilesList= glob('D:/GWApps/gcpl/PMKit/upload/*');
-			
+		public function filelist() {
+			$allFilesList = glob('D:/GWApps/gcpl/PMKit/upload/*');
 		}
 		
-		public function changestatus(){
-
+		public function changestatus() {
             $email=$this->input->post('email');
             $chageStatus = $this->home_model->statusChange($email);
             
             $response['success']='true';
             return $response;
-
         }
 		
 		public function insert_email(){
