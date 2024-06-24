@@ -190,7 +190,7 @@ $planthubvalue=array("hublist","plantlist");
                            </a>
                         </li> 
 						
-						<li class="nav-item <?php echo (!empty(array_intersect($uervalue,$link_array))  && !in_array('order', $link_array) && !in_array('mapping', $link_array) && !in_array('surcharge', $link_array) && !in_array('empaccess', $link_array) && !in_array('orderSearch', $link_array) && !in_array('createmapping', $link_array) )?'active':'';?> ">
+						<li class="nav-item <?php echo (!empty(array_intersect($uervalue,$link_array))  && !in_array('order', $link_array) && !in_array('mapping', $link_array) && !in_array('orderSearch', $link_array) && !in_array('createmapping', $link_array) )?'active':'';?> ">
                             <a href="javascript:;" class="nav-link nav-toggle">
                                 <i class="icon-settings"></i>
                                 <span class="title">Order Managment </span>
@@ -354,6 +354,25 @@ $planthubvalue=array("hublist","plantlist");
                                         <span class="title">Promotion</span>
                                         <span class="selected"></span>
 
+                            </a>
+                        </li>
+						
+						<?php $a2=array("discount"); ?>
+                        <li class="nav-item <?php echo (!empty(array_intersect($a2,$link_array)))?'active':'';?>">
+                            <a href="<?php echo base_url('admin/discount/list'); ?>" class="nav-link ">
+                                        <i class="fa fa-puzzle-piece"></i>
+                                        <span class="title">Global Discount</span>
+                                        <span class="selected"></span>
+
+                            </a>
+                        </li>
+
+                        <?php $a3=array("promocode"); ?>
+                        <li class="nav-item <?php echo (!empty(array_intersect($a3,$link_array)))?'active':'';?>">
+                            <a href="<?php echo base_url('admin/promocode/list'); ?>" class="nav-link ">
+                                <i class="fa fa-puzzle-piece"></i>
+                                <span class="title">Promocode</span>
+                                <span class="selected"></span>
                             </a>
                         </li>
 
