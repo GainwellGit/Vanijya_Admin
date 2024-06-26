@@ -54,8 +54,8 @@ ob_start();
  *
  * NOTE: If you change these, also change the error_reporting() code below
  */
-	//define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
-	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'production');
+	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
+	//define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'production');
 
 /*
  *---------------------------------------------------------------
@@ -68,7 +68,7 @@ ob_start();
 switch (ENVIRONMENT)
 {
 	case 'development':
-		 error_reporting(E_ALL);
+		 error_reporting(0);
 
             // Display errors in output
             ini_set('display_errors', 1);
