@@ -136,8 +136,9 @@ div#sample_1_length {
           <li>
             <span>Promocodes List</span>
           </li>
-        </ul><br><br>
-        <div class="pull-right">
+        </ul>
+        <!-- <br><br> -->
+        <!-- <div class="pull-right">
           <div class="col-xs-2"> 
             <a href="<?php echo base_url(); ?>/admin/discount/download_excel">
               <button type="button" class="btn btn-primary downloadquiz" id="btn_downloadquiz" name="btn_downloadquiz"> 
@@ -192,7 +193,7 @@ div#sample_1_length {
           <div class="col-xs-2">
             <button type="submit" class="btn btn-primary btn_customer" id="btn_location" name="btn_mulquiz">Upload Zone Promocode </button>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="content">
         <div class="row" style="margin-bottom:20px; ">

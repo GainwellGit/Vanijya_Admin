@@ -406,7 +406,7 @@ div#sample_1_length {
         </div>
         <div class="modal-body">
           <div id="dvLoading" style="display: none;"></div>
-          <form action="<?php echo base_url('/admin/discount/bulk_promocode'); ?>" enctype="multipart/form-data" method="post" role="form">
+          <form action="<?php echo base_url('/admin/discount/bulk_upload_discount'); ?>" enctype="multipart/form-data" method="post" role="form">
             <div class="form-group  row">
               <label for="uploadfile" class="col-md-2 control-label fileUpload">Bulk Upload</label>
               <input type="file" id="uploadfile" class="col-md-6 uploadfile btn btn-primary" name="uploadfile" required="" accept=".xls, .xlsx, .csv"><div class="col-md-1"></div>
