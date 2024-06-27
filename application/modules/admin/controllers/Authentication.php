@@ -27,7 +27,6 @@ class Authentication extends CI_Controller {
 				);
 
 				$this->session->set_userdata('logged_in', $sess_array);
-				// echo "<pre>"; print_r($sess_array); die();
 				          redirect('admin/home');	
 				}else{					
 				    $this->session->set_flashdata('msg',"Wrong Username Or Password");
