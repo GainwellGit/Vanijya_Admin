@@ -30,11 +30,11 @@ class Promocode extends CI_Controller {
         $this->load->ftemplate('global_promocode',$data);
     }
 
-    public function get_materials(){
+    public function get_discounton_typerecords(){
         $disid    = $this->input->post('dis_id');
-        $getMaterials = $this->Promocode_model->get_material($disid);
-        $data['allmaterials'] = $getMaterials;
-        echo json_encode($data);
+        $dison    = $this->input->post('dison');
+        $getlists = $this->Promocode_model->get_dison_selectlist($disid, $dison);
+        echo json_encode($getlists);
     }
 
     public function edit_globalpromocode(){
@@ -46,7 +46,7 @@ class Promocode extends CI_Controller {
         $disfrom   = $this->input->post('disfrom');
         $disto 	   = $this->input->post('disto');
         $dison     = $this->input->post('dison');
-        $dismat    = ($dison=='MATERIAL-GROUP')?$this->input->post('dismat'):'';print_r($dismat);
+        $dismat    = ($dison=='MATERIAL-GROUP')?$this->input->post('dismat'):'';
         $discust   = ($dison=='CUSTOMER')? $this->input->post('discust'):'';
         $disreg    = ($dison=='REGION')? $this->input->post('disreg'):'';
         $diszone   = ($dison=='ZONE')? $this->input->post('diszone'):'';

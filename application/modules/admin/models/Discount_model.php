@@ -26,6 +26,7 @@ class Discount_model extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('global_discount_materials');
 		$this->db->where('discount_id',$disid);
+		$this->db->join('material_master', 'global_discount_materials.material_no = material_master.material_no');
 		$fetch_data = $this->db->get();
 		if($fetch_data->num_rows() > 0 ){
 			$getdata = $fetch_data->result_array();	

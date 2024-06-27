@@ -136,7 +136,63 @@ div#sample_1_length {
           <li>
             <span>Promocodes List</span>
           </li>
-        </ul>
+        </ul><br><br>
+        <div class="pull-right">
+          <div class="col-xs-2"> 
+            <a href="<?php echo base_url(); ?>/admin/discount/download_excel">
+              <button type="button" class="btn btn-primary downloadquiz" id="btn_downloadquiz" name="btn_downloadquiz"> 
+                Download Material Promocode Template
+              </button>
+            </a>   
+          </div>
+        </div>
+        <div class="form-group pull-right">
+          <div class="col-xs-2">
+            <button type="submit" class="btn btn-primary btn_customer" id="btn_location" name="btn_mulquiz">Upload Material Promocode </button>
+          </div>
+        </div>
+        <div class="form-group pull-right">
+          <div class="col-xs-2"> 
+            <a href="<?php echo base_url(); ?>/admin/discount/download_excel">
+              <button type="button" class="btn btn-primary downloadquiz" id="btn_downloadquiz" name="btn_downloadquiz"> 
+                Download Customer Promocode Template
+              </button>
+            </a>   
+          </div>
+        </div>
+        <div class="form-group pull-right">
+          <div class="col-xs-2">
+            <button type="submit" class="btn btn-primary btn_customer" id="btn_location" name="btn_mulquiz">Upload Customer Promocode </button>
+          </div>
+        </div>
+        <div class="form-group pull-right">
+          <div class="col-xs-2"> 
+            <a href="<?php echo base_url(); ?>/admin/discount/download_excel">
+              <button type="button" class="btn btn-primary downloadquiz" id="btn_downloadquiz" name="btn_downloadquiz"> 
+                Download Region Promocode Template
+              </button>
+            </a>   
+          </div>
+        </div>
+        <div class="form-group pull-right">
+          <div class="col-xs-2">
+            <button type="submit" class="btn btn-primary btn_customer" id="btn_location" name="btn_mulquiz">Upload Region Promocode </button>
+          </div>
+        </div>
+        <div class="form-group pull-right">
+          <div class="col-xs-2"> 
+            <a href="<?php echo base_url(); ?>/admin/discount/download_excel">
+              <button type="button" class="btn btn-primary downloadquiz" id="btn_downloadquiz" name="btn_downloadquiz"> 
+                Download Zone Promocode Template
+              </button>
+            </a>   
+          </div>
+        </div>
+        <div class="form-group pull-right">
+          <div class="col-xs-2">
+            <button type="submit" class="btn btn-primary btn_customer" id="btn_location" name="btn_mulquiz">Upload Zone Promocode </button>
+          </div>
+        </div>
       </div>
       <div class="content">
         <div class="row" style="margin-bottom:20px; ">
@@ -406,11 +462,14 @@ div#sample_1_length {
                 </button>
               </span>
             </div>
-            <div class="invalid-feedback-edisto" style="color:red;"></div>
+            <div class="invalid-feedback-edisto" style="color:red;display:none;"></div>
           </div>
           <div class="form-group">
             <label for="usr"> Discount On </label>
             <input type="text" maxlength="50" required class="form-control" id="dison" disabled>
+          </div>
+          <div class="form-group" id="display_list" style="display:none;">
+            
           </div>
           <div class="form-group">
             <label for="usr"> Status </label>
@@ -419,7 +478,7 @@ div#sample_1_length {
               <option value="A">ACTIVE</option>
               <option value="I">INACTIVE</option>
             </select>
-            <div class="invalid-feedback-edisstatus" style="color:red;"></div>
+            <div class="invalid-feedback-edisstatus" style="color:red;display:none;"></div>
           </div>
           <div class="form-group">
             <input type="hidden" maxlength="10" required class="form-control" id="id_x">
@@ -432,6 +491,31 @@ div#sample_1_length {
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal left fade" id="location_promo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title popup_heading_text" id="exampleModalLabel">Add Global Discounts</h5>
+          <div style="margin-top:6px;">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+        <div class="modal-body">
+          <div id="dvLoading" style="display: none;"></div>
+          <form action="<?php echo base_url('/admin/discount/bulk_promocode'); ?>" enctype="multipart/form-data" method="post" role="form">
+            <div class="form-group  row">
+              <label for="uploadfile" class="col-md-2 control-label fileUpload">Bulk Upload</label>
+              <input type="file" id="uploadfile" class="col-md-6 uploadfile btn btn-primary" name="uploadfile" required="" accept=".xls, .xlsx, .csv"><div class="col-md-1"></div>
+              <button type="submit" class="col-md-2 btn btn-default" name="submit" value="submit">Upload</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -450,6 +534,26 @@ div#sample_1_length {
       $('#add_cust_sec').hide();
       $('#add_reg_sec').hide();
       $('#add_zone_sec').hide();
+
+      $('.invalid-feedback-distype').text('');
+      $('.invalid-feedback-disval').text('');
+      $('.invalid-feedback-dismina').text('');
+      $('.invalid-feedback-disfrom').text('');
+      $('.invalid-feedback-disto').text('');
+      $('.invalid-feedback-dison').text('');
+      $('.invalid-feedback-disstatus').text('');
+      $('.invalid-feedback-dispromo').text('');
+      $('.invalid-feedback-dispdes').text('');
+
+      $('#add_distype').val('');
+      $('#add_disval').val('');
+      $('#add_dismina').val('');
+      $('#add_disfrom').val('');
+      $('#add_disto').val('');
+      $('#add_dison').val('');
+      $('#add_disstatus').val('');
+      $('#add_dispromo').val('');
+      $('#add_dispdes').val('');
     });
 
     $(".popupDynamic").click(function(){
@@ -464,16 +568,62 @@ div#sample_1_length {
       var dison     = $(this).data('dison');
       var disstatus = $(this).data('disstatus');
       var disid     = $(this).data('disid');
-      if(disval == ''){
-        $('#delete_form').hide();
+      if(disstatus != ''){
+        $('.invalid-feedback-edisstatus').hide();
       }else{
-        $('#delete_form').show();
+        $('.invalid-feedback-edisstatus').show();
       }
 
-      if(dison == 'MATERIAL-GROUP'){
-        $('#add_mat_sec').show();
+      if(disto != ''){
+        $('.invalid-feedback-edisto').hide();
       }else{
-        $('#add_mat_sec').hide();
+        $('.invalid-feedback-edisto').show();
+      }  
+
+      if(dison == 'MATERIAL-GROUP' || dison == 'CUSTOMER' || dison == 'REGION' || dison == 'ZONE'){
+        $("#display_list").show();
+
+        $.ajax({
+          type: "POST",
+          url: '<?php echo base_url(); ?>admin/promocode/get_discounton_typerecords',
+          data:'dis_id='+id_x+'&dison='+dison,
+          dataType: "json",
+          success: function(response){
+            var html ='';
+            if(dison == 'MATERIAL-GROUP'){
+              html +='<label for="usr"> Materials </label><select class="form-control" id="dismat" multiple diabled>';
+              $.each(response,function (index, val) {
+                html+='<option value="'+val.material_no+'" disabled>'+val.material_description+'</option>';
+              });
+            }
+
+            if(dison == 'CUSTOMER'){
+              html +='<label for="usr"> Customers </label><select class="form-control" id="dismat" multiple diabled>';
+              $.each(response,function (index, val) {
+                html+='<option value="'+val.customer_code+'" disabled>'+val.name1+'</option>';
+              });
+            }
+
+            if(dison == 'REGION'){
+              html +='<label for="usr"> Regions </label><select class="form-control" id="dismat" multiple diabled>';
+              $.each(response,function (index, val) {
+                html+='<option value="'+val.region_code+'" disabled>'+val.region_description+'</option>';
+              });
+            }
+
+            if(dison == 'ZONE'){
+              html +='<label for="usr"> Zones </label><select class="form-control" id="dismat" multiple diabled>';
+              $.each(response,function (index, val) {
+                html+='<option value="'+val.zone+'" disabled>'+val.zone+'</option>';
+              });
+            }
+
+            html+='</select>';
+            $("#display_list").html(html);
+          }
+        });
+      }else{
+        $("#display_list").hide();
       }
 
       $('#id_x').val(id_x);
@@ -818,43 +968,48 @@ div#sample_1_length {
       });
       
       $("#delete_form").click(function(){
-        $('.invalid-feedback').hide();
-        var disid     = $('#id_x').val();
-        var promocode = $('#distype').val();
-        var distype   = $('#distype').val();
-        var disval    = $('#disval').val();
-        var dismina   = $('#dismina').val();
-        var disfrom   = $('#disfrom').val();
-        var disto     = $('#disto').val();
-        var dison     = $('#dison').val();
-        var disstatus = $('#disstatus').val();
+        if(confirm('Do you really want to delete?')){
+          $('.invalid-feedback').hide();
+          var disid     = $('#id_x').val();
+          var promocode = $('#distype').val();
+          var distype   = $('#distype').val();
+          var disval    = $('#disval').val();
+          var dismina   = $('#dismina').val();
+          var disfrom   = $('#disfrom').val();
+          var disto     = $('#disto').val();
+          var dison     = $('#dison').val();
+          var disstatus = $('#disstatus').val();
 
-        var data = {disid: disid, promocode: promocode, distype: distype, disval: disval, dismina: dismina, disfrom: disfrom, disto: disto, dison: dison, disstatus: disstatus};
+          var data = {disid: disid, promocode: promocode, distype: distype, disval: disval, dismina: dismina, disfrom: disfrom, disto: disto, dison: dison, disstatus: disstatus};
 
-        $.ajax({
-          url: '<?php echo base_url(); ?>admin/promocode/delete_globalpromocode', // Replace with your API endpoint
-          type: 'POST',
-          data: data,
-          dataType: 'json',
-          success: function(response) {
-          // Request successful, do something with the response
-          $('#myModal').modal('toggle');
+          $.ajax({
+            url: '<?php echo base_url(); ?>admin/promocode/delete_globalpromocode', // Replace with your API endpoint
+            type: 'POST',
+            data: data,
+            dataType:'json',
+            success: function(response) {
+            // Request successful, do something with the response
+            $('#myModal').modal('toggle');
+            
+            toastr["info"]("", "success : One Promocode Data is Deleted.")
+            console.log(response);
+            },
+            error: function(xhr, status, error) {
+            // Request failed, handle the error
+            toastr["error"]("", "Failure : Something went wrong.")
+            console.error(error);
+            }
+          });
           
-          toastr["info"]("", "success : One Promocode Data is Deleted.")
-          console.log(response);
-          },
-          error: function(xhr, status, error) {
-          // Request failed, handle the error
-          toastr["error"]("", "Failure : Something went wrong.")
-          console.error(error);
-          }
-        });
-        
-        $(document).ajaxStop(function(){
-          setTimeout(function(){// wait for 1 secs(2)
-            window.location.reload(); // then reload the page.(3)
-          }, 1000);
-        });
+          $(document).ajaxStop(function(){
+            setTimeout(function(){// wait for 1 secs(2)
+              window.location.reload(); // then reload the page.(3)
+            }, 1000);
+          });
+        }
+        else{
+          return false;
+        }
       });
     })
 </script>

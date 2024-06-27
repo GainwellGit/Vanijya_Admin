@@ -39,17 +39,34 @@ class Promocode_model extends CI_Model {
 		return $gettype;
     }
 
-	public function get_material($disid){
-		$this->db->select('*');
-		$this->db->from('global_discount_materials');
-		$this->db->where('discount_id',$disid,'=');
+	public function get_dison_selectlist($disid, $dison){
+		if($dison=='MATERIAL-GROUP'){
+			$this->db->select('*');
+			$this->db->from('promo_codes_material_group');
+			$this->db->join('material_master', 'promo_codes_material_group.material_no = material_master.material_no');
+		}
+		if($dison=='CUSTOMER'){
+			$this->db->select('*');
+			$this->db->from('promo_codes_customer');
+			$this->db->join('customer_address', 'promo_codes_customer.customer_code = customer_address.customer_code');
+		}
+		if($dison=='REGION'){
+			$this->db->select('*');
+			$this->db->from('promo_codes_region');
+			$this->db->join('region_master', 'promo_codes_region.region = region_master.region_code');
+		}
+		if($dison=='ZONE'){
+			$this->db->select('*');
+			$this->db->from('promo_codes_zone');
+		}
+		$this->db->where('discount_id',$disid);
 		$fetch_data = $this->db->get();
-			if($fetch_data->num_rows() > 0 ){
-				$getdata = $fetch_data->result_array();	
-			}
-			else{
-				$getdata = array();
-			}
+		if($fetch_data->num_rows() > 0 ){
+			$getdata = $fetch_data->result_array();	
+		}
+		else{
+			$getdata = array();
+		}
 		return $getdata;
 	}
 
