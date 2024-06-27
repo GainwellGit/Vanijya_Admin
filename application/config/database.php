@@ -99,10 +99,10 @@ $db['default'] = array(
 // Secondary database connection
 $db['secondary'] = array(
 	'dsn'	=> '',
-	'hostname' => '10.131.13.40',
+	'hostname' => '10.131.13.62',
 	'username' => 'pmkitusr',
 	'password' => 'u23XE0&7By2T#123',
-	'database' => 'pmkit',
+	'database' => 'pmkit_ana_db',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
