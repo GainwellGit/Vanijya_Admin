@@ -75,7 +75,7 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '10.131.13.62',
+	'hostname' => '10.131.13.40',
 	'username' => 'pmkitusr',
 	'password' => 'u23XE0&7By2T#123',
 	'database' => 'pmkit',
@@ -99,7 +99,7 @@ $db['default'] = array(
 // Secondary database connection
 $db['secondary'] = array(
 	'dsn'	=> '',
-	'hostname' => '10.131.13.62',
+	'hostname' => '10.131.13.40',
 	'username' => 'pmkitusr',
 	'password' => 'u23XE0&7By2T#123',
 	'database' => 'pmkit_ana_db',
