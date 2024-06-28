@@ -80,14 +80,14 @@ class Discount extends CI_Controller {
 
     public function download_excel()
     {
-        $file_url =base_url('assets/csv/global_discount.xlsx');
+        $file_url =base_url('assets/csv/Global_discount.xlsx');;//echo $file_url;die;
         header('Content-Type: application/octet-stream');
         header("Content-Transfer-Encoding: Binary"); 
         header("Content-disposition: attachment; filename=\"" . basename($file_url) . "\""); 
         readfile($file_url);
     }
 
-    public function bulk_upload_discount() {
+    public function bulk_promocode() {
         if(isset($_FILES['uploadfile']['name'])) {
             $filename =$_FILES['uploadfile']['name'];
             $path = $_FILES['uploadfile']['tmp_name'];

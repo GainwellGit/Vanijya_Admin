@@ -137,10 +137,10 @@ div#sample_1_length {
             <span>Promocodes List</span>
           </li>
         </ul>
-        <!-- <br><br> -->
-        <!-- <div class="pull-right">
+        <!-- <br><br>
+        <div class="pull-right">
           <div class="col-xs-2"> 
-            <a href="<?php echo base_url(); ?>/admin/discount/download_excel">
+            <a href="<?php echo base_url(); ?>/admin/promocode/download_excel">
               <button type="button" class="btn btn-primary downloadquiz" id="btn_downloadquiz" name="btn_downloadquiz"> 
                 Download Material Promocode Template
               </button>
@@ -149,12 +149,12 @@ div#sample_1_length {
         </div>
         <div class="form-group pull-right">
           <div class="col-xs-2">
-            <button type="submit" class="btn btn-primary btn_customer" id="btn_location" name="btn_mulquiz">Upload Material Promocode </button>
+            <button type="submit" class="btn btn-primary btn_customer" id="btn_matpromo" name="btn_mulquiz">Upload Material Promocode </button>
           </div>
         </div>
         <div class="form-group pull-right">
           <div class="col-xs-2"> 
-            <a href="<?php echo base_url(); ?>/admin/discount/download_excel">
+            <a href="<?php echo base_url(); ?>/admin/promocode/download_excel">
               <button type="button" class="btn btn-primary downloadquiz" id="btn_downloadquiz" name="btn_downloadquiz"> 
                 Download Customer Promocode Template
               </button>
@@ -163,12 +163,12 @@ div#sample_1_length {
         </div>
         <div class="form-group pull-right">
           <div class="col-xs-2">
-            <button type="submit" class="btn btn-primary btn_customer" id="btn_location" name="btn_mulquiz">Upload Customer Promocode </button>
+            <button type="submit" class="btn btn-primary btn_customer" id="btn_custpromo" name="btn_mulquiz">Upload Customer Promocode </button>
           </div>
         </div>
         <div class="form-group pull-right">
           <div class="col-xs-2"> 
-            <a href="<?php echo base_url(); ?>/admin/discount/download_excel">
+            <a href="<?php echo base_url(); ?>/admin/promocode/download_excel">
               <button type="button" class="btn btn-primary downloadquiz" id="btn_downloadquiz" name="btn_downloadquiz"> 
                 Download Region Promocode Template
               </button>
@@ -177,12 +177,12 @@ div#sample_1_length {
         </div>
         <div class="form-group pull-right">
           <div class="col-xs-2">
-            <button type="submit" class="btn btn-primary btn_customer" id="btn_location" name="btn_mulquiz">Upload Region Promocode </button>
+            <button type="submit" class="btn btn-primary btn_customer" id="btn_regpromo" name="btn_mulquiz">Upload Region Promocode </button>
           </div>
         </div>
         <div class="form-group pull-right">
           <div class="col-xs-2"> 
-            <a href="<?php echo base_url(); ?>/admin/discount/download_excel">
+            <a href="<?php echo base_url(); ?>/admin/promocode/download_excel">
               <button type="button" class="btn btn-primary downloadquiz" id="btn_downloadquiz" name="btn_downloadquiz"> 
                 Download Zone Promocode Template
               </button>
@@ -191,7 +191,7 @@ div#sample_1_length {
         </div>
         <div class="form-group pull-right">
           <div class="col-xs-2">
-            <button type="submit" class="btn btn-primary btn_customer" id="btn_location" name="btn_mulquiz">Upload Zone Promocode </button>
+            <button type="submit" class="btn btn-primary btn_customer" id="btn_zonepromo" name="btn_mulquiz">Upload Zone Promocode </button>
           </div>
         </div> -->
       </div>
@@ -229,7 +229,7 @@ div#sample_1_length {
                       <th> Promocode </th>
                       <th> Description </th>
                       <th> From Date </th>
-                      <th> To Date </th>
+                      <th> To Date &nbsp;&nbsp;&nbsp;&nbsp;</th>
                       <th> Discount On </th>
                       <th> Status </th>
                       <th> Created At </th>
@@ -248,12 +248,12 @@ div#sample_1_length {
                       <td><span id="disa-<?php echo $globalpromocodes['id']; ?>"><?php echo isset($globalpromocodes['min_ammount']) ? $globalpromocodes['min_ammount'] : ''; ?></span></td>
                       <td><span id="disp-<?php echo $globalpromocodes['id']; ?>"><?php echo isset($globalpromocodes['promocode']) ? $globalpromocodes['promocode'] : ''; ?></span></td>
                       <td><span id="disd-<?php echo $globalpromocodes['id']; ?>"><?php echo isset($globalpromocodes['description']) ? $globalpromocodes['description'] : ''; ?></span></td>
-                      <td><span id="disf-<?php echo $globalpromocodes['id']; ?>"><?php echo isset($globalpromocodes['from_date']) ? $globalpromocodes['from_date'] : ''; ?></span></td>
-                      <td><span id="disto-<?php echo $globalpromocodes['id']; ?>"><?php echo isset($globalpromocodes['to_date']) ? $globalpromocodes['to_date'] : ''; ?></span></td>
+                      <td><span id="disf-<?php echo $globalpromocodes['id']; ?>"><?php echo isset($globalpromocodes['from_date']) ? date('d-m-Y', strtotime($globalpromocodes['from_date'])) : ''; ?></span></td>
+                      <td><span id="disto-<?php echo $globalpromocodes['id']; ?>"><?php echo isset($globalpromocodes['to_date']) ? date('d-m-Y', strtotime($globalpromocodes['to_date'])) : ''; ?></span></td>
                       <td><span id="diso-<?php echo $globalpromocodes['id']; ?>"><?php echo isset($globalpromocodes['discount_on']) ? $globalpromocodes['discount_on'] : ''; ?></span></td>
                       <td><span id="diss-<?php echo $globalpromocodes['id']; ?>"><?php echo isset($globalpromocodes['status']) ? $globalpromocodes['status'] : ''; ?></span></td>
-                      <td><span id="disc-<?php echo $globalpromocodes['id']; ?>"><?php echo isset($globalpromocodes['created_at']) ? $globalpromocodes['created_at'] : ''; ?></span></td>
-                      <td><span id="disu-<?php echo $globalpromocodes['id']; ?>"><?php echo isset($globalpromocodes['updated_at']) ? $globalpromocodes['updated_at'] : ''; ?></span></td>
+                      <td><span id="disc-<?php echo $globalpromocodes['id']; ?>"><?php echo isset($globalpromocodes['created_at']) ? date('d-m-Y', strtotime($globalpromocodes['created_at'])) : ''; ?></span></td>
+                      <td><span id="disu-<?php echo $globalpromocodes['id']; ?>"><?php echo isset($globalpromocodes['updated_at']) ? date('d-m-Y', strtotime($globalpromocodes['updated_at'])) : ''; ?></span></td>
                       <td><a data-id="<?php echo $globalpromocodes['id']; ?>" data-disid="<?php echo $globalpromocodes['id'] ;?>" data-distype="<?php echo $globalpromocodes['discount_type'] ;?>" data-disval="<?php echo $globalpromocodes['discount_value']; ?>" data-dismina="<?php echo $globalpromocodes['min_ammount']; ?>" data-disp="<?php echo $globalpromocodes['promocode']; ?>" data-disd="<?php echo $globalpromocodes['description']; ?>" data-disfrom="<?php echo $globalpromocodes['from_date']; ?>" data-disto="<?php echo $globalpromocodes['to_date']; ?>" data-dison="<?php echo $globalpromocodes['discount_on']; ?>" data-disstatus="<?php echo $globalpromocodes['status']; ?>" href="#" class="popupDynamic" ><i class="fa fa-pencil-square-o"></i></a></td>
                       </tr>
 
@@ -315,7 +315,7 @@ div#sample_1_length {
           </div>
           <div class="form-group">
             <label for="usr"> From date </label>
-            <div class="input-group date date-picker" data-date-format="yyyy-mm-dd" data-date-start-date="+1d">
+            <div class="input-group date date-picker" data-date-format="yyyy-mm-dd" data-date-start-date="+0d">
                 <input type="text" class="form-control" name="valid_from" required onkeypress="return false;" id="add_disfrom">
                 <span class="input-group-btn">
                     <button class="btn default" type="button">
@@ -497,11 +497,11 @@ div#sample_1_length {
     </div>
   </div>
 
-  <div class="modal left fade" id="location_promo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal left fade" id="material_promo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title popup_heading_text" id="exampleModalLabel">Add Global Discounts</h5>
+          <h5 class="modal-title popup_heading_text" id="exampleModalLabel">Add Material Promocodes</h5>
           <div style="margin-top:6px;">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
@@ -510,7 +510,82 @@ div#sample_1_length {
         </div>
         <div class="modal-body">
           <div id="dvLoading" style="display: none;"></div>
-          <form action="<?php echo base_url('/admin/discount/bulk_promocode'); ?>" enctype="multipart/form-data" method="post" role="form">
+          <form action="<?php echo base_url('admin/promocode/bulk_matpromocode'); ?>" enctype="multipart/form-data" method="post" role="form">
+            <div class="form-group  row">
+              <label for="uploadfile" class="col-md-2 control-label fileUpload">Bulk Upload</label>
+              <input type="file" id="uploadfile" class="col-md-6 uploadfile btn btn-primary" name="uploadfile" required="" accept=".xls, .xlsx, .csv"><div class="col-md-1"></div>
+              <button type="submit" class="col-md-2 btn btn-default" name="submit" value="submit">Upload</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal left fade" id="customer_promo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title popup_heading_text" id="exampleModalLabel">Add Customer Promocodes</h5>
+          <div style="margin-top:6px;">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+        <div class="modal-body">
+          <div id="dvLoading" style="display: none;"></div>
+          <form action="<?php echo base_url('/admin/promocode/bulk_custpromocode'); ?>" enctype="multipart/form-data" method="post" role="form">
+            <div class="form-group  row">
+              <label for="uploadfile" class="col-md-2 control-label fileUpload">Bulk Upload</label>
+              <input type="file" id="uploadfile" class="col-md-6 uploadfile btn btn-primary" name="uploadfile" required="" accept=".xls, .xlsx, .csv"><div class="col-md-1"></div>
+              <button type="submit" class="col-md-2 btn btn-default" name="submit" value="submit">Upload</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal left fade" id="region_promo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title popup_heading_text" id="exampleModalLabel">Add Region Promocodes</h5>
+          <div style="margin-top:6px;">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+        <div class="modal-body">
+          <div id="dvLoading" style="display: none;"></div>
+          <form action="<?php echo base_url('/admin/promocode/bulk_regpromocode'); ?>" enctype="multipart/form-data" method="post" role="form">
+            <div class="form-group  row">
+              <label for="uploadfile" class="col-md-2 control-label fileUpload">Bulk Upload</label>
+              <input type="file" id="uploadfile" class="col-md-6 uploadfile btn btn-primary" name="uploadfile" required="" accept=".xls, .xlsx, .csv"><div class="col-md-1"></div>
+              <button type="submit" class="col-md-2 btn btn-default" name="submit" value="submit">Upload</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal left fade" id="zone_promo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title popup_heading_text" id="exampleModalLabel">Add Zone Promocodes</h5>
+          <div style="margin-top:6px;">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+        <div class="modal-body">
+          <div id="dvLoading" style="display: none;"></div>
+          <form action="<?php echo base_url('/admin/promocode/bulk_zonepromocode'); ?>" enctype="multipart/form-data" method="post" role="form">
             <div class="form-group  row">
               <label for="uploadfile" class="col-md-2 control-label fileUpload">Bulk Upload</label>
               <input type="file" id="uploadfile" class="col-md-6 uploadfile btn btn-primary" name="uploadfile" required="" accept=".xls, .xlsx, .csv"><div class="col-md-1"></div>
@@ -718,6 +793,30 @@ div#sample_1_length {
         }
         else{
           $('.invalid-feedback-dispromo').hide();
+        }
+
+        if (dispromo != '') {
+          $.ajax({
+            url: '<?php echo base_url(); ?>admin/promocode/check_promocode', // Replace with your API endpoint
+            type: 'POST',
+            data: {dispromo:dispromo},
+            success: function(response) {
+            // Request successful, do something with the response
+            console.log(response);
+            if (response == 1) {
+              $('.invalid-feedback-dispromo').fadeIn();
+              $('#add_dismina').focus();
+              $('.invalid-feedback-dispromo').text('Promocode already exists. Please try another!');
+            } else {
+              $('.invalid-feedback-dispromo').hide();
+            }
+            },
+            error: function(xhr, status, error) {
+            // Request failed, handle the error
+            toastr["error"]("", "Failure : Something went wrong.")
+            console.error(error);
+            }
+          });
         }
 
         if (dispdes == '') {
@@ -1011,6 +1110,22 @@ div#sample_1_length {
         else{
           return false;
         }
+      });
+
+      $(document).on('click','#btn_matpromo',function(){
+      $('#material_promo').modal('show');
+      });
+
+      $(document).on('click','#btn_custpromo',function(){
+      $('#customer_promo').modal('show');
+      });
+
+      $(document).on('click','#btn_regpromo',function(){
+      $('#region_promo').modal('show');
+      });
+
+      $(document).on('click','#btn_zonepromo',function(){
+      $('#zone_promo').modal('show');
       });
     })
 </script>

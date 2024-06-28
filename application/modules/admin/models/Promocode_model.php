@@ -84,6 +84,20 @@ class Promocode_model extends CI_Model {
 		return $getdata;
 	}
 
+	public function check_promocode($promocode) {
+		$this->db->select('*');
+		$this->db->from('promo_codes');
+		$this->db->where('promocode', $promocode);
+		$fetch_data = $this->db->get();
+		if($fetch_data->num_rows() > 0 ){
+			$getdata = 1;	
+		}
+		else{
+			$getdata = 0;
+		}
+		return $getdata;
+	}
+
     public function save_promocode($id,$promocode,$desc,$distype,$disval,$dismina,$disfrom,$disto,$dison,$dismat,$discust,$disreg,$diszone,$disstatus){
 		$this->db->select('*');
 		$this->db->from('promo_codes');

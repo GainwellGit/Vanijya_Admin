@@ -184,7 +184,7 @@ div#sample_1_length {
                       <th> Discount Value </th>
                       <th> Minimum Amount </th>
                       <th> From Date </th>
-                      <th> To Date </th>
+                      <th> To Date &nbsp;&nbsp;&nbsp;&nbsp;</th>
                       <th> Discount On </th>
                       <th> Status </th>
                       <th> Created At </th>
@@ -201,12 +201,12 @@ div#sample_1_length {
                       <td><span id="dist-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['discount_type']) ? $globaldiscounts['discount_type'] : ''; ?></span></td>
                       <td><span id="disv-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['discount_value']) ? $globaldiscounts['discount_value'] : ''; ?></span></td>
                       <td><span id="disa-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['min_ammount']) ? $globaldiscounts['min_ammount'] : ''; ?></span></td>
-                      <td><span id="disf-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['from_date']) ? $globaldiscounts['from_date'] : ''; ?></span></td>
-                      <td><span id="disto-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['to_date']) ? $globaldiscounts['to_date'] : ''; ?></span></td>
+                      <td><span id="disf-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['from_date']) ? date('d-m-Y', strtotime($globaldiscounts['from_date'])) : ''; ?></span></td>
+                      <td><span id="disto-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['to_date']) ? date('d-m-Y', strtotime($globaldiscounts['to_date'])) : ''; ?></span></td>
                       <td><span id="diso-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['discount_on']) ? $globaldiscounts['discount_on'] : ''; ?></span></td>
                       <td><span id="diss-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['status']) ? $globaldiscounts['status'] : ''; ?></span></td>
-                      <td><span id="disc-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['created_at']) ? $globaldiscounts['created_at'] : ''; ?></span></td>
-                      <td><span id="disu-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['updated_at']) ? $globaldiscounts['updated_at'] : ''; ?></span></td>
+                      <td><span id="disc-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['created_at']) ? date('d-m-Y', strtotime($globaldiscounts['created_at'])) : ''; ?></span></td>
+                      <td><span id="disu-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['updated_at']) ? date('d-m-Y', strtotime($globaldiscounts['updated_at'])) : ''; ?></span></td>
                       <td><a data-id="<?php echo $globaldiscounts['id']; ?>" data-disid="<?php echo $globaldiscounts['id'] ;?>" data-distype="<?php echo $globaldiscounts['discount_type'] ;?>" data-disval="<?php echo $globaldiscounts['discount_value']; ?>" data-dismina="<?php echo $globaldiscounts['min_ammount']; ?>" data-disfrom="<?php echo $globaldiscounts['from_date']; ?>" data-disto="<?php echo $globaldiscounts['to_date']; ?>" data-dison="<?php echo $globaldiscounts['discount_on']; ?>" data-disstatus="<?php echo $globaldiscounts['status']; ?>" href="#" class="popupDynamic" ><i class="fa fa-pencil-square-o"></i></a></td>
                       </tr>
 
@@ -258,7 +258,7 @@ div#sample_1_length {
           </div>
           <div class="form-group">
             <label for="usr"> From date </label>
-            <div class="input-group date date-picker" data-date-format="yyyy-mm-dd" data-date-start-date="+1d">
+            <div class="input-group date date-picker" data-date-format="yyyy-mm-dd" data-date-start-date="+0d">
                 <input type="text" class="form-control" name="valid_from" required onkeypress="return false;" id="add_disfrom">
                 <span class="input-group-btn">
                     <button class="btn default" type="button">
@@ -406,7 +406,7 @@ div#sample_1_length {
         </div>
         <div class="modal-body">
           <div id="dvLoading" style="display: none;"></div>
-          <form action="<?php echo base_url('/admin/discount/bulk_upload_discount'); ?>" enctype="multipart/form-data" method="post" role="form">
+          <form action="<?php echo base_url('/admin/discount/bulk_promocode'); ?>" enctype="multipart/form-data" method="post" role="form">
             <div class="form-group  row">
               <label for="uploadfile" class="col-md-2 control-label fileUpload">Bulk Upload</label>
               <input type="file" id="uploadfile" class="col-md-6 uploadfile btn btn-primary" name="uploadfile" required="" accept=".xls, .xlsx, .csv"><div class="col-md-1"></div>
