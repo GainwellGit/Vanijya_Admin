@@ -801,20 +801,21 @@ div#sample_1_length {
             type: 'POST',
             data: {dispromo:dispromo},
             success: function(response) {
-            // Request successful, do something with the response
-            console.log(response);
-            if (response == 1) {
-              $('.invalid-feedback-dispromo').fadeIn();
-              $('#add_dismina').focus();
-              $('.invalid-feedback-dispromo').text('Promocode already exists. Please try another!');
-            } else {
-              $('.invalid-feedback-dispromo').hide();
-            }
+              // Request successful, do something with the response
+              console.log(response);
+              if (response == 1) {
+                $('.invalid-feedback-dispromo').fadeIn();
+                $('#add_dismina').focus();
+                $('.invalid-feedback-dispromo').text('Promocode already exists. Please try another!');
+                return false;
+              } else {
+                $('.invalid-feedback-dispromo').hide();
+              }
             },
             error: function(xhr, status, error) {
-            // Request failed, handle the error
-            toastr["error"]("", "Failure : Something went wrong.")
-            console.error(error);
+              // Request failed, handle the error
+              toastr["error"]("", "Failure : Something went wrong.")
+              console.error(error);
             }
           });
         }
