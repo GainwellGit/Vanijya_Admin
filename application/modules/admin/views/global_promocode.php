@@ -758,6 +758,7 @@ div#sample_1_length {
         var disreg = $('#add_reg').val();
         var diszone = $('#add_zone').val();
         var disstatus = $('#add_disstatus').val();
+        var promocodestatus = 0;
 
         if (distype == '') {
           $('.invalid-feedback-distype').fadeIn();
@@ -807,9 +808,10 @@ div#sample_1_length {
                 $('.invalid-feedback-dispromo').fadeIn();
                 $('#add_dismina').focus();
                 $('.invalid-feedback-dispromo').text('Promocode already exists. Please try another!');
-                return false;
+                promocodestatus = 1;
               } else {
                 $('.invalid-feedback-dispromo').hide();
+                promocodestatus = 0;
               }
             },
             error: function(xhr, status, error) {
@@ -901,7 +903,7 @@ div#sample_1_length {
           $('.invalid-feedback-disstatus').hide();
         }
 
-        if((distype != '') && (dispromo!='') && (dispdes!='') && (disval != '') && (dismina != '') && (disfrom != '') && (disto != '') && (dison != '') && (disstatus != '')){
+        if((distype != '') && (dispromo!='') && (dispdes!='') && (disval != '') && (dismina != '') && (disfrom != '') && (disto != '') && (dison != '') && (disstatus != '') && (promocodestatus == 0)){
           var data = {
             distype: distype,
             disval: disval,
