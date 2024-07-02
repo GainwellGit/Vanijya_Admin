@@ -225,13 +225,13 @@ class Location extends CI_Controller {
                     );
 
 					$faq_content= $this->Location_model->insert_zone_coupon($data,$zone_id);*/
-					$faq_content= $this->Location_model->select_zone_coupon($zone_id);
-					if(!empty($faq_content)){
-						$array_ids = explode(',',$faq_content);
-						foreach($array_ids as $ids){
-							$update_record= $this->Location_model->update_previous_discountdetail($ids);
-						}
-					}
+					// $faq_content= $this->Location_model->select_zone_coupon($zone_id);
+					// if(!empty($faq_content)){
+					// 	$array_ids = explode(',',$faq_content);
+					// 	foreach($array_ids as $ids){
+					// 		$update_record= $this->Location_model->update_previous_discountdetail($ids);
+					// 	}
+					// }
 					
 					$discount_detail_ids = array();
 					if(!empty($zone_list)){
