@@ -1,4 +1,4 @@
-var url=window.location.origin+"/gcpl/PMKit/";
+var url=window.location.origin+"/";
     jQuery(document).on('click', '#genlocationcoupon', function(){
         var html = '';
         var location_id = $(this).attr("data-id");
