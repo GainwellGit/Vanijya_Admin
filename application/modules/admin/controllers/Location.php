@@ -264,7 +264,7 @@ class Location extends CI_Controller {
 					   'min_ammount'=>$min_ammount,
 					   'from_date'=>$this->input->post('valid_from'),
 					   'to_date'=>$this->input->post('valid_to'),
-					   'updated_at'=>date('Y-m-d H:i:s'),
+					   // 'updated_at'=>date('Y-m-d H:i:s'),
 					   // 'discount_detail_ids'=>implode(',',$discount_detail_ids),
 					   'source_ip'=>$this->input->ip_address(),
 					   'is_delete'=>0
