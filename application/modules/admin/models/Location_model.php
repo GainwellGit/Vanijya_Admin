@@ -151,7 +151,6 @@ class Location_model extends CI_Model {
 
 	public function insert_zone_coupon($data,$zone_id)
 	{
-		echo "<pre>"; print_r($data); die();
 		    $this->db->where('id', $zone_id);
 		    $this->db->update('zone_coupon',$data);	
             return TRUE ;
