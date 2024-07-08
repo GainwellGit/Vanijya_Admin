@@ -137,9 +137,9 @@ div#sample_1_length {
             <span>Global Discounts List</span>
           </li>
         </ul>
-        <!-- <div class="pull-right">
+        <div class="pull-right">
           <div class="col-xs-2"> 
-            <a href="<?php echo base_url(); ?>/admin/discount/download_excel">
+            <a href="<?php echo base_url(); ?>admin/discount/download_excel">
               <button type="button" class="btn btn-primary downloadquiz" id="btn_downloadquiz" name="btn_downloadquiz"> 
                 Download Global Discount Template
               </button>
@@ -150,7 +150,7 @@ div#sample_1_length {
           <div class="col-xs-2">
             <button type="submit" class="btn btn-primary btn_customer" id="btn_location" name="btn_mulquiz">Upload Global Discounts </button>
           </div>
-        </div> -->
+        </div>
       </div>
       <div class="content">
         <div class="row" style="margin-bottom:20px; ">
@@ -181,7 +181,7 @@ div#sample_1_length {
                     <tr>
                       <th> Sl. No. </th>
                       <th> Discount Type </th>
-                      <th> Discount Value </th>
+                      <th> Discount Percentage </th>
                       <th> Minimum Amount </th>
                       <th> From Date </th>
                       <th> To Date &nbsp;&nbsp;&nbsp;&nbsp;</th>
@@ -204,10 +204,22 @@ div#sample_1_length {
                       <td><span id="disf-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['from_date']) ? date('d-m-Y', strtotime($globaldiscounts['from_date'])) : ''; ?></span></td>
                       <td><span id="disto-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['to_date']) ? date('d-m-Y', strtotime($globaldiscounts['to_date'])) : ''; ?></span></td>
                       <td><span id="diso-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['discount_on']) ? $globaldiscounts['discount_on'] : ''; ?></span></td>
-                      <td><span id="diss-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['status']) ? $globaldiscounts['status'] : ''; ?></span></td>
+                      <td>
+                        <span id="diss-<?php echo $globaldiscounts['id']; ?>">
+                        <?php if($globaldiscounts['status']=='A'){ ?>
+                        <label class="switch" data-id="<?php echo $globaldiscounts['id'] ?>">
+                          <input type="checkbox" <?php echo ($globaldiscounts['status']=='A') ? 'checked' :'disabled' ?> name="change_status_<?php echo $globaldiscounts['id'] ?>">
+                          <span class="slider round"></span>
+                        </label>
+                        <?php }else{ echo 'Inactive'; } ?>
+                        </span>
+                      </td>
                       <td><span id="disc-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['created_at']) ? date('d-m-Y', strtotime($globaldiscounts['created_at'])) : ''; ?></span></td>
                       <td><span id="disu-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['updated_at']) ? date('d-m-Y', strtotime($globaldiscounts['updated_at'])) : ''; ?></span></td>
-                      <td><a data-id="<?php echo $globaldiscounts['id']; ?>" data-disid="<?php echo $globaldiscounts['id'] ;?>" data-distype="<?php echo $globaldiscounts['discount_type'] ;?>" data-disval="<?php echo $globaldiscounts['discount_value']; ?>" data-dismina="<?php echo $globaldiscounts['min_ammount']; ?>" data-disfrom="<?php echo $globaldiscounts['from_date']; ?>" data-disto="<?php echo $globaldiscounts['to_date']; ?>" data-dison="<?php echo $globaldiscounts['discount_on']; ?>" data-disstatus="<?php echo $globaldiscounts['status']; ?>" href="#" class="popupDynamic" ><i class="fa fa-pencil-square-o"></i></a></td>
+                      <td><?php if($globaldiscounts['status']!='A'){ ?>
+                        <a data-id="<?php echo $globaldiscounts['id']; ?>" data-disid="<?php echo $globaldiscounts['id'] ;?>" data-distype="<?php echo $globaldiscounts['discount_type'] ;?>" data-disval="<?php echo $globaldiscounts['discount_value']; ?>" data-dismina="<?php echo $globaldiscounts['min_ammount']; ?>" data-disfrom="<?php echo $globaldiscounts['from_date']; ?>" data-disto="<?php echo $globaldiscounts['to_date']; ?>" data-dison="<?php echo $globaldiscounts['discount_on']; ?>" data-matgrp="<?php echo $globaldiscounts['material_group_code']; ?>" data-allselect="<?php echo $globaldiscounts['all_select']; ?>" data-disstatus="<?php echo $globaldiscounts['status']; ?>" href="#" class="popupDynamic" ><i class="fa fa-clone"></i></a>
+                        <?php } ?>
+                      </td>
                       </tr>
 
                     <?php $counter ++;} } ?>
@@ -238,26 +250,22 @@ div#sample_1_length {
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label for="usr"> Discount Type </label>
-            <select class="form-control" name="discount_type" required class="form-control" id="add_distype">
-                <option value="">Select</option>
-                <option value="PERCENT">PERCENT</option>
-                <option value="AMOUNT">AMOUNT</option>
-            </select>
+            <label for="add_distype"> Discount Type </label>
+            <input type="text" class="form-control" id="add_distype" name="discount_type" value="PERCENT" disabled>
             <div class="invalid-feedback-distype" style="color:red;"></div>
           </div>
           <div class="form-group">
-            <label for="usr"> Discount Value </label>
-            <input type="text" maxlength="30" required class="form-control" id="add_disval" name="dis_val">
+            <label for="add_disval"> Discount Percentage </label>
+            <input type="number" min="0" required class="form-control" id="add_disval" name="dis_val">
             <div class="invalid-feedback-disval" style="color:red;"></div>
           </div>
           <div class="form-group">
-            <label for="usr"> Minimum Amount </label>
-            <input type="text" minlength="10" maxlength="10" required class="form-control" id="add_dismina" name="min_amt">
+            <label for="add_dismina"> Minimum Amount </label>
+            <input type="number" min="0" required class="form-control" id="add_dismina" name="min_amt">
             <div class="invalid-feedback-dismina" style="color:red;"></div>
           </div>
           <div class="form-group">
-            <label for="usr"> From date </label>
+            <label for="add_disfrom"> From date </label>
             <div class="input-group date date-picker" data-date-format="yyyy-mm-dd" data-date-start-date="+0d">
                 <input type="text" class="form-control" name="valid_from" required onkeypress="return false;" id="add_disfrom">
                 <span class="input-group-btn">
@@ -269,7 +277,7 @@ div#sample_1_length {
             <div class="invalid-feedback-disfrom" style="color:red;"></div>
           </div>
           <div class="form-group">
-            <label for="usr"> To Date </label>
+            <label for="add_disto"> To Date </label>
             <div class="input-group date date-picker" data-date-format="yyyy-mm-dd" data-date-start-date="+1d">
                 <input type="text" class="form-control" name="valid_to" required onkeypress="return false;" id="add_disto">
                 <span class="input-group-btn">
@@ -281,34 +289,43 @@ div#sample_1_length {
             <div class="invalid-feedback-disto" style="color:red;"></div>
           </div>
           <div class="form-group">
-            <label for="usr"> Discount On </label>
-            <select class="form-control" name="discount_on" onChange="getMaterials(this.value);" required class="form-control" id="add_dison">
+            <label for="add_dison"> Discount On </label>
+            <select class="form-control" name="discount_on" onChange="getMaterialGrps(this.value);" required class="form-control" id="add_dison">
                 <option value="">Select</option>
                 <option value="ALL">ALL</option>
-                <option value="MATERIAL">MATERIAL</option>
+                <option value="MATERIAL">MATERIAL-GROUP</option>
             </select>
             <div class="invalid-feedback-dison" style="color:red;"></div>
           </div>
-          <div class="form-group" id="add_mat_sec">
-            <label for="usr"> Materials </label>
-            <select class="form-control" name="material_no" id="add_mat" multiple>
+          <div class="form-group" id="add_mat_grp_sec">
+            <label for="add_mat_grp"> Material Groups </label>
+            <select class="form-control" name="material_no" id="add_mat_grp" onChange="getMaterials(this.value);">
               <option value="">Select</option>
               <?php
-              if (!empty($allmaterials)) {
-                foreach ($allmaterials as $key => $val) { ?>
-                  <option value="<?php echo $val['material_no'];?>"><?php echo $val['material_description'];?></option>
+              if (!empty($allmaterialgrps)) {
+                foreach ($allmaterialgrps as $key => $val) { ?>
+                  <option value="<?php echo $val['group_code'];?>"><?php echo $val['group_description'].' ('.$val['group_code'].')';?></option>
               <?php }} ?>
             </select>
-            <div class="invalid-feedback-dismat" style="color:red;"></div>
+            <div class="invalid-feedback-dismatgrp" style="color:red;"></div>
           </div>
-          <div class="form-group">
-            <label for="usr"> Status </label>
-            <select class="form-control" name="discount_status" required class="form-control" id="add_disstatus">
-                <option value="">Select</option>
-                <option value="A">ACTIVE</option>
-                <option value="I">INACTIVE</option>
-            </select>
-            <div class="invalid-feedback-disstatus" style="color:red;"></div>
+          <div class="form-group" id="add_checkbox_forbulk" style="display:none;">
+            <input type="radio" id="allmat" style="margin-right:5px;" name="chose_radio" value="All" />
+            <label style="margin-bottom:auto;" for="allmat">All</label>
+            <input type="radio" id="selectmat" style="margin-right:5px;margin-left: 13px;" name="chose_radio" value="Choose Material" />
+            <label style="margin-bottom:auto;" for="selectmat">Choose Material</label>
+            <input type="radio" id="bulkmat" style="margin-right:5px;margin-left: 13px;" name="chose_radio" value="Bulk upload from Excel" />
+            <label style="margin-bottom:auto;" for="bulkmat">Bulk upload from Excel</label>
+
+            <div class="invalid-feedback-radiogrp" style="color:red;"></div>
+          </div>
+          <div class="form-group" id="add_mat_sec" style="display:none;">
+          
+          </div>
+          <div class="form-group" id="add_excel_file" style="display:none;">
+            <input type='file' name='file' id='file' required accept=".xls, .xlsx">
+            <input type="hidden" class="form-control" id="add_bulk_mats">
+            <div class="invalid-feedback-excelfile" style="color:red;" style="display:none;"></div>
           </div>
           <div class="form-group">
             <input type="hidden" maxlength="10" required class="form-control" id="add_id_x">
@@ -330,27 +347,38 @@ div#sample_1_length {
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Update Global Discount</h4>
+          <h4 class="modal-title">Clone Global Discount</h4>
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label for="usr"> Discount Type </label>
+            <label for="distype"> Discount Type </label>
             <input type="text" maxlength="30" required class="form-control" id="distype" disabled>
           </div>
           <div class="form-group">
-            <label for="usr"> Discount Value </label>
-            <input type="text" minlength="10" maxlength="10" required class="form-control" id="disval" disabled>
+            <label for="disval"> Discount Percentage </label>
+            <input type="number" min="0" required class="form-control" id="disval">
+            <div class="invalid-feedback-edisval" style="color:red;display:none;"></div>
           </div>
           <div class="form-group">
-            <label for="usr"> Minimum Amount </label>
-            <input type="text" maxlength="50" required class="form-control" id="dismina" disabled>
+            <label for="dismina"> Minimum Amount </label>
+            <input type="number" min="0" required class="form-control" id="dismina">
+            <div class="invalid-feedback-edismina" style="color:red;display:none;"></div>
           </div>
           <div class="form-group">
-            <label for="usr"> From Date </label>
-            <input type="text" maxlength="50" required class="form-control" id="disfrom" disabled>
+            <label for="disfrom"> From Date </label>
+            <!--<input type="text" maxlength="50" required class="form-control" id="disfrom">-->
+            <div class="input-group date date-picker" data-date-format="yyyy-mm-dd" data-date-start-date="+0d">
+              <input type="text" class="form-control" name="valid_from" required onkeypress="return false;" id="disfrom">
+              <span class="input-group-btn">
+                <button class="btn default" type="button">
+                  <i class="fa fa-calendar"></i>
+                </button>
+              </span>
+            </div>
+            <div class="invalid-feedback-edisfrom" style="color:red;display:none;"></div>
           </div>
           <div class="form-group">
-            <label for="usr"> To Date </label>
+            <label for="disto"> To Date </label>
             <div class="input-group date date-picker" data-date-format="yyyy-mm-dd" data-date-start-date="+1d">
               <input type="text" class="form-control" name="valid_to" required onkeypress="return false;" id="disto">
               <span class="input-group-btn">
@@ -362,20 +390,17 @@ div#sample_1_length {
             <div class="invalid-feedback-edisto" style="color:red;display:none;"></div>
           </div>
           <div class="form-group">
-            <label for="usr"> Discount On </label>
+            <label for="dison"> Discount On </label>
             <input type="text" maxlength="50" required class="form-control" id="dison" disabled>
+          </div>
+          <div class="form-group" id="grp_display_list" style="display:none;">
+            
+          </div>
+          <div class="form-group" id="all_select_radio" style="display:none;">
+            
           </div>
           <div class="form-group" id="display_list" style="display:none;">
             
-          </div>
-          <div class="form-group">
-            <label for="usr"> Status </label>
-            <select class="form-control" name="discount_status" required class="form-control" id="disstatus">
-              <option value="">Select</option>
-              <option value="A">ACTIVE</option>
-              <option value="I">INACTIVE</option>
-            </select>
-            <div class="invalid-feedback-edisstatus" style="color:red;display:none;"></div>
           </div>
           <div class="form-group">
             <input type="hidden" maxlength="10" required class="form-control" id="id_x">
@@ -383,7 +408,7 @@ div#sample_1_length {
           </div>
           <div class="form-group">
             <button type="button" id="submit_form" class="btn btn-primary">Save</button>
-            <button type="button" id="delete_form" class="btn btn-primary">Delete</button>
+            <!--<button type="button" id="delete_form" class="btn btn-primary">Delete</button>-->
           </div>
         </div>
         <div class="modal-footer">
@@ -406,7 +431,7 @@ div#sample_1_length {
         </div>
         <div class="modal-body">
           <div id="dvLoading" style="display: none;"></div>
-          <form action="<?php echo base_url('/admin/discount/bulk_promocode'); ?>" enctype="multipart/form-data" method="post" role="form">
+          <form action="<?php echo base_url('admin/discount/bulk_upload_discount'); ?>" enctype="multipart/form-data" method="post" role="form">
             <div class="form-group  row">
               <label for="uploadfile" class="col-md-2 control-label fileUpload">Bulk Upload</label>
               <input type="file" id="uploadfile" class="col-md-6 uploadfile btn btn-primary" name="uploadfile" required="" accept=".xls, .xlsx, .csv"><div class="col-md-1"></div>
@@ -428,6 +453,9 @@ div#sample_1_length {
     $(".addModal").click(function(){
       $("#addModal").modal('show');
       $('#add_mat_sec').hide();
+      $('#add_mat_grp_sec').hide();
+      $('#add_checkbox_forbulk').hide();
+      $('#add_excel_file').hide();
 
       $('.invalid-feedback-distype').text('');
       $('.invalid-feedback-disval').text('');
@@ -436,14 +464,22 @@ div#sample_1_length {
       $('.invalid-feedback-disto').text('');
       $('.invalid-feedback-dison').text('');
       $('.invalid-feedback-disstatus').text('');
+      $('.invalid-feedback-dismatgrp').text('');
+      $('.invalid-feedback-radiogrp').text('');
+      $('.invalid-feedback-dismat').text('');
+      $('.invalid-feedback-excelfile').text('');
 
-      $('#add_distype').val('');
+      //$('#add_distype').val('');
       $('#add_disval').val('');
       $('#add_dismina').val('');
       $('#add_disfrom').val('');
       $('#add_disto').val('');
       $('#add_dison').val('');
       $('#add_disstatus').val('');
+      $('#add_mat_grp').val('');
+      $('#add_checkbox_forbulk').val('');
+      //$('input:radio').not(':checked');
+      //$('input:checked').removeAttr('checked');
     });
 
     $(".popupDynamic").click(function(){
@@ -454,40 +490,76 @@ div#sample_1_length {
       var disfrom   = $(this).data('disfrom');
       var disto     = $(this).data('disto');
       var dison     = $(this).data('dison');
+      var matgrp    = $(this).data('matgrp');
+      var allselect = $(this).data('allselect');
       var disstatus = $(this).data('disstatus');
       var disid     = $(this).data('disid');
-      if(disstatus != ''){
-        $('.invalid-feedback-edisstatus').hide();
+      if(disval != ''){
+        $('.invalid-feedback-edisval').hide();
       }else{
-        $('.invalid-feedback-edisstatus').show();
+        $('.invalid-feedback-edisval').show();
+      }
+
+      if(dismina != ''){
+        $('.invalid-feedback-edismina').hide();
+      }else{
+        $('.invalid-feedback-edismina').show();
+      }
+
+      if(disfrom != ''){
+        $('.invalid-feedback-edisfrom').hide();
+      }else{
+        $('.invalid-feedback-edisfrom').show();
       }
 
       if(disto != ''){
         $('.invalid-feedback-edisto').hide();
       }else{
         $('.invalid-feedback-edisto').show();
-      } 
+      }
 
-      var html='';
       if(dison == 'MATERIAL'){
+        var html='', html1='';
         $.ajax({
           type: "POST",
-          url: '<?php echo base_url(); ?>/admin/discount/get_materials',
-          data:'dis_id='+id_x,
+          url: '<?php echo base_url(); ?>admin/discount/get_materials_by_disid',
+          data:'discount_id='+id_x,
           dataType: "json",
           success: function(response){
-            html +='<label for="usr"> Materials </label><select class="form-control" id="dismat" multiple diabled>';
-            $.each(response,function (index, val) {
-              html+='<option value="'+val.material_no+'" disabled>'+val.material_description+'</option>';
-            });
-            html+='</select>';
-            $("#display_list").show();
-            $("#display_list").html(html); 
+            html1 +='<label for="add_matgrp"> Material Group </label><select class="form-control" id="dismatgrp" name="material_no" disabled>';
+            html1+='<option value="'+response[0].material_group+'">'+response[0].group_description+' ('+response[0].material_group+')</option>';
+            html1+='</select>';
+            $("#grp_display_list").show();
+            $("#grp_display_list").html(html1); 
+            if(response.length > 0){
+              html +='<label for="add_mat"> Materials </label><select class="form-control" id="dismat" name="material_no" multiple disabled>';
+              $.each(response,function (index, val) {
+                html+='<option value="'+val.material_no+'" selected>'+val.material_description+' ('+val.material_no+')</option>';
+              });
+              html+='</select><div class="invalid-feedback-dismat" style="color:red;"></div>';
+              $("#display_list").show();
+              $("#display_list").html(html);
+            } else{
+              $("#display_list").hide();
+            }
+            if (allselect == 1) {
+              $("#all_select_radio").show();
+              // $("#all_select_radio").html(html);
+            }
           }
         });
       }else{
+        $("#grp_display_list").hide();
         $("#display_list").hide();
+        $("#all_select_radio").hide();
       }
+
+      if(disstatus != ''){
+        $('.invalid-feedback-edisstatus').hide();
+      }else{
+        $('.invalid-feedback-edisstatus').show();
+      }
+
 
       $('#id_x').val(id_x);
 
@@ -495,31 +567,182 @@ div#sample_1_length {
       $('#distype').val($('#dist-'+id_x).text());
       $('#disval').val($('#disv-'+id_x).text());
       $('#dismina').val($('#disa-'+id_x).text());
-      $('#disfrom').val($('#disf-'+id_x).text());
-      $('#disto').val($('#disto-'+id_x).text());
+      /* $('#disfrom').val($('#disf-'+id_x).text());
+      $('#disto').val($('#disto-'+id_x).text()); */
       $('#dison').val($('#diso-'+id_x).text());
       $('#disstatus').val($('#diss-'+id_x).text());
       $("#myModal").modal('show');
     }); 
     
-    function getMaterials(val) {
+    function getMaterialGrps(val) {
       if(val == 'MATERIAL'){
-        $('#add_mat_sec').show();
+        $('#add_mat_grp_sec').show();
       }else{
-        $('#add_mat_sec').hide();
+        $('#add_mat_grp_sec').hide();
+      }
+    }
+
+    function getMaterials(val) {
+      if(val != ''){
+        var html='';
+        $.ajax({
+          type: "POST",
+          url: '<?php echo base_url(); ?>admin/discount/get_materials',
+          data:'material_group='+val,
+          dataType: "json",
+          success: function(response){
+            html +='<label for="add_mat"> Materials </label><select class="form-control" id="add_mat" name="material_no" multiple>';
+            $.each(response,function (index, val) {
+              html+='<option value="'+val.material_no+'">'+val.material_description+' ('+val.material_no+')</option>';
+            });
+            html+='</select><div class="invalid-feedback-dismat" style="color:red;"></div>';
+
+            $('#add_checkbox_forbulk').show();
+            $('#invalid-feedback-radiogrp').show();
+            $("#add_mat_sec").html(html); 
+          }
+        });
+      }else{
+        $('#add_checkbox_forbulk').hide();
+        $('#invalid-feedback-radiogrp').hide();
+        $('#invalid-feedback-radiogrp').val('');
+      }
+    }
+
+    function getDiscountonOptions(val){
+      if(val == 'AMOUNT'){
+        $('#add_dison').html('<option value="">Select</option><option value="ALL">ALL</option>');
+      }else{
+        $('#add_dison').html('<option value="">Select</option><option value="ALL">ALL</option><option value="MATERIAL">MATERIAL-GROUP</option>');
       }
     }
     
     $(document).ready(function(){
+      /* $('.switch').change(function (event) {
+        var discountId = $(this).data("id");
+        if(confirm('Are you confirm ?')) {
+          $.ajax({
+            method: "POST",
+            url: "<?php echo site_url('/admin/discount/changestatus'); ?>", 
+            data:{discountId: discountId},
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            datatype : "json",
+            success: function(response)
+            {
+              //var dataObject = jQuery.parseJSON(response);
+              window.location.reload();
+            },
+            error: function( error )
+            {   
+              //$('#type').find('option').not(':first').remove();
+            }
+          });
+        } else {
+          window.location.reload();
+          return false;
+        }
+      }); */
+
+      $('.switch input[type="checkbox"]').change(function(event) {
+        var isChecked = $(this).prop('checked');
+        var discountId = $(this).closest('.switch').data("id");
+  
+        if (!isChecked) {
+          if (confirm('Are you sure you want to uncheck the checkbox?')) {
+            $.ajax({
+              method: "POST",
+              url: "<?php echo site_url('/admin/discount/changestatus'); ?>",
+              data: {
+                discountId: discountId
+              },
+              contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+              datatype: "json",
+              success: function(response) {
+                console.log(response);
+                window.location.reload();
+              },
+              error: function(error) {
+                console.error('Error:', error);
+              }
+            });
+          } else {
+            $(this).prop('checked', true);
+          }
+        }
+      });
+
+      $('#allmat').on('click', function(e){
+        $('#add_excel_file').hide();
+        $('.invalid-feedback-excelfile').hide();
+        $('#add_mat_sec').hide();
+      });
+
+      $('#selectmat').on('click', function(e){
+        $('#add_excel_file').hide();
+        $('.invalid-feedback-excelfile').hide();
+        $('#add_mat_sec').show();
+      });
+
+      $('#bulkmat').on('click', function(e){
+        $('#add_excel_file').show();
+        $('.invalid-feedback-excelfile').show();
+        $('#add_mat_sec').hide();
+      });
+
+      /* var uploadfiledet;
+      $('#import_undeliverable_parts').on('submit', function(e){
+        e.preventDefault();
+        uploadfiledet = new FormData(this);alert(uploadfiledet);
+      }); */
+
+      $("#file").change(function() {
+        var fd = new FormData();
+        fd.append('file', this.files[0]); // since this is your file input
+        var filename = this.files[0].name;
+        var file_extension = filename.split('.').pop().toLowerCase();
+        
+        if(jQuery.inArray(file_extension, ['xls','xlsx']) == -1){
+          $('.invalid-feedback-excelfile').text('Invalid excel file extension');
+        }else{
+          $('.invalid-feedback-excelfile').text('');
+        }
+
+        /* var file_size = this.files[0].size;
+        if(file_size > 5000){
+          $('.invalid-feedback-excelfile').text('File size is very big');
+        } */
+
+        $.ajax({
+          url: "<?php echo base_url(); ?>admin/discount/bulk_upload_discount",
+          type: "post",
+          dataType: 'json',
+          processData: false, // important
+          contentType: false, // important
+          data: fd,
+          success: function(response) {
+            if(response.length > 0) {
+              alert("Your excel file was uploaded successfully");
+              $('#add_bulk_mats').val(response);
+            }
+          },
+          error: function() {
+            alert("An error occured, please try again.");         
+          }
+        });
+      });
+
       $("#submit_addform").click(function(){
-        var distype = $('#add_distype').val();
-        var disval = $('#add_disval').val();
-        var dismina = $('#add_dismina').val();
-        var disfrom = $('#add_disfrom').val();
-        var disto = $('#add_disto').val();
-        var dison = $('#add_dison').val();
-        var dismat = $('#add_mat').val();
-        var disstatus = $('#add_disstatus').val();
+        var distype   = $('#add_distype').val();
+        var disval    = $('#add_disval').val();
+        var dismina   = $('#add_dismina').val();
+        var disfrom   = $('#add_disfrom').val();
+        var disto     = $('#add_disto').val();
+        var dison     = $('#add_dison').val();
+        var dismatgrp = $('#add_mat_grp').val();
+        //var filedet   = uploadfiledet;
+        var dismat    = $('#add_mat').val();
+        var mattype   = $('input[name="chose_radio"]:checked').val();
+        //var disstatus = $('#add_disstatus').val();
 
         if (distype == '') {
           $('.invalid-feedback-distype').fadeIn();
@@ -575,7 +798,25 @@ div#sample_1_length {
           $('.invalid-feedback-dison').hide();
         }
 
-        if(dison == 'MATERIAL' && dismat==null){
+        if(dison == 'MATERIAL' && dismatgrp==''){
+          $('.invalid-feedback-dismatgrp').fadeIn();
+          $('#add_mat_grp').focus();
+          $('.invalid-feedback-dismatgrp').text('Please select atleast one material group');
+        }
+        else{
+          $('.invalid-feedback-dismatgrp').hide();
+        }
+
+        if(dison == 'MATERIAL' && dismatgrp!=null && mattype == null){
+          $('.invalid-feedback-radiogrp').fadeIn();
+          $('#allmat').focus();
+          $('.invalid-feedback-radiogrp').text('Please select atleast one option');
+        }
+        else{
+          $('.invalid-feedback-radiogrp').hide();
+        }
+
+        if(dison == 'MATERIAL' && dismatgrp!=null && (mattype =='Choose Material' && dismat==null)){
           $('.invalid-feedback-dismat').fadeIn();
           $('#add_dismat').focus();
           $('.invalid-feedback-dismat').text('Please select atleast one material');
@@ -584,16 +825,18 @@ div#sample_1_length {
           $('.invalid-feedback-dismat').hide();
         }
 
-        if (disstatus == '') {
-          $('.invalid-feedback-disstatus').fadeIn();
-          $('#add_disstatus').focus();
-          $('.invalid-feedback-disstatus').text('Please select status');
-        }
-        else{
-          $('.invalid-feedback-disstatus').hide();
-        }
+        // if(dison == 'MATERIAL' && dismatgrp!=null && (mattype =='Bulk upload from Excel' && dismat==null)){
+        //   $('.invalid-feedback-dismat').fadeIn();
+        //   $('#add_dismat').focus();
+        //   $('.invalid-feedback-dismat').text('Please select atleast one material');
+        // }
+        // else{
+        //   $('.invalid-feedback-dismat').hide();
+        // }
 
-        if((distype != '') && (disval != '') && (dismina != '') && (disfrom != '') && (disto != '') && (dison != '') && (disstatus != '')){
+        alert(mattype);
+
+        if((distype != '') && (disval != '') && (dismina != '') && (disfrom != '') && (disto != '') && (dison != '')){
           var data = {
             distype: distype,
             disval: disval,
@@ -601,12 +844,14 @@ div#sample_1_length {
             disfrom: disfrom,
             disto: disto,
             dison: dison,
+            dismatgrp: dismatgrp,
+            mattype: mattype,
             dismat: dismat,
-            disstatus: disstatus
+            disstatus: ''
           };
-
+          // console.log(dismat);
           $.ajax({
-            url: '<?php echo base_url(); ?>/admin/discount/edit_globaldiscount', // Replace with your API endpoint
+            url: '<?php echo base_url(); ?>admin/discount/edit_globaldiscount', // Replace with your API endpoint
             type: 'POST',
             data: data,
             dataType: 'json',
@@ -622,11 +867,11 @@ div#sample_1_length {
             console.error(error);
             }
           });
-          $(document).ajaxStop(function(){
-            setTimeout(function(){// wait for 1 secs(2)
-              window.location.reload(); // then reload the page.(3)
-            }, 1000); 
-          });
+          // $(document).ajaxStop(function(){
+          //   setTimeout(function(){// wait for 1 secs(2)
+          //     window.location.reload(); // then reload the page.(3)
+          //   }, 1000); 
+          // });
         }  
       });
 
@@ -640,6 +885,8 @@ div#sample_1_length {
         var disto = $('#disto').val();
         var dison = $('#dison').val();
         var disstatus = $('#disstatus').val();
+        var dismatgrp = $('#dismatgrp').val();
+        var dismat = $('#dismat').val();
         var id_x = $('#id_x').val();
 
         if (distype == '') {
@@ -652,30 +899,30 @@ div#sample_1_length {
         }
 
         if (disval == '') {
-          $('.invalid-feedback-disval').fadeIn();
+          $('.invalid-feedback-edisval').fadeIn();
           $('#disval').focus();
-          $('.invalid-feedback-disval').text('Please enter discount value');
+          $('.invalid-feedback-edisval').text('Please enter discount value');
         }
         else{
-          $('.invalid-feedback-disval').hide();
+          $('.invalid-feedback-edisval').hide();
         }
 
         if (dismina == '') {
-          $('.invalid-feedback-dismina').fadeIn();
+          $('.invalid-feedback-edismina').fadeIn();
           $('#dismina').focus();
-          $('.invalid-feedback-dismina').text('Please enter minimum amount');
+          $('.invalid-feedback-edismina').text('Please enter minimum amount');
         }
         else{
-          $('.invalid-feedback-dismina').hide();
+          $('.invalid-feedback-edismina').hide();
         }
 
         if (disfrom == '') {
-          $('.invalid-feedback-disfrom').fadeIn();
+          $('.invalid-feedback-edisfrom').fadeIn();
           $('#disfrom').focus();
-          $('.invalid-feedback-disfrom').text('Please select from date');
+          $('.invalid-feedback-edisfrom').text('Please select from date');
         }
         else{
-          $('.invalid-feedback-disfrom').hide();
+          $('.invalid-feedback-edisfrom').hide();
         }
 
         if (disto == '') {
@@ -714,27 +961,21 @@ div#sample_1_length {
             disfrom: disfrom,
             disto: disto,
             dison: dison,
-            disstatus: disstatus
+            dismatgrp: dismatgrp,
+            dismat: dismat,
+            disstatus: ''
           };
 
           $.ajax({
-            url: '<?php echo base_url(); ?>/admin/discount/edit_globaldiscount', // Replace with your API endpoint
+            url: '<?php echo base_url(); ?>admin/discount/edit_globaldiscount', // Replace with your API endpoint
             type: 'POST',
             data: data,
             dataType: 'json',
             success: function(response) {
             // Request successful, do something with the response
-            $('#disv-'+id_x).text(distype);
-            $('#disa-'+id_x).text(disval);
-            $('#disf-'+id_x).text(dismina);
-            $('#disto-'+id_x).text(disfrom);
-            $('#diso-'+id_x).text(disto);
-            $('#diss-'+id_x).text(dison);
-            $('#disc-'+id_x).text(disstatus);
-            $('#disu-'+id_x).text(response['data']);
             $('#myModal').modal('toggle');
             
-            toastr["info"]("", "success : One Global Discount Data is Updated Successfully.")
+            toastr["info"]("", "success : One Global Discount Data is Cloned Successfully.")
             console.log(response);
             },
             error: function(xhr, status, error) {
@@ -766,7 +1007,7 @@ div#sample_1_length {
           var data = {disid: disid, distype: distype, disval: disval, dismina: dismina, disfrom: disfrom, disto: disto, dison: dison, disstatus: disstatus};
 
           $.ajax({
-            url: '<?php echo base_url(); ?>/admin/discount/delete_globaldiscount', // Replace with your API endpoint
+            url: '<?php echo base_url(); ?>admin/discount/delete_globaldiscount', // Replace with your API endpoint
             type: 'POST',
             data: data,
             dataType: 'json',

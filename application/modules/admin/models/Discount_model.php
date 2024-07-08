@@ -22,14 +22,91 @@ class Discount_model extends CI_Model {
 		return $gettype;
     }
 
-	public function get_material($disid){
-		$this->db->select('*');
-		$this->db->from('global_discount_materials');
-		$this->db->where('discount_id',$disid);
-		$this->db->join('material_master', 'global_discount_materials.material_no = material_master.material_no');
+	public function statusChange($id){
+
+    	$this->db->select('*');
+		$this->db->from('global_discounts');
+		$this->db->where('id',$id);
 		$fetch_data = $this->db->get();
 		if($fetch_data->num_rows() > 0 ){
-			$getdata = $fetch_data->result_array();	
+
+			$gettype = $fetch_data->row();	
+			if($gettype->status == 'A'){
+
+				$data = ['status' => 'I',];
+		
+				$this->db->where('id',$id);
+				$this->db->update('global_discounts', $data);
+				return FALSE;
+
+			}elseif($gettype->status == 'I'){
+
+				$data = ['status' => 'A',];
+		
+				$this->db->where('id',$id);
+				$this->db->update('global_discounts', $data);
+				return TRUE;
+			}
+		}else{
+			return FALSE;
+		}
+    }
+
+	public function get_material($matgrp){
+		$this->db->select('*');
+		$this->db->from('material_master');
+		$this->db->where('material_group',$matgrp);
+		$fetch_data = $this->db->get();
+
+		$grpwise_mat_nos = array();
+		if($fetch_data->num_rows() > 0 ){
+			$getrowdata = $fetch_data->result_array();
+
+			foreach($getrowdata as $row){
+				$grpwise_mat_nos[] = $row['material_no'];
+			}
+
+			$existing_active_mat_ids = array();
+			$this->db->select('id');
+			$this->db->from('global_discounts');
+			$this->db->where('status','A');
+			$this->db->where('discount_on','MATERIAL');
+			$fetch_data = $this->db->get();
+
+			if($fetch_data->num_rows() > 0 ){
+				$gettype = $fetch_data->result_array();
+				
+				foreach($gettype as $row){
+					$existing_active_mat_ids[] = $row['id'];
+				}
+			}
+
+			$dis_mat_ids = array();
+			if (count($existing_active_mat_ids) > 0) {
+				$this->db->select('material_no');
+				$this->db->from('global_discount_materials');
+				$this->db->where_in('discount_id',$existing_active_mat_ids);
+				$fetch_data = $this->db->get();
+				if ($fetch_data->num_rows() > 0) {
+					$existing_mat_ids = $fetch_data->result_array();
+					foreach ($existing_mat_ids as $existing_mat_id) {
+						array_push($dis_mat_ids, $existing_mat_id['material_no']);
+					}
+				}
+
+				$getdiffdata=array_values(array_diff($grpwise_mat_nos,$dis_mat_ids));
+				$this->db->select('*');
+				$this->db->from('material_master');
+				$this->db->where_in('material_no',$getdiffdata);
+				$fetch_data = $this->db->get();
+
+				$getdata = array();
+				if($fetch_data->num_rows() > 0){
+					$getdata = $fetch_data->result_array();
+				}
+			} else {
+				$getdata = $getrowdata;
+			}
 		}
 		else{
 			$getdata = array();
@@ -37,46 +114,200 @@ class Discount_model extends CI_Model {
 		return $getdata;
 	}
 
-    public function save_discount($id,$distype,$disval,$dismina,$disfrom,$disto,$dison,$dismat,$disstatus){
-		
-		$this->db->select('*');
-		$this->db->from('global_discounts');
-		$this->db->where('id',$id);    
-		$fetch_data = $this->db->get();
+	public function get_materialby_disid($global_disid){
+		$this->db->select('global_discount_materials.material_no, material_master.material_description, material_master.material_group, material_group.group_description');
+		$this->db->from('global_discount_materials');
+		$this->db->join('material_master','global_discount_materials.material_no = material_master.material_no');
+		$this->db->join('material_group','material_master.material_group = material_group.group_code');
+		$this->db->where('global_discount_materials.discount_id',$global_disid);
 
-		if($disstatus=='A'){
-			$Where = array('status' => 'A', 'id !=' => $id);
-			$this->db->where($Where);
-			$this->db->update('global_discounts', ['status' => 'I', 'updated_at' => date("Y-m-d h:i:s")]);
+		$fetch_data = $this->db->get();
+		if($fetch_data->num_rows() > 0 ){
+			$gettype = $fetch_data->result_array();
+		}else{
+			$gettype = array();
+		}//echo '<pre>';print_r($gettype);die('124');
+		return $gettype;
+	}
+
+	public function save_discount($id,$distype,$disval,$dismina,$disfrom,$disto,$dison,$dismatgrp,$mattype,$dismat,$disstatus){
+		
+		$this->db->select('id');
+		$this->db->from('global_discounts');
+		$this->db->where('status','A');
+
+		if($dison == 'MATERIAL'){
+			$this->db->where('discount_on','ALL');
 		}
 
+		$fetch_data = $this->db->get();
 		if($fetch_data->num_rows() > 0 ){
-			$data = ['to_date' => $disto, 'status' => $disstatus, 'updated_at' => date("Y-m-d h:i:s")];
-
-			$Where = array('id' => $id );
-			$this->db->where($Where);
-			$this->db->update('global_discounts', $data);
-		}else{
-			$data = ['discount_type' => $distype, 'discount_value' => $disval, 'min_ammount' => $dismina, 'from_date' => $disfrom, 'to_date' => $disto, 'discount_on' => $dison, 'status' => $disstatus, 'created_at' => date("Y-m-d h:i:s"), 'updated_at' => date("Y-m-d h:i:s")];
-
-			$this->db->insert('global_discounts',$data);
-			$insert_id = $this->db->insert_id();
+			$gettype = $fetch_data->result_array();
 			
-			$newArray=array();
-			if($dison=='MATERIAL'){
-				foreach($dismat as $mat){
+			foreach($gettype as $row){
+				$this->db->where(['id' => $row['id']]);
+				$this->db->update('global_discounts', ['status' => 'I', 'updated_at' => date("Y-m-d h:i:s")]);
+			}
+		}
+
+		if ($mattype == '') {
+			$all_select = 0;
+		} else if ($mattype == 'All') {
+			$all_select = 1;
+		} else {
+			$all_select = 0;
+		}
+
+		$data = ['discount_type' => $distype, 'discount_value' => $disval, 'min_ammount' => $dismina, 'from_date' => $disfrom, 'to_date' => $disto, 'discount_on' => $dison, 'material_group_code' => $dismatgrp, 'all_select' => $all_select, 'status' => 'A', 'created_at' => date("Y-m-d h:i:s"), 'updated_at' => date("Y-m-d h:i:s")];
+		
+		$this->db->insert('global_discounts',$data);
+
+		if($dison == 'MATERIAL' && $all_select == 0){
+			$insert_id = $this->db->insert_id();
+			$exist_mat_arr = array();
+			$new_mat_arr = array();
+			foreach($dismat as $mat){
+				if ($this->validate_material_exist($mat) == 0) {
 					$matdata['discount_id'] = $insert_id;
 					$matdata['material_no'] = $mat;
-					$matdata['created_at'] = date("Y-m-d h:i:s");
-					$matdata['updated_at'] = date("Y-m-d h:i:s");
-					$newArray[] = $matdata;
+					$matdata['created_at'] 	= date("Y-m-d h:i:s");
+					$matdata['updated_at'] 	= date("Y-m-d h:i:s");
 				}
-				
-				$this->db->insert_batch('global_discount_materials', $newArray);
+
+				if ($this->validate_material_exist($mat) == 1) {
+					$extmatdata['material_no'] = $mat;
+				}
+
+				$new_mat_arr[] = $matdata;
+				$exist_mat_arr[] = $extmatdata;
 			}
+
+			$new_mat_arr = array_values(array_filter($new_mat_arr));
+			$exist_mat_arr = array_values(array_filter($exist_mat_arr));
+			$this->db->insert_batch('global_discount_materials', $new_mat_arr);
 		}
 		return true;
 	}
+
+	public function validate_material_exist($material_no) {
+		$this->db->select('id');
+		$this->db->from('global_discounts');
+		$this->db->where('discount_on','MATERIAL');
+		$this->db->where('status','A');
+		$where = '(to_date > now())';
+       	$this->db->where($where);
+		$fetch_query = $this->db->get();
+		$fetch_data = $fetch_query->result_array();
+		$mat_arr = array();
+		for ($i = 0; $i < count($fetch_data); $i++) {
+			$this->db->select('material_no');
+			$this->db->from('global_discount_materials');
+			$this->db->where('discount_id', $fetch_data[$i]['id']);
+			$fetch_mat_query = $this->db->get();
+			$fetch_mat_data = $fetch_mat_query->result_array();
+			for ($j = 0; $j < count($fetch_mat_data); $j++) {
+				array_push($mat_arr, $fetch_mat_data[$j]['material_no']);
+			}
+		}
+		if (in_array($material_no, $mat_arr)) {
+			$exist = 1;
+		} else {
+			$exist = 0;
+		}
+		return $exist;
+	}
+
+    /* public function save_discount($id,$distype,$disval,$dismina,$disfrom,$disto,$dison,$dismat,$disstatus){
+		
+		$this->db->select('id');
+		$this->db->from('global_discounts');
+		$this->db->where('status','A');
+		
+		if($dison == 'ALL'){
+			$fetch_data = $this->db->get();
+
+			if($fetch_data->num_rows() > 0 ){
+				$gettype = $fetch_data->result_array();
+				
+				foreach($gettype as $row){
+					$this->db->where(['id' => $row['id']]);
+					$this->db->update('global_discounts', ['status' => 'I', 'updated_at' => date("Y-m-d h:i:s")]);
+				}
+			}
+
+			$data = ['discount_type' => $distype, 'discount_value' => $disval, 'min_ammount' => $dismina, 'from_date' => $disfrom, 'to_date' => $disto, 'discount_on' => $dison, 'status' => 'A', 'created_at' => date("Y-m-d h:i:s"), 'updated_at' => date("Y-m-d h:i:s")];
+
+			$this->db->insert('global_discounts',$data);
+			$insert_id = $this->db->insert_id();
+		}
+
+		if($dison == 'MATERIAL'){
+			$this->db->where('discount_on !=','MATERIAL');
+			$fetch_data = $this->db->get();
+
+			if($fetch_data->num_rows() > 0 ){
+				$gettype = $fetch_data->result_array();
+				
+				foreach($gettype as $row){
+					$this->db->where(['id' => $row['id']]);
+					$this->db->update('global_discounts', ['status' => 'I', 'updated_at' => date("Y-m-d h:i:s")]);
+				}
+			}
+
+			$existing_active_mat_ids = array();
+			$this->db->select('id');
+			$this->db->from('global_discounts');
+			$this->db->where('status','A');
+			$this->db->where('discount_on','MATERIAL');
+			$fetch_data = $this->db->get();
+
+			if($fetch_data->num_rows() > 0 ){
+				$gettype = $fetch_data->result_array();
+				
+				foreach($gettype as $row){
+					$existing_active_mat_ids[] = $row['id'];
+				}
+			}
+			$dis_mat_ids = array();
+
+			$this->db->select('material_no');
+			$this->db->from('global_discount_materials');
+			$this->db->where_in('discount_id',$existing_active_mat_ids);
+			$fetch_data = $this->db->get();
+			$existing_mat_ids = $fetch_data->result_array();
+			foreach ($existing_mat_ids as $ss) {
+				array_push($dis_mat_ids, $ss['material_no']);
+			}
+			$result = array_intersect($dis_mat_ids, $dismat);
+			// echo "<pre>"; print_r($result); die();
+			
+			if(empty($result)){
+
+				$data = ['discount_type' => $distype, 'discount_value' => $disval, 'min_ammount' => $dismina, 'from_date' => $disfrom, 'to_date' => $disto, 'discount_on' => $dison, 'status' => 'A', 'created_at' => date("Y-m-d h:i:s"), 'updated_at' => date("Y-m-d h:i:s")];
+
+				$this->db->insert('global_discounts',$data);
+				$insert_id = $this->db->insert_id();
+				
+				$newArray=array();
+				if($dison=='MATERIAL'){
+					foreach($dismat as $mat){
+						$matdata['discount_id'] = $insert_id;
+						$matdata['material_no'] = $mat;
+						$matdata['created_at'] 	= date("Y-m-d h:i:s");
+						$matdata['updated_at'] 	= date("Y-m-d h:i:s");
+
+						$newArray[] = $matdata;
+					}
+					$this->db->insert_batch('global_discount_materials', $newArray);
+				}
+				return $result;
+			} 
+			else{
+				return $result;
+			}
+		}
+		return true;
+	} */
 
 	public function delete_discount($id, $distype, $disval, $dismina, $disfrom, $disto, $dison, $disstatus){
 		$this->db->where(['id' => $id, 'discount_type' => $distype, 'discount_value' => $disval, 'min_ammount' => $dismina, 'discount_on' => $dison]);

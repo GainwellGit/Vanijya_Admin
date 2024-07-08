@@ -5,6 +5,7 @@ class Discount extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('Discount_model');
+        $this->load->model('Group_model');
         $this->load->model('Home_model');
         $this->load->library('excel');
         $this->usersessiondata = $this->session->userdata('logged_in'); 		
@@ -17,16 +18,38 @@ class Discount extends CI_Controller {
     {
         $getGlobalDiscount = $this->Discount_model->get_globaldiscount();
         $getMaterials = $this->Home_model->get_material();
+        $getMaterialGroups = $this->Group_model->getAllGroup();
         
         $data['globaldiscount'] = $getGlobalDiscount;
         $data['allmaterials'] = $getMaterials;
+        $data['allmaterialgrps'] = $getMaterialGroups;
 
         $this->load->ftemplate('global_discount',$data);
     }
 
+    public function changestatus(){
+        $id=$this->input->post('discountId');
+        $chageStatus = $this->Discount_model->statusChange($id);
+        
+       /*  $response['success']=$chageStatus;
+        return $response; */
+
+        $request = array('success'=>$chageStatus); 
+        $response = json_encode($request);
+        header('Content-Type: application/json');
+        echo $response;
+    }
+
     public function get_materials(){
-        $disid        = $this->input->post('dis_id');
-        $getMaterials = $this->Discount_model->get_material($disid);
+        $matgrp        = $this->input->post('material_group');
+        $getMaterials = $this->Discount_model->get_material($matgrp);
+        //$data['allmaterials'] = $getMaterials;
+        echo json_encode($getMaterials);
+    }
+
+    public function get_materials_by_disid(){
+        $global_disid = $this->input->post('discount_id');
+        $getMaterials = $this->Discount_model->get_materialby_disid($global_disid);
         //$data['allmaterials'] = $getMaterials;
         echo json_encode($getMaterials);
     }
@@ -38,14 +61,16 @@ class Discount extends CI_Controller {
         $disfrom 	= $this->input->post('disfrom');
         $disto 	    = $this->input->post('disto');
         $dison      = $this->input->post('dison');
+        $dismatgrp  = $this->input->post('dismatgrp');
+        $mattype    = $this->input->post('mattype');
         $dismat     = $this->input->post('dismat');
-        $disstatus  = $this->input->post('disstatus');
+        $disstatus  = ($this->input->post('disstatus'))?$this->input->post('disstatus'):'';
         $id 	    = ($this->input->post('id_x'))?$this->input->post('id_x'):'';
         
         $request = array();
         if ( !empty($dismina) ) {
             // code...
-            $data_1 = $this->Discount_model->save_discount($id,$distype,$disval,$dismina,$disfrom,$disto,$dison,$dismat,$disstatus); 
+            $data_1 = $this->Discount_model->save_discount($id,$distype,$disval,$dismina,$disfrom,$disto,$dison,$dismatgrp,$mattype,$dismat,$disstatus);
             $request = array('success'=>true , 'data' => $data_1);     
         }else{
             $request = array('success'=>false , 'data' => 'Empty values' , 'dismina'=> $dismina , 'id'=> $id);
@@ -80,14 +105,14 @@ class Discount extends CI_Controller {
 
     public function download_excel()
     {
-        $file_url = base_url('assets/csv/global_discount.xlsx');
+        $file_url =base_url('assets/csv/Global_discount.xlsx');;//echo $file_url;die;
         header('Content-Type: application/octet-stream');
         header("Content-Transfer-Encoding: Binary"); 
         header("Content-disposition: attachment; filename=\"" . basename($file_url) . "\""); 
         readfile($file_url);
     }
 
-    public function bulk_promocode() {
+    /* public function bulk_upload_discount() {
         if(isset($_FILES['uploadfile']['name'])) {
             $filename =$_FILES['uploadfile']['name'];
             $path = $_FILES['uploadfile']['tmp_name'];
@@ -130,10 +155,35 @@ class Discount extends CI_Controller {
             $this->session->set_flashdata('message', $this->upload->display_errors());
             redirect("/admin/discount/list");
 
-            /* if(file_exists($_SERVER['DOCUMENT_ROOT'].'/gcpl/pmkit/assets/csv/'.$filename)) {
-                $path = $_SERVER['DOCUMENT_ROOT'].'/gcpl/pmkit/assets/csv/'.$filename;
-                unlink($path);
-            } */
+            // if(file_exists($_SERVER['DOCUMENT_ROOT'].'/gcpl/pmkit/assets/csv/'.$filename)) {
+            //    $path = $_SERVER['DOCUMENT_ROOT'].'/gcpl/pmkit/assets/csv/'.$filename;
+            //    unlink($path);
+            //}
+        }
+    } */
+
+    public function bulk_upload_discount() {
+        if(isset($_FILES['file']['name'])) {
+            $filename =$_FILES['file']['name'];
+            $path = $_FILES['file']['tmp_name'];
+            $object = PHPExcel_IOFactory::load($path);
+                 
+            foreach($object->getWorksheetIterator() as $worksheet) {
+                $highestRow = $worksheet->getHighestRow();
+                $highestColumn = $worksheet->getHighestColumn();
+                $materials_arr = array();
+
+                for($row=2; $row<=$highestRow; $row++) {
+                    if($worksheet->getCellByColumnAndRow(0, $row)->getValue()){
+                        $materials_arr[] = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
+                    }else{
+                        //$bulk_upload= $this->Discount_model->save_discount('',$discount_type,$discount_value,$min_ammount,$valid_from,$valid_to,'MATERIAL',$materials_arr,$status);
+                        break;
+                    }
+                }
+            }
+
+            echo json_encode($materials_arr);
         }
     }
 }
