@@ -137,20 +137,6 @@ div#sample_1_length {
             <span>Global Discounts List</span>
           </li>
         </ul>
-        <div class="pull-right">
-          <div class="col-xs-2"> 
-            <a href="<?php echo base_url(); ?>admin/discount/download_excel">
-              <button type="button" class="btn btn-primary downloadquiz" id="btn_downloadquiz" name="btn_downloadquiz"> 
-                Download Global Discount Template
-              </button>
-            </a>   
-          </div>
-        </div>
-        <div class="form-group pull-right">
-          <div class="col-xs-2">
-            <button type="submit" class="btn btn-primary btn_customer" id="btn_location" name="btn_mulquiz">Upload Global Discounts </button>
-          </div>
-        </div>
       </div>
       <div class="content">
         <div class="row" style="margin-bottom:20px; ">
