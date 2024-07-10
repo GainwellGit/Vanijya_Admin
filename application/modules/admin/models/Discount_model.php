@@ -114,24 +114,41 @@ class Discount_model extends CI_Model {
 		return $getdata;
 	}
 
-	public function get_materialby_disid($global_disid){
-		$this->db->select('global_discount_materials.material_no, material_master.material_description, material_master.material_group, material_group.group_description');
+	public function get_materialby_disid($global_disid, $group_code, $allselect){
+		/* $this->db->select('global_discount_materials.material_no, material_master.material_description, material_master.material_group, material_group.group_description');
 		$this->db->from('global_discount_materials');
 		$this->db->join('material_master','global_discount_materials.material_no = material_master.material_no');
 		$this->db->join('material_group','material_master.material_group = material_group.group_code');
-		$this->db->where('global_discount_materials.discount_id',$global_disid);
+		$this->db->where('global_discount_materials.discount_id',$global_disid); */
+
+		if($allselect == 1){
+			$this->db->select('material_group.group_code, material_group.group_description');
+			$this->db->from('material_group');
+			$this->db->where('material_group.group_code',$group_code);
+		}
+		else{
+			$this->db->select('global_discount_materials.material_no, material_master.material_description, material_group.group_code, material_group.group_description');
+			$this->db->from('global_discount_materials');
+			$this->db->join('material_master','global_discount_materials.material_no = material_master.material_no');
+			$this->db->join('material_group','material_master.material_group = material_group.group_code');
+			$this->db->where('global_discount_materials.discount_id',$global_disid);
+		}
 
 		$fetch_data = $this->db->get();
 		if($fetch_data->num_rows() > 0 ){
 			$gettype = $fetch_data->result_array();
 		}else{
 			$gettype = array();
-		}//echo '<pre>';print_r($gettype);die('124');
+		}
 		return $gettype;
 	}
 
 	public function save_discount($id,$distype,$disval,$dismina,$disfrom,$disto,$dison,$dismatgrp,$mattype,$dismat,$disstatus){
-		
+		if(is_string($dismat)){
+			$string_mat = $dismat;
+			$dismat = explode(',', $string_mat);
+		}
+
 		$this->db->select('id');
 		$this->db->from('global_discounts');
 		$this->db->where('status','A');
@@ -159,7 +176,7 @@ class Discount_model extends CI_Model {
 		}
 
 		$data = ['discount_type' => $distype, 'discount_value' => $disval, 'min_ammount' => $dismina, 'from_date' => $disfrom, 'to_date' => $disto, 'discount_on' => $dison, 'material_group_code' => $dismatgrp, 'all_select' => $all_select, 'status' => 'A', 'created_at' => date("Y-m-d h:i:s"), 'updated_at' => date("Y-m-d h:i:s")];
-		
+
 		$this->db->insert('global_discounts',$data);
 
 		if($dison == 'MATERIAL' && $all_select == 0){
@@ -184,7 +201,13 @@ class Discount_model extends CI_Model {
 
 			$new_mat_arr = array_values(array_filter($new_mat_arr));
 			$exist_mat_arr = array_values(array_filter($exist_mat_arr));
-			$this->db->insert_batch('global_discount_materials', $new_mat_arr);
+
+			if(!empty($new_mat_arr)){
+				$this->db->insert_batch('global_discount_materials', $new_mat_arr);
+			}else{
+				$this->db->delete('global_discounts', array('id' => $insert_id));
+				return $exist_mat_arr;
+			}
 		}
 		return true;
 	}

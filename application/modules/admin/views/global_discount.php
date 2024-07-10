@@ -465,7 +465,7 @@ div#sample_1_length {
       $('#add_mat_grp').val('');
       $('#add_checkbox_forbulk').val('');
       //$('input:radio').not(':checked');
-      //$('input:checked').removeAttr('checked');
+      $('input[name="chose_radio"]:checked').removeAttr('checked');
     });
 
     $(".popupDynamic").click(function(){
@@ -505,19 +505,20 @@ div#sample_1_length {
       }
 
       if(dison == 'MATERIAL'){
-        var html='', html1='';
+        var html='', html1='', html2='';
         $.ajax({
           type: "POST",
           url: '<?php echo base_url(); ?>admin/discount/get_materials_by_disid',
-          data:'discount_id='+id_x,
+          data:'discount_id='+id_x+'&group_code='+matgrp+'&allselect='+allselect,
           dataType: "json",
           success: function(response){
             html1 +='<label for="add_matgrp"> Material Group </label><select class="form-control" id="dismatgrp" name="material_no" disabled>';
-            html1+='<option value="'+response[0].material_group+'">'+response[0].group_description+' ('+response[0].material_group+')</option>';
+            html1+='<option value="'+response[0].group_code+'">'+response[0].group_description+' ('+response[0].group_code+')</option>';
             html1+='</select>';
             $("#grp_display_list").show();
-            $("#grp_display_list").html(html1); 
-            if(response.length > 0){
+            $("#grp_display_list").html(html1);
+
+            if(response.length > 0 && allselect != 1){
               html +='<label for="add_mat"> Materials </label><select class="form-control" id="dismat" name="material_no" multiple disabled>';
               $.each(response,function (index, val) {
                 html+='<option value="'+val.material_no+'" selected>'+val.material_description+' ('+val.material_no+')</option>';
@@ -528,9 +529,16 @@ div#sample_1_length {
             } else{
               $("#display_list").hide();
             }
+
             if (allselect == 1) {
               $("#all_select_radio").show();
-              // $("#all_select_radio").html(html);
+
+              html2 +='<input type="radio" id="disallmat" style="margin-right:5px;" name="chose_radio" value="All" checked disabled /><label style="margin-bottom:auto;" for="allmat">All</label>'
+              $("#all_select_radio").html(html2);
+            }
+            else{
+              $("#all_select_radio").hide();
+              $("#all_select_radio").html(html2);
             }
           }
         });
@@ -729,6 +737,10 @@ div#sample_1_length {
         var dismat    = $('#add_mat').val();
         var mattype   = $('input[name="chose_radio"]:checked').val();
         //var disstatus = $('#add_disstatus').val();
+        if(mattype=='Bulk upload from Excel'){
+          var dismat = $('#add_bulk_mats').val();
+        }
+        var uploaded_mats = $('#add_bulk_mats').val();
 
         if (distype == '') {
           $('.invalid-feedback-distype').fadeIn();
@@ -811,14 +823,14 @@ div#sample_1_length {
           $('.invalid-feedback-dismat').hide();
         }
 
-        // if(dison == 'MATERIAL' && dismatgrp!=null && (mattype =='Bulk upload from Excel' && dismat==null)){
-        //   $('.invalid-feedback-dismat').fadeIn();
-        //   $('#add_dismat').focus();
-        //   $('.invalid-feedback-dismat').text('Please select atleast one material');
-        // }
-        // else{
-        //   $('.invalid-feedback-dismat').hide();
-        // }
+        if(dison == 'MATERIAL' && dismatgrp!=null && (mattype =='Bulk upload from Excel' && uploaded_mats=='')){
+          $('.invalid-feedback-excelfile').fadeIn();
+          $('#file').focus();
+          $('.invalid-feedback-excelfile').text('Please upload an excel file');
+        }
+        else{
+          $('.invalid-feedback-excelfile').hide();
+        }
 
 
         if((distype != '') && (disval != '') && (dismina != '') && (disfrom != '') && (disto != '') && (dison != '')){
@@ -834,13 +846,13 @@ div#sample_1_length {
             dismat: dismat,
             disstatus: ''
           };
-          // console.log(dismat);
+          
           $.ajax({
             url: '<?php echo base_url(); ?>admin/discount/edit_globaldiscount', // Replace with your API endpoint
             type: 'POST',
             data: data,
             dataType: 'json',
-            success: function(response) {
+            success: function(response) {console.log(response);
             // Request successful, do something with the response
             $('#addModal').modal('toggle');
             toastr["info"]("", "success : One Global Discount Data is Added Successfully.")
@@ -871,6 +883,7 @@ div#sample_1_length {
         var dison = $('#dison').val();
         var disstatus = $('#disstatus').val();
         var dismatgrp = $('#dismatgrp').val();
+        var disallmat = $('#disallmat').val();
         var dismat = $('#dismat').val();
         var id_x = $('#id_x').val();
 
@@ -947,6 +960,7 @@ div#sample_1_length {
             disto: disto,
             dison: dison,
             dismatgrp: dismatgrp,
+            mattype: disallmat,
             dismat: dismat,
             disstatus: ''
           };

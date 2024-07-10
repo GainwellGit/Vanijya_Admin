@@ -48,8 +48,10 @@ class Discount extends CI_Controller {
     }
 
     public function get_materials_by_disid(){
-        $global_disid = $this->input->post('discount_id');
-        $getMaterials = $this->Discount_model->get_materialby_disid($global_disid);
+        $global_disid   = $this->input->post('discount_id');
+        $group_code     = $this->input->post('group_code');
+        $allselect      = $this->input->post('allselect');
+        $getMaterials = $this->Discount_model->get_materialby_disid($global_disid, $group_code, $allselect);
         //$data['allmaterials'] = $getMaterials;
         echo json_encode($getMaterials);
     }
@@ -71,7 +73,14 @@ class Discount extends CI_Controller {
         if ( !empty($dismina) ) {
             // code...
             $data_1 = $this->Discount_model->save_discount($id,$distype,$disval,$dismina,$disfrom,$disto,$dison,$dismatgrp,$mattype,$dismat,$disstatus);
-            $request = array('success'=>true , 'data' => $data_1);     
+            if(is_array($data_1)){
+                $statusMsg = 'The following materials are already exist and active:<br>';
+                foreach($data_1 as $data){
+                    $statusMsg .=$data['material_no'].'<br>';
+                }
+                $this->session->set_flashdata('message',$statusMsg);
+            }
+            $request = array('success'=>true , 'data' => $data_1);
         }else{
             $request = array('success'=>false , 'data' => 'Empty values' , 'dismina'=> $dismina , 'id'=> $id);
         }
