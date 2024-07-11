@@ -74,10 +74,11 @@ class Discount extends CI_Controller {
             // code...
             $data_1 = $this->Discount_model->save_discount($id,$distype,$disval,$dismina,$disfrom,$disto,$dison,$dismatgrp,$mattype,$dismat,$disstatus);
             if(is_array($data_1)){
-                $statusMsg = 'The following materials are already exist and active:<br>';
-                foreach($data_1 as $data){
-                    $statusMsg .=$data['material_no'].'<br>';
-                }
+                // $statusMsg = 'The following materials are either already exist and active or not exist in group:<br>';
+                $statusMsg = 'The global discount can not be created because material with same group already exists.';
+                // foreach($data_1 as $data){
+                //     $statusMsg .=$data['material_no'].'<br>';
+                // }
                 $this->session->set_flashdata('message',$statusMsg);
             }
             $request = array('success'=>true , 'data' => $data_1);
@@ -114,7 +115,7 @@ class Discount extends CI_Controller {
 
     public function download_excel()
     {
-        $file_url =base_url('assets/csv/Global_discount.xlsx');;//echo $file_url;die;
+        $file_url =base_url('assets/csv/select_bulk_materials.xlsx');//echo $file_url;die;
         header('Content-Type: application/octet-stream');
         header("Content-Transfer-Encoding: Binary"); 
         header("Content-disposition: attachment; filename=\"" . basename($file_url) . "\""); 

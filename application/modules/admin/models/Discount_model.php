@@ -175,6 +175,13 @@ class Discount_model extends CI_Model {
 			$all_select = 0;
 		}
 
+		if ($all_select == 1) {
+			$this->db->where(['material_group_code' => $dismatgrp]);
+			// $where = '(to_date <= '.$disto.')';
+			// $this->db->where($where);
+			$this->db->update('global_discounts', ['status' => 'I', 'updated_at' => date("Y-m-d h:i:s")]);
+		}
+
 		$data = ['discount_type' => $distype, 'discount_value' => $disval, 'min_ammount' => $dismina, 'from_date' => $disfrom, 'to_date' => $disto, 'discount_on' => $dison, 'material_group_code' => $dismatgrp, 'all_select' => $all_select, 'status' => 'A', 'created_at' => date("Y-m-d h:i:s"), 'updated_at' => date("Y-m-d h:i:s")];
 
 		$this->db->insert('global_discounts',$data);
@@ -184,15 +191,14 @@ class Discount_model extends CI_Model {
 			$exist_mat_arr = array();
 			$new_mat_arr = array();
 			foreach($dismat as $mat){
-				if ($this->validate_material_exist($mat) == 0) {
+				if ($this->validate_material_exist($mat, $dismatgrp) == 0) {
 					$matdata['discount_id'] = $insert_id;
 					$matdata['material_no'] = $mat;
 					$matdata['created_at'] 	= date("Y-m-d h:i:s");
 					$matdata['updated_at'] 	= date("Y-m-d h:i:s");
-				}
-
-				if ($this->validate_material_exist($mat) == 1) {
+				} else {
 					$extmatdata['material_no'] = $mat;
+					break;
 				}
 
 				$new_mat_arr[] = $matdata;
@@ -200,11 +206,11 @@ class Discount_model extends CI_Model {
 			}
 
 			$new_mat_arr = array_values(array_filter($new_mat_arr));
-			$exist_mat_arr = array_values(array_filter($exist_mat_arr));
+			// $exist_mat_arr = array_values(array_filter($exist_mat_arr));
 
-			if(!empty($new_mat_arr)){
+			if (empty($exist_mat_arr)) {
 				$this->db->insert_batch('global_discount_materials', $new_mat_arr);
-			}else{
+			} else {
 				$this->db->delete('global_discounts', array('id' => $insert_id));
 				return $exist_mat_arr;
 			}
@@ -212,30 +218,45 @@ class Discount_model extends CI_Model {
 		return true;
 	}
 
-	public function validate_material_exist($material_no) {
-		$this->db->select('id');
-		$this->db->from('global_discounts');
-		$this->db->where('discount_on','MATERIAL');
-		$this->db->where('status','A');
-		$where = '(to_date > now())';
-       	$this->db->where($where);
-		$fetch_query = $this->db->get();
-		$fetch_data = $fetch_query->result_array();
-		$mat_arr = array();
-		for ($i = 0; $i < count($fetch_data); $i++) {
-			$this->db->select('material_no');
-			$this->db->from('global_discount_materials');
-			$this->db->where('discount_id', $fetch_data[$i]['id']);
-			$fetch_mat_query = $this->db->get();
-			$fetch_mat_data = $fetch_mat_query->result_array();
-			for ($j = 0; $j < count($fetch_mat_data); $j++) {
-				array_push($mat_arr, $fetch_mat_data[$j]['material_no']);
+	public function validate_material_exist($material_no, $mat_grp) {
+		$exist = 0;
+		$this->db->select('*');
+		$this->db->from('material_master');
+		$this->db->where('material_group',$mat_grp);
+		$this->db->where('material_no',$material_no);
+		$fetch_data = $this->db->get();
+		if ($fetch_data->num_rows() > 0) {
+			$this->db->select('id');
+			$this->db->from('global_discounts');
+			$this->db->where('discount_on','MATERIAL');
+			$this->db->where('material_group_code',$mat_grp);
+			$this->db->where('status','A');
+			$where = '(to_date > now())';
+			$this->db->where($where);
+			$fetch_query = $this->db->get();
+			if ($fetch_query->num_rows() == 0) {
+				$fetch_data = $fetch_query->result_array();
+				$mat_arr = array();
+				for ($i = 0; $i < count($fetch_data); $i++) {
+					$this->db->select('material_no');
+					$this->db->from('global_discount_materials');
+					$this->db->where('discount_id', $fetch_data[$i]['id']);
+					$fetch_mat_query = $this->db->get();
+					$fetch_mat_data = $fetch_mat_query->result_array();
+					for ($j = 0; $j < count($fetch_mat_data); $j++) {
+						array_push($mat_arr, $fetch_mat_data[$j]['material_no']);
+					}
+				}
+				if (in_array($material_no, $mat_arr)) {
+					$exist = 1;
+				} else {
+					$exist = 0;
+				}
+			} else {
+				$exist = 1;
 			}
-		}
-		if (in_array($material_no, $mat_arr)) {
-			$exist = 1;
 		} else {
-			$exist = 0;
+			$exist = 1;
 		}
 		return $exist;
 	}

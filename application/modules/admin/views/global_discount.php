@@ -311,6 +311,11 @@ div#sample_1_length {
           <div class="form-group" id="add_excel_file" style="display:none;">
             <input type='file' name='file' id='file' required accept=".xls, .xlsx">
             <input type="hidden" class="form-control" id="add_bulk_mats">
+            <a href="<?php echo base_url(); ?>admin/discount/download_excel">
+              <button type="button" class="btn btn-primary downloadquiz" id="btn_downloadquiz" name="btn_downloadquiz"> 
+                Download Sample Template
+              </button>
+            </a>  
             <div class="invalid-feedback-excelfile" style="color:red;" style="display:none;"></div>
           </div>
           <div class="form-group">
@@ -678,7 +683,7 @@ div#sample_1_length {
       });
 
       $('#bulkmat').on('click', function(e){
-        $('#add_excel_file').show();
+        $('#add_excel_file').show().css('display', 'flex');
         $('.invalid-feedback-excelfile').show();
         $('#add_mat_sec').hide();
       });
@@ -715,7 +720,7 @@ div#sample_1_length {
           data: fd,
           success: function(response) {
             if(response.length > 0) {
-              alert("Your excel file was uploaded successfully");
+              // alert("Your excel file was uploaded successfully");
               $('#add_bulk_mats').val(response);
             }
           },
