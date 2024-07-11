@@ -214,6 +214,7 @@ class Discount_model extends CI_Model {
 			$insert_id = $this->db->insert_id();
 			$exist_mat_arr = array();
 			$new_mat_arr = array();
+			echo "<pre>"; print_r($dis_mat_arr);
 			foreach($dis_mat_arr as $mat){
 				echo $dismatgrp;
 				echo $mat;
