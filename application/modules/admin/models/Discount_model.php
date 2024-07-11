@@ -52,6 +52,30 @@ class Discount_model extends CI_Model {
 		}
     }
 
+    public function get_all_group() {
+		$this->db->select('*');
+		$this->db->from('material_group');
+		$this->db->order_by("group_description", "desc");
+		$fetch_data = $this->db->get();
+		if($fetch_data->num_rows() > 0 ){
+			$getdata = $fetch_data->result_array();	
+		} else {
+			$getdata = array();
+		}
+
+		foreach ($getdata as $key => $grp) {
+			$this->db->select('*');
+			$this->db->from('material_master');
+			$this->db->where("material_group", $grp);
+			$fetch_data = $this->db->get();
+			if($fetch_data->num_rows() == 0) {
+				unset($getdata[$key]);
+			}
+		}
+
+		return $getdata;
+	}
+
 	public function get_material($matgrp){
 		$this->db->select('*');
 		$this->db->from('material_master');
@@ -94,7 +118,7 @@ class Discount_model extends CI_Model {
 					}
 				}
 
-				$getdiffdata=array_values(array_diff($grpwise_mat_nos,$dis_mat_ids));
+				$getdiffdata = array_values(array_diff($grpwise_mat_nos, $dis_mat_ids));
 				$this->db->select('*');
 				$this->db->from('material_master');
 				$this->db->where_in('material_no',$getdiffdata);

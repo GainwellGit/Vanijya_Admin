@@ -578,6 +578,9 @@ div#sample_1_length {
         $('#add_mat_grp_sec').show();
       }else{
         $('#add_mat_grp_sec').hide();
+        $('#add_checkbox_forbulk').hide();
+        $('#add_mat_sec').hide();
+        $('#add_excel_file').hide();
       }
     }
 
@@ -869,11 +872,11 @@ div#sample_1_length {
             console.error(error);
             }
           });
-          $(document).ajaxStop(function(){
-            setTimeout(function(){// wait for 1 secs(2)
-              window.location.reload(); // then reload the page.(3)
-            }, 1000); 
-          });
+          // $(document).ajaxStop(function(){
+          //   setTimeout(function(){// wait for 1 secs(2)
+          //     window.location.reload(); // then reload the page.(3)
+          //   }, 1000); 
+          // });
         }  
       });
 
