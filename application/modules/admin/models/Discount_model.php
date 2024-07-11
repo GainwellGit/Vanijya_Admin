@@ -66,7 +66,7 @@ class Discount_model extends CI_Model {
 		foreach ($getdata as $key => $grp) {
 			$this->db->select('*');
 			$this->db->from('material_master');
-			$this->db->where("material_group", $grp);
+			$this->db->where("material_group", $grp['group_code']);
 			$fetch_data = $this->db->get();
 			if($fetch_data->num_rows() == 0) {
 				unset($getdata[$key]);
