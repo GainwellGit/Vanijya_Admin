@@ -170,7 +170,7 @@ class Discount_model extends CI_Model {
 	public function save_discount($id,$distype,$disval,$dismina,$disfrom,$disto,$dison,$dismatgrp,$mattype,$dismat,$disstatus){
 		if(is_string($dismat)){
 			$string_mat = $dismat;
-			$dismat = explode(',', $string_mat);
+			$dis_mat_arr = explode(',', $string_mat);
 		}
 
 		$this->db->select('id');
@@ -214,7 +214,9 @@ class Discount_model extends CI_Model {
 			$insert_id = $this->db->insert_id();
 			$exist_mat_arr = array();
 			$new_mat_arr = array();
-			foreach($dismat as $mat){
+			foreach($dis_mat_arr as $mat){
+				echo $dismatgrp;
+				echo $mat;
 				echo $this->validate_material_exist($mat, $dismatgrp);
 				if ($this->validate_material_exist($mat, $dismatgrp) == 0) {
 					$matdata['discount_id'] = $insert_id;
