@@ -182,9 +182,7 @@ class Discount_model extends CI_Model {
 			foreach ($gettype as $row) {
 				$this->db->where(['id' => $row['id']]);
 				$this->db->update('global_discounts', ['status' => 'I', 'updated_at' => date("Y-m-d h:i:s")]);
-				$this->db->last_query();
 			}
-			die();
 		}
 
 		if ($mattype == '') {
