@@ -285,9 +285,12 @@ class Discount_model extends CI_Model {
 				for ($j = 0; $j < count($fetch_mat_data); $j++) {
 					array_push($mat_arr, $fetch_mat_data[$j]['material_no']);
 				}
+				echo "<pre>"; print_r($mat_arr);
 				if (in_array($material_no, $mat_arr)) {
+					echo "rrrr";
 					$exist = 1;
 				} else {
+					echo "yyyuy";
 					$exist = 0;
 				}
 			} else {
