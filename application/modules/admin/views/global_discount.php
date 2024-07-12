@@ -73,6 +73,7 @@ input:checked + .slider:before {
     padding-left: 0;
     padding-right: 0;
 }
+.download_sample {margin-top: 10px; display: block;}
 .box2 {
     position: relative;
     border-radius: 3px;
@@ -313,10 +314,10 @@ div#sample_1_length {
           
           </div>
           <div class="form-group" id="add_excel_file" style="display:none;">
-            <input type='file' name='file' id='file' required accept=".xls, .xlsx">
-            <input type="hidden" class="form-control" id="add_bulk_mats">
+            <input type='file' name='file' id='file' class="form-control" required accept=".xls, .xlsx">
+            <input type="hidden" id="add_bulk_mats">
             <div class="invalid-feedback-excelfile" style="color:red;" style="display:none;"></div>
-            <a href="<?php echo base_url(); ?>admin/discount/download_excel">Download Sample Template
+            <a href="<?php echo base_url(); ?>admin/discount/download_excel" class="download_sample">Download Sample Template
               <!-- <button type="button" class="btn btn-primary downloadquiz" id="btn_downloadquiz" name="btn_downloadquiz"> 
                 Download Sample Template
               </button> -->
@@ -690,7 +691,7 @@ div#sample_1_length {
       });
 
       $('#bulkmat').on('click', function(e){
-        $('#add_excel_file').show().css('display', 'flex');
+        $('#add_excel_file').show().css('display', 'block');
         $('.invalid-feedback-excelfile').show();
         $('#add_mat_sec').hide();
       });
