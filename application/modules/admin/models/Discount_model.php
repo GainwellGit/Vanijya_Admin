@@ -168,32 +168,6 @@ class Discount_model extends CI_Model {
 	}
 
 	public function save_discount($id,$distype,$disval,$dismina,$disfrom,$disto,$dison,$dismatgrp,$mattype,$dismat,$disstatus){
-		// if($dismat){
-		// 	// $string_mat = $dismat;
-		// 	$dis_mat_arr = explode(',', $dismat);
-		// }
-
-		/*$this->db->select('id');
-		$this->db->from('global_discounts');
-		$this->db->where('status','A');
-
-		if($dison == 'MATERIAL'){
-			$this->db->where('discount_on','ALL');
-		}
-
-		$this->db->where(
-			array(
-                'DATE(from_date) >=' => $disfrom,
-                'DATE(from_date) <=' => $disto,
-            )
-		);
-		$this->db->where(
-			array(
-                'DATE(to_date) >=' => $disfrom,
-                'DATE(to_date) <=' => $disto,
-            )
-		);*/
-
 		$query = 'SELECT `id` FROM `global_discounts` WHERE `status` = "A"';
 		if($dison == 'MATERIAL'){
 			$query .= ' AND `discount_on` = "ALL"';
@@ -202,9 +176,6 @@ class Discount_model extends CI_Model {
 		$query .= ' OR (DATE(to_date) >= ' . $disfrom . ' AND DATE(to_date) <= ' . $disto . '))';
 
 		$fetch_data = $this->db->query($query);
-
-		// $fetch_data = $this->db->get();
-		// echo $this->db->last_query(); die();
 
 		if($fetch_data->num_rows() > 0 ){
 			$gettype = $fetch_data->result_array();
@@ -227,24 +198,27 @@ class Discount_model extends CI_Model {
 			$this->db->flush_cache();
 			$this->db->reset_query();
 			$this->db->where(['material_group_code' => $dismatgrp]);
-			$this->db->where(
-				array(
-                    'DATE(from_date) >=' => $disfrom,
-                    'DATE(from_date) <=' => $disto,
-                )
-			);
-			$this->db->or_where(
-				array(
-                    'DATE(to_date) >=' => $disfrom,
-                    'DATE(to_date) <=' => $disto,
-                )
-			);
+			// $this->db->where(
+			// 	array(
+            //         'DATE(from_date) >=' => $disfrom,
+            //         'DATE(from_date) <=' => $disto,
+            //     )
+			// );
+			// $this->db->or_where(
+			// 	array(
+            //         'DATE(to_date) >=' => $disfrom,
+            //         'DATE(to_date) <=' => $disto,
+            //     )
+			// );
+			$query1 = ' AND ((DATE(from_date) >= ' . $disfrom . ' AND DATE(from_date) <= ' . $disto . ')';
+			$query1 .= ' OR (DATE(to_date) >= ' . $disfrom . ' AND DATE(to_date) <= ' . $disto . '))';
+			$this->db->where($query1);
 			$this->db->update('global_discounts', ['status' => 'I', 'updated_at' => date("Y-m-d h:i:s")]);
 		}
 
 		$data = ['discount_type' => $distype, 'discount_value' => $disval, 'min_ammount' => $dismina, 'from_date' => $disfrom, 'to_date' => $disto, 'discount_on' => $dison, 'material_group_code' => $dismatgrp, 'all_select' => $all_select, 'status' => 'A', 'created_at' => date("Y-m-d h:i:s"), 'updated_at' => date("Y-m-d h:i:s")];
 
-		$this->db->insert('global_discounts',$data);
+		$this->db->insert('global_discounts', $data);
 
 		if($dison == 'MATERIAL' && $all_select == 0){
 			$insert_id = $this->db->insert_id();
