@@ -214,11 +214,7 @@ class Discount_model extends CI_Model {
 			$insert_id = $this->db->insert_id();
 			$exist_mat_arr = array();
 			$new_mat_arr = array();
-			echo "<pre>"; print_r($dis_mat_arr);
 			foreach($dis_mat_arr as $mat){
-				echo $dismatgrp;
-				echo $mat;
-				echo $this->validate_material_exist($mat, $dismatgrp);
 				if ($this->validate_material_exist($mat, $dismatgrp) == 0) {
 					$matdata['discount_id'] = $insert_id;
 					$matdata['material_no'] = $mat;
@@ -232,8 +228,6 @@ class Discount_model extends CI_Model {
 				$new_mat_arr[] = $matdata;
 				$exist_mat_arr[] = $extmatdata;
 			}
-
-			echo "<pre>"; print_r($new_mat_arr); print_r($exist_mat_arr); die();
 
 			$new_mat_arr = array_values(array_filter($new_mat_arr));
 			// $exist_mat_arr = array_values(array_filter($exist_mat_arr));
@@ -256,6 +250,7 @@ class Discount_model extends CI_Model {
 		$this->db->where('material_no',$material_no);
 		$fetch_data = $this->db->get();
 		if ($fetch_data->num_rows() > 0) {
+			echo "hiii";
 			$this->db->select('id');
 			$this->db->from('global_discounts');
 			$this->db->where('discount_on','MATERIAL');
