@@ -75,7 +75,7 @@ class Discount extends CI_Controller {
             $data_1 = $this->Discount_model->save_discount($id,$distype,$disval,$dismina,$disfrom,$disto,$dison,$dismatgrp,$mattype,$dismat,$disstatus);
             if(is_array($data_1)){
                 // $statusMsg = 'The following materials are either already exist and active or not exist in group:<br>';
-                $statusMsg = 'The global discount can not be created because material with same group already exists.';
+                $statusMsg = 'The global discount can not be created as the materials are either already exist and active or not exist in group!.';
                 // foreach($data_1 as $data){
                 //     $statusMsg .=$data['material_no'].'<br>';
                 // }
