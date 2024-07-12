@@ -255,7 +255,7 @@ class Discount_model extends CI_Model {
 			$this->db->select('id');
 			$this->db->from('global_discounts');
 			$this->db->where('discount_on','MATERIAL');
-			// $this->db->where('material_group_code',$mat_grp);
+			$this->db->where('material_group_code',$mat_grp);
 			$this->db->where('status','A');
 			$where = '(to_date > now())';
 			$this->db->where($where);
