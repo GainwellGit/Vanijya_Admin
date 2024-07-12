@@ -214,6 +214,8 @@ class Discount_model extends CI_Model {
 			$query1 .= ' OR (DATE(to_date) >= ' . $disfrom . ' AND DATE(to_date) <= ' . $disto . '))';
 			$this->db->where($query1);
 			$this->db->update('global_discounts', ['status' => 'I', 'updated_at' => date("Y-m-d h:i:s")]);
+
+			echo $this->db->last_query(); die();
 		}
 
 		$data = ['discount_type' => $distype, 'discount_value' => $disval, 'min_ammount' => $dismina, 'from_date' => $disfrom, 'to_date' => $disto, 'discount_on' => $dison, 'material_group_code' => $dismatgrp, 'all_select' => $all_select, 'status' => 'A', 'created_at' => date("Y-m-d h:i:s"), 'updated_at' => date("Y-m-d h:i:s")];
