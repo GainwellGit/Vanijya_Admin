@@ -655,7 +655,7 @@ div#sample_1_length {
         var discountId = $(this).closest('.switch').data("id");
   
         if (!isChecked) {
-          if (confirm('Are you sure you want to uncheck the checkbox?')) {
+          if (confirm('Are you sure you want to disable the discount?')) {
             $.ajax({
               method: "POST",
               url: "<?php echo site_url('/admin/discount/changestatus'); ?>",
