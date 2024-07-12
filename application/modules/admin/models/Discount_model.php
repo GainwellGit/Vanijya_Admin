@@ -180,6 +180,9 @@ class Discount_model extends CI_Model {
 	}
 
 	public function save_discount($id,$distype,$disval,$dismina,$disfrom,$disto,$dison,$dismatgrp,$mattype,$dismat,$disstatus){
+		if (is_string($dismat)) {
+			$dismat = explode(',', $dismat);
+		}
 		$query = 'SELECT `id` FROM `global_discounts` WHERE `status` = "A"';
 		if ($dison == 'MATERIAL') {
 			$query .= ' AND `discount_on` = "ALL"';
