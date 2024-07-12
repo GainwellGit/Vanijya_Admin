@@ -315,12 +315,12 @@ div#sample_1_length {
           <div class="form-group" id="add_excel_file" style="display:none;">
             <input type='file' name='file' id='file' required accept=".xls, .xlsx">
             <input type="hidden" class="form-control" id="add_bulk_mats">
-            <a href="<?php echo base_url(); ?>admin/discount/download_excel">
-              <button type="button" class="btn btn-primary downloadquiz" id="btn_downloadquiz" name="btn_downloadquiz"> 
-                Download Sample Template
-              </button>
-            </a>  
             <div class="invalid-feedback-excelfile" style="color:red;" style="display:none;"></div>
+            <a href="<?php echo base_url(); ?>admin/discount/download_excel">Download Sample Template
+              <!-- <button type="button" class="btn btn-primary downloadquiz" id="btn_downloadquiz" name="btn_downloadquiz"> 
+                Download Sample Template
+              </button> -->
+            </a>
           </div>
           <div class="form-group">
             <input type="hidden" maxlength="10" required class="form-control" id="add_id_x">
