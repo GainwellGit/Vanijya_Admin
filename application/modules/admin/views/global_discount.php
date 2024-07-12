@@ -189,7 +189,7 @@ div#sample_1_length {
                       <td><span id="disa-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['min_ammount']) ? $globaldiscounts['min_ammount'] : ''; ?></span></td>
                       <td><span id="disf-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['from_date']) ? date('d-m-Y', strtotime($globaldiscounts['from_date'])) : ''; ?></span></td>
                       <td><span id="disto-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['to_date']) ? date('d-m-Y', strtotime($globaldiscounts['to_date'])) : ''; ?></span></td>
-                      <td><span id="diso-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['discount_on']) ? $globaldiscounts['discount_on'] . echo isset($globaldiscounts['all_select']) && $globaldiscounts['all_select'] == 1 ? .'(ALL)' : '' : ''; ?></span></td>
+                      <td><span id="diso-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['discount_on']) ? $globaldiscounts['discount_on'] . isset($globaldiscounts['all_select']) && $globaldiscounts['all_select'] == 1 ? .'(ALL)' : '' : ''; ?></span></td>
                       <td>
                         <span id="diss-<?php echo $globaldiscounts['id']; ?>">
                         <?php if($globaldiscounts['status']=='A'){ ?>
