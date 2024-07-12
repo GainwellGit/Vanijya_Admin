@@ -529,7 +529,7 @@ div#sample_1_length {
             $("#grp_display_list").html(html1);
 
             if(response.length > 0 && allselect != 1){
-              html +='<label for="add_mat"> Materials </label><select class="form-control" id="dismat" name="material_no" multiple disabled>';
+              html +='<label for="add_mat"> Materials </label><select class="form-control" id="dismat" name="material_no" multiple multiselect-search="true" disabled>';
               $.each(response,function (index, val) {
                 html+='<option value="'+val.material_no+'" selected>'+val.material_description+' ('+val.material_no+')</option>';
               });
@@ -1053,3 +1053,5 @@ div#sample_1_length {
 <script src="<?php echo base_url(); ?>assets/pages/scripts/table-datatables-rowreorder.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/group.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/toastr.min.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+<script src="<?php echo base_url(); ?>assets/js/multiselect-dropdown.js"></script>
