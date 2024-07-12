@@ -249,13 +249,9 @@ class Discount_model extends CI_Model {
 			$new_mat_arr = array_values(array_filter($new_mat_arr));
 			$exist_mat_arr = array_values(array_filter($exist_mat_arr));
 
-			echo "<pre>"; print_r($new_mat_arr); die();
-
 			if (empty($exist_mat_arr)) {
-				echo "sss";
 				$this->db->insert_batch('global_discount_materials', $new_mat_arr);
 			} else {
-				echo "dddd";
 				$this->db->delete('global_discounts', array('id' => $insert_id));
 				return $exist_mat_arr;
 			}
@@ -280,7 +276,7 @@ class Discount_model extends CI_Model {
 			$where = '(to_date > now())';
 			$this->db->where($where);
 			$fetch_query1 = $this->db->get();
-			echo $this->db->last_query();
+			// echo $this->db->last_query();
 			if ($fetch_query1->num_rows() == 0) {
 				$mat_arr = array();
 				$this->db->select('material_no');
@@ -290,12 +286,9 @@ class Discount_model extends CI_Model {
 				for ($j = 0; $j < count($fetch_mat_data); $j++) {
 					array_push($mat_arr, $fetch_mat_data[$j]['material_no']);
 				}
-				echo "<pre>"; print_r($mat_arr);
 				if (in_array($material_no, $mat_arr)) {
-					echo "rrrr";
 					$exist = 1;
 				} else {
-					echo "yyyuy";
 					$exist = 0;
 				}
 			} else {
