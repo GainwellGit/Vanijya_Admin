@@ -178,11 +178,13 @@ class Discount_model extends CI_Model {
 		$fetch_data = $this->db->query($query);
 		if ($fetch_data->num_rows() > 0) {
 			$gettype = $fetch_data->result_array();
-			echo "<pre>"; print_r($gettype); die();
+			// echo "<pre>"; print_r($gettype); die();
 			foreach ($gettype as $row) {
 				$this->db->where(['id' => $row['id']]);
 				$this->db->update('global_discounts', ['status' => 'I', 'updated_at' => date("Y-m-d h:i:s")]);
+				$this->db->last_query();
 			}
+			die();
 		}
 
 		if ($mattype == '') {
