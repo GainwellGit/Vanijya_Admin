@@ -176,11 +176,9 @@ class Discount_model extends CI_Model {
 		$query .= ' OR (DATE(to_date) >= "' . $disfrom . '" AND DATE(to_date) <= "' . $disto . '"))';
 
 		$fetch_data = $this->db->query($query);
-
-		echo $this->db->last_query(); echo $fetch_data->num_rows(); die();
-
 		if ($fetch_data->num_rows() > 0) {
 			$gettype = $fetch_data->result_array();
+			echo "<pre>"; print_r($gettype); die();
 			foreach ($gettype as $row) {
 				$this->db->where(['id' => $row['id']]);
 				$this->db->update('global_discounts', ['status' => 'I', 'updated_at' => date("Y-m-d h:i:s")]);
