@@ -529,7 +529,7 @@ div#sample_1_length {
             $("#grp_display_list").html(html1);
 
             if(response.length > 0 && allselect != 1){
-              html +='<label for="add_mat"> Materials </label><select class="form-control" id="dismat" name="material_no" multiple multiselect-search="true" disabled>';
+              html +='<label for="add_mat"> Materials </label><select class="form-control" id="dismat" name="material_no" disabled>';
               $.each(response,function (index, val) {
                 html+='<option value="'+val.material_no+'" selected>'+val.material_description+' ('+val.material_no+')</option>';
               });
@@ -598,7 +598,7 @@ div#sample_1_length {
           data:'material_group='+val,
           dataType: "json",
           success: function(response){
-            html +='<label for="add_mat"> Materials </label><select class="form-control" id="add_mat" name="material_no" multiple>';
+            html +='<label for="add_mat"> Materials </label><select class="form-control" id="add_mat" name="material_no" multiple multiselect-search="true">';
             $.each(response,function (index, val) {
               html+='<option value="'+val.material_no+'">'+val.material_description+' ('+val.material_no+')</option>';
             });
