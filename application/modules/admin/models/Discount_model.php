@@ -215,6 +215,7 @@ class Discount_model extends CI_Model {
 			$exist_mat_arr = array();
 			$new_mat_arr = array();
 			foreach($dismat as $mat){
+				echo $mat;
 				if ($this->validate_material_exist($mat, $dismatgrp) == 0) {
 					$matdata['discount_id'] = $insert_id;
 					$matdata['material_no'] = $mat;
