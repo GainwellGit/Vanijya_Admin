@@ -108,11 +108,8 @@ div#sample_1_length {
 
 <head>
   <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" type="text/css" href="https://bootswatch.com/superhero/bootstrap.min.css">
-  <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/mock.js"></script>
-  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
   <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/jquery.dropdown.css">
-  <script src="<?php echo base_url(); ?>assets/js/jquery.dropdown.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://bootswatch.com/superhero/bootstrap.min.css">
 </head>
   <!-- BEGIN CONTENT -->
   <div class="page-content-wrapper">
@@ -1063,3 +1060,6 @@ div#sample_1_length {
 <script src="<?php echo base_url(); ?>assets/pages/scripts/table-datatables-rowreorder.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/group.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/toastr.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/mock.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script> -->
+<script src="<?php echo base_url(); ?>assets/js/jquery.dropdown.js"></script>
