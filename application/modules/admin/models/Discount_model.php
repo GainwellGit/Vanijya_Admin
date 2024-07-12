@@ -197,7 +197,7 @@ class Discount_model extends CI_Model {
 		if ($all_select == 1) {
 			$this->db->flush_cache();
 			$this->db->reset_query();
-			$this->db->where(['material_group_code' => $dismatgrp]);
+			// $this->db->where(['material_group_code' => $dismatgrp]);
 			// $this->db->where(
 			// 	array(
             //         'DATE(from_date) >=' => $disfrom,
@@ -210,12 +210,16 @@ class Discount_model extends CI_Model {
             //         'DATE(to_date) <=' => $disto,
             //     )
 			// );
-			$query1 = ' AND ((DATE(from_date) >= ' . $disfrom . ' AND DATE(from_date) <= ' . $disto . ')';
+			// $this->db->where($query1);
+			// $this->db->update('global_discounts', ['status' => 'I', 'updated_at' => date("Y-m-d h:i:s")]);
+
+			$query1 = 'UPDATE `global_discounts` SET `status` = 'I', `updated_at` = ' . date("Y-m-d h:i:s") . ' WHERE ';
+			$query1 .= ' `material_group_code` = ' . $dismatgrp . '';
+			$query1 .= ' AND ((DATE(from_date) >= ' . $disfrom . ' AND DATE(from_date) <= ' . $disto . ')';
 			$query1 .= ' OR (DATE(to_date) >= ' . $disfrom . ' AND DATE(to_date) <= ' . $disto . '))';
-			$this->db->where($query1);
-			$this->db->update('global_discounts', ['status' => 'I', 'updated_at' => date("Y-m-d h:i:s")]);
 
 			echo $this->db->last_query(); die();
+			$this->db->query($query1);
 		}
 
 		$data = ['discount_type' => $distype, 'discount_value' => $disval, 'min_ammount' => $dismina, 'from_date' => $disfrom, 'to_date' => $disto, 'discount_on' => $dison, 'material_group_code' => $dismatgrp, 'all_select' => $all_select, 'status' => 'A', 'created_at' => date("Y-m-d h:i:s"), 'updated_at' => date("Y-m-d h:i:s")];
