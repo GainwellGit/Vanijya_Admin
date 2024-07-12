@@ -215,8 +215,7 @@ class Discount_model extends CI_Model {
 			$exist_mat_arr = array();
 			$new_mat_arr = array();
 			foreach($dismat as $mat){
-				echo $mat;
-				if ($this->validate_material_exist($mat, $dismatgrp) == 0) {
+				if ($this->validate_material_exist($mat, $dismatgrp, $insert_id) == 0) {
 					$matdata['discount_id'] = $insert_id;
 					$matdata['material_no'] = $mat;
 					$matdata['created_at'] 	= date("Y-m-d h:i:s");
@@ -245,7 +244,7 @@ class Discount_model extends CI_Model {
 		return true;
 	}
 
-	public function validate_material_exist($material_no, $mat_grp) {
+	public function validate_material_exist($material_no, $mat_grp, $discount_id) {
 		$exist = 0;
 		$this->db->select('*');
 		$this->db->from('material_master');
@@ -257,22 +256,19 @@ class Discount_model extends CI_Model {
 			$this->db->from('global_discounts');
 			$this->db->where('discount_on','MATERIAL');
 			$this->db->where('material_group_code',$mat_grp);
+			$this->db->where('id !=',$discount_id);
 			$this->db->where('status','A');
 			$where = '(to_date > now())';
 			$this->db->where($where);
 			$fetch_query1 = $this->db->get();
 			if ($fetch_query1->num_rows() == 0) {
-				$fetch_data1 = $fetch_query1->result_array();
 				$mat_arr = array();
-				for ($i = 0; $i < count($fetch_query1); $i++) {
-					$this->db->select('material_no');
-					$this->db->from('global_discount_materials');
-					$this->db->where('discount_id', $fetch_query1[$i]['id']);
-					$fetch_mat_query = $this->db->get();
-					$fetch_mat_data = $fetch_mat_query->result_array();
-					for ($j = 0; $j < count($fetch_mat_data); $j++) {
-						array_push($mat_arr, $fetch_mat_data[$j]['material_no']);
-					}
+				$this->db->select('material_no');
+				$this->db->from('global_discount_materials');
+				$fetch_mat_query = $this->db->get();
+				$fetch_mat_data = $fetch_mat_query->result_array();
+				for ($j = 0; $j < count($fetch_mat_data); $j++) {
+					array_push($mat_arr, $fetch_mat_data[$j]['material_no']);
 				}
 				if (in_array($material_no, $mat_arr)) {
 					$exist = 1;
