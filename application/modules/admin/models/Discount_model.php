@@ -171,6 +171,8 @@ class Discount_model extends CI_Model {
 		if(is_string($dismat)){
 			$string_mat = $dismat;
 			$dis_mat_arr = explode(',', $string_mat);
+			
+			echo "<pre>"; print_r($dis_mat_arr); die();
 		}
 
 		$this->db->select('id');
