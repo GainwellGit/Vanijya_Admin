@@ -107,7 +107,12 @@ div#sample_1_length {
 </style>
 
 <head>
-
+  <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="https://bootswatch.com/superhero/bootstrap.min.css">
+  <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/mock.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/jquery.dropdown.css">
+  <script src="<?php echo base_url(); ?>assets/js/jquery.dropdown.js"></script>
 </head>
   <!-- BEGIN CONTENT -->
   <div class="page-content-wrapper">
@@ -311,7 +316,7 @@ div#sample_1_length {
             <div class="invalid-feedback-radiogrp" style="color:red;"></div>
           </div>
           <div class="form-group" id="add_mat_sec" style="display:none;">
-          
+            
           </div>
           <div class="form-group" id="add_excel_file" style="display:none;">
             <input type='file' name='file' id='file' class="form-control" required accept=".xls, .xlsx">
@@ -446,6 +451,11 @@ div#sample_1_length {
   </style>
 
   <script type="text/javascript">
+
+    $('.dropdown-sin-2').dropdown({
+      input: '<input type="text" maxLength="20" placeholder="Search">'
+    });
+
     $(".addModal").click(function(){
       $("#addModal").modal('show');
       $('#add_mat_sec').hide();
@@ -598,11 +608,11 @@ div#sample_1_length {
           data:'material_group='+val,
           dataType: "json",
           success: function(response){
-            html +='<label for="add_mat"> Materials </label><select class="form-control" id="add_mat" name="material_no" multiple>';
+            html +='<label for="add_mat"> Materials </label><div class="dropdown-sin-2"><select class="form-control" id="add_mat" name="material_no" multiple>';
             $.each(response,function (index, val) {
               html+='<option value="'+val.material_no+'">'+val.material_description+' ('+val.material_no+')</option>';
             });
-            html+='</select><div class="invalid-feedback-dismat" style="color:red;"></div>';
+            html+='</select></select><div class="invalid-feedback-dismat" style="color:red;"></div>';
 
             $('#add_checkbox_forbulk').show();
             $('#invalid-feedback-radiogrp').show();
@@ -877,11 +887,11 @@ div#sample_1_length {
             console.error(error);
             }
           });
-          // $(document).ajaxStop(function(){
-          //   setTimeout(function(){// wait for 1 secs(2)
-          //     window.location.reload(); // then reload the page.(3)
-          //   }, 1000);
-          // });
+          $(document).ajaxStop(function(){
+            setTimeout(function(){// wait for 1 secs(2)
+              window.location.reload(); // then reload the page.(3)
+            }, 1000);
+          });
         }  
       });
 
