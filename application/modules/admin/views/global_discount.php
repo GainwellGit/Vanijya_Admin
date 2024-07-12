@@ -872,11 +872,11 @@ div#sample_1_length {
             console.error(error);
             }
           });
-          // $(document).ajaxStop(function(){
-          //   setTimeout(function(){// wait for 1 secs(2)
-          //     window.location.reload(); // then reload the page.(3)
-          //   }, 1000); 
-          // });
+          $(document).ajaxStop(function(){
+            setTimeout(function(){// wait for 1 secs(2)
+              window.location.reload(); // then reload the page.(3)
+            }, 1000); 
+          });
         }  
       });
 

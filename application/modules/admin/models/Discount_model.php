@@ -230,7 +230,7 @@ class Discount_model extends CI_Model {
 			}
 
 			$new_mat_arr = array_values(array_filter($new_mat_arr));
-			// $exist_mat_arr = array_values(array_filter($exist_mat_arr));
+			$exist_mat_arr = array_values(array_filter($exist_mat_arr));
 
 			if (empty($exist_mat_arr)) {
 				$this->db->insert_batch('global_discount_materials', $new_mat_arr);
