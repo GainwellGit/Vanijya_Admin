@@ -193,8 +193,7 @@ div#sample_1_length {
                       <td><span id="disf-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['from_date']) ? date('d-m-Y', strtotime($globaldiscounts['from_date'])) : ''; ?></span></td>
                       <td><span id="disto-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['to_date']) ? date('d-m-Y', strtotime($globaldiscounts['to_date'])) : ''; ?></span></td>
                       <td><span id="diso-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['discount_on']) ? $globaldiscounts['discount_on'] . $material_all : ''; ?></span></td>
-                      <td>
-                      <td><span id="dis-mat-grp-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['group_code']) ? $globaldiscounts['group_description'] . '(' . $globaldiscounts['group_code'] . ')' : ''; ?></span></td>
+                      <td><span id="dis-mat-grp-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['group_code']) ? $globaldiscounts['group_description'] . ' (' . $globaldiscounts['group_code'] . ')' : ''; ?></span></td>
                       <td>
                         <span id="diss-<?php echo $globaldiscounts['id']; ?>">
                         <?php if($globaldiscounts['status']=='A'){ ?>
