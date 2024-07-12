@@ -169,10 +169,8 @@ class Discount_model extends CI_Model {
 
 	public function save_discount($id,$distype,$disval,$dismina,$disfrom,$disto,$dison,$dismatgrp,$mattype,$dismat,$disstatus){
 		if($dismat){
-			$string_mat = $dismat;
-			$dis_mat_arr = explode(',', $string_mat);
-
-			echo "<pre>"; print_r($dis_mat_arr); die();
+			// $string_mat = $dismat;
+			$dis_mat_arr = explode(',', $dismat);
 		}
 
 		$this->db->select('id');
