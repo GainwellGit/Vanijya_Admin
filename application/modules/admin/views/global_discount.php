@@ -182,7 +182,7 @@ div#sample_1_length {
                     <?php if (!empty($globaldiscount)){
                       $counter = 1; 
                       foreach( $globaldiscount as $globaldiscounts){
-                        $material_all = (isset($globaldiscounts['all_select']) && $globaldiscounts['all_select'] == 1) ? '(ALL)' : '';
+                        $material_all = (isset($globaldiscounts['all_select']) && $globaldiscounts['all_select'] == 1) ? ' (ALL)' : '';
                     ?>
                       <tr>
                       <td><span><?php echo $counter ;?></span></td>
