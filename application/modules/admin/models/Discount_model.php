@@ -204,7 +204,7 @@ class Discount_model extends CI_Model {
 		$fetch_data = $this->db->query($query);
 
 		// $fetch_data = $this->db->get();
-		echo $this->db->last_query(); die();
+		// echo $this->db->last_query(); die();
 
 		if($fetch_data->num_rows() > 0 ){
 			$gettype = $fetch_data->result_array();
