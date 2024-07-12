@@ -169,18 +169,19 @@ class Discount_model extends CI_Model {
 
 	public function save_discount($id,$distype,$disval,$dismina,$disfrom,$disto,$dison,$dismatgrp,$mattype,$dismat,$disstatus){
 		$query = 'SELECT `id` FROM `global_discounts` WHERE `status` = "A"';
-		if($dison == 'MATERIAL'){
+		if ($dison == 'MATERIAL') {
 			$query .= ' AND `discount_on` = "ALL"';
 		}
-		$query .= ' AND ((DATE(from_date) >= ' . $disfrom . ' AND DATE(from_date) <= ' . $disto . ')';
-		$query .= ' OR (DATE(to_date) >= ' . $disfrom . ' AND DATE(to_date) <= ' . $disto . '))';
+		$query .= ' AND ((DATE(from_date) >= "' . $disfrom . '" AND DATE(from_date) <= "' . $disto . '")';
+		$query .= ' OR (DATE(to_date) >= "' . $disfrom . '" AND DATE(to_date) <= "' . $disto . '"))';
 
 		$fetch_data = $this->db->query($query);
 
-		if($fetch_data->num_rows() > 0 ){
+		echo $this->db->last_query(); echo $fetch_data->num_rows(); die();
+
+		if ($fetch_data->num_rows() > 0) {
 			$gettype = $fetch_data->result_array();
-			
-			foreach($gettype as $row){
+			foreach ($gettype as $row) {
 				$this->db->where(['id' => $row['id']]);
 				$this->db->update('global_discounts', ['status' => 'I', 'updated_at' => date("Y-m-d h:i:s")]);
 			}
@@ -197,21 +198,6 @@ class Discount_model extends CI_Model {
 		if ($all_select == 1) {
 			$this->db->flush_cache();
 			$this->db->reset_query();
-			// $this->db->where(['material_group_code' => $dismatgrp]);
-			// $this->db->where(
-			// 	array(
-            //         'DATE(from_date) >=' => $disfrom,
-            //         'DATE(from_date) <=' => $disto,
-            //     )
-			// );
-			// $this->db->or_where(
-			// 	array(
-            //         'DATE(to_date) >=' => $disfrom,
-            //         'DATE(to_date) <=' => $disto,
-            //     )
-			// );
-			// $this->db->where($query1);
-			// $this->db->update('global_discounts', ['status' => 'I', 'updated_at' => date("Y-m-d h:i:s")]);
 
 			$query1 = 'UPDATE `global_discounts` SET `status` = "I", `updated_at` = "' . date("Y-m-d h:i:s") . '" WHERE ';
 			$query1 .= ' `material_group_code` = "' . $dismatgrp . '"';
