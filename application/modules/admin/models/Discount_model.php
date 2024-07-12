@@ -213,10 +213,10 @@ class Discount_model extends CI_Model {
 			// $this->db->where($query1);
 			// $this->db->update('global_discounts', ['status' => 'I', 'updated_at' => date("Y-m-d h:i:s")]);
 
-			$query1 = 'UPDATE `global_discounts` SET `status` = "I", `updated_at` = ' . date("Y-m-d h:i:s") . ' WHERE ';
+			$query1 = 'UPDATE `global_discounts` SET `status` = "I", `updated_at` = "' . date("Y-m-d h:i:s") . '" WHERE ';
 			$query1 .= ' `material_group_code` = ' . $dismatgrp . '';
-			$query1 .= ' AND ((DATE(from_date) >= ' . $disfrom . ' AND DATE(from_date) <= ' . $disto . ')';
-			$query1 .= ' OR (DATE(to_date) >= ' . $disfrom . ' AND DATE(to_date) <= ' . $disto . '))';
+			$query1 .= ' AND ((DATE(from_date) >= "' . $disfrom . '" AND DATE(from_date) <= "' . $disto . '")';
+			$query1 .= ' OR (DATE(to_date) >= "' . $disfrom . '" AND DATE(to_date) <= "' . $disto . '"))';
 
 			$this->db->query($query1);
 			echo $this->db->last_query(); die();
