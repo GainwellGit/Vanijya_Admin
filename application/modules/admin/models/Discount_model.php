@@ -265,8 +265,8 @@ class Discount_model extends CI_Model {
 		$this->db->where('material_group',$mat_grp);
 		$this->db->where('material_no',$material_no);
 		$fetch_data = $this->db->get();
-		echo $this->db->last_query();
 		if ($fetch_data->num_rows() > 0) {
+			echo "ffff";
 			$this->db->select('id');
 			$this->db->from('global_discounts');
 			$this->db->where('discount_on','MATERIAL');
@@ -276,6 +276,7 @@ class Discount_model extends CI_Model {
 			$where = '(to_date > now())';
 			$this->db->where($where);
 			$fetch_query1 = $this->db->get();
+			echo $this->db->last_query();
 			if ($fetch_query1->num_rows() == 0) {
 				$mat_arr = array();
 				$this->db->select('material_no');
