@@ -252,7 +252,6 @@ class Discount_model extends CI_Model {
 		$this->db->where('material_no',$material_no);
 		$fetch_data = $this->db->get();
 		if ($fetch_data->num_rows() > 0) {
-			echo "hiii";
 			$this->db->select('id');
 			$this->db->from('global_discounts');
 			$this->db->where('discount_on','MATERIAL');
@@ -262,6 +261,7 @@ class Discount_model extends CI_Model {
 			$this->db->where($where);
 			$fetch_query = $this->db->get();
 			if ($fetch_query->num_rows() == 0) {
+				echo "ddd";
 				$fetch_data = $fetch_query->result_array();
 				$mat_arr = array();
 				for ($i = 0; $i < count($fetch_data); $i++) {
@@ -275,12 +275,12 @@ class Discount_model extends CI_Model {
 					}
 				}
 				if (in_array($material_no, $mat_arr)) {
-					$exist = 1;
+					echo $exist = 1;
 				} else {
-					$exist = 0;
+					echo $exist = 0;
 				}
 			} else {
-				$exist = 1;
+				echo $exist = 1;
 			}
 		} else {
 			$exist = 1;
