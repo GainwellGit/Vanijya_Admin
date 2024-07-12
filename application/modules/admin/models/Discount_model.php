@@ -204,8 +204,20 @@ class Discount_model extends CI_Model {
 
 		if ($all_select == 1) {
 			$this->db->where(['material_group_code' => $dismatgrp]);
-			$this->db->where('date(from_date) BETWEEN ' . $disfrom . ' AND ' . $disto . '');
-			$this->db->or_where('date(to_date) BETWEEN ' . $disfrom . ' AND ' . $disto . '');
+			// $this->db->where('date(from_date) BETWEEN ' . $disfrom . ' AND ' . $disto . '');
+			// $this->db->or_where('date(to_date) BETWEEN ' . $disfrom . ' AND ' . $disto . '');
+			$this->db->where(
+				array(
+                    'DATE(from_date) >=' => $disfrom,
+                    'DATE(from_date) <=' => $disto,
+                )
+			);
+			$this->db->or_where(
+				array(
+                    'DATE(to_date) >=' => $disfrom,
+                    'DATE(to_date) <=' => $disto,
+                )
+			);
 			$this->db->update('global_discounts', ['status' => 'I', 'updated_at' => date("Y-m-d h:i:s")]);
 
 			$this->db->last_query(); die();
