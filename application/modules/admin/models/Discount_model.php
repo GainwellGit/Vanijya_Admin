@@ -173,7 +173,7 @@ class Discount_model extends CI_Model {
 		// 	$dis_mat_arr = explode(',', $dismat);
 		// }
 
-		$this->db->select('id');
+		/*$this->db->select('id');
 		$this->db->from('global_discounts');
 		$this->db->where('status','A');
 
@@ -187,14 +187,23 @@ class Discount_model extends CI_Model {
                 'DATE(from_date) <=' => $disto,
             )
 		);
-		$this->db->or_where(
+		$this->db->where(
 			array(
                 'DATE(to_date) >=' => $disfrom,
                 'DATE(to_date) <=' => $disto,
             )
-		);
+		);*/
 
-		$fetch_data = $this->db->get();
+		$query = 'SELECT `id` FROM `global_discounts` WHERE `status` = "A"';
+		if($dison == 'MATERIAL'){
+			$query .= ' AND `discount_on` = "ALL"';
+		}
+		$query .= ' AND ((DATE(from_date) >= ' . $disfrom . ' AND DATE(from_date) <= ' . $disto . ')';
+		$query .= ' OR (DATE(to_date) >= ' . $disfrom . ' AND DATE(to_date) <= ' . $disto . '))';
+
+		$fetch_data = $this->db->query($query);
+
+		// $fetch_data = $this->db->get();
 		echo $this->db->last_query(); die();
 
 		if($fetch_data->num_rows() > 0 ){
