@@ -265,6 +265,7 @@ class Discount_model extends CI_Model {
 		$this->db->where('material_group',$mat_grp);
 		$this->db->where('material_no',$material_no);
 		$fetch_data = $this->db->get();
+		echo $this->db->last_query();
 		if ($fetch_data->num_rows() > 0) {
 			$this->db->select('id');
 			$this->db->from('global_discounts');
