@@ -172,6 +172,7 @@ div#sample_1_length {
                       <th> From Date </th>
                       <th> To Date &nbsp;&nbsp;&nbsp;&nbsp;</th>
                       <th> Discount On </th>
+                      <th> Material Group </th>
                       <th> Status </th>
                       <th> Created At </th>
                       <th> Updated At </th>
@@ -192,6 +193,8 @@ div#sample_1_length {
                       <td><span id="disf-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['from_date']) ? date('d-m-Y', strtotime($globaldiscounts['from_date'])) : ''; ?></span></td>
                       <td><span id="disto-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['to_date']) ? date('d-m-Y', strtotime($globaldiscounts['to_date'])) : ''; ?></span></td>
                       <td><span id="diso-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['discount_on']) ? $globaldiscounts['discount_on'] . $material_all : ''; ?></span></td>
+                      <td>
+                      <td></td>
                       <td>
                         <span id="diss-<?php echo $globaldiscounts['id']; ?>">
                         <?php if($globaldiscounts['status']=='A'){ ?>
@@ -874,11 +877,11 @@ div#sample_1_length {
             console.error(error);
             }
           });
-          // $(document).ajaxStop(function(){
-          //   setTimeout(function(){// wait for 1 secs(2)
-          //     window.location.reload(); // then reload the page.(3)
-          //   }, 1000); 
-          // });
+          $(document).ajaxStop(function(){
+            setTimeout(function(){// wait for 1 secs(2)
+              window.location.reload(); // then reload the page.(3)
+            }, 1000);
+          });
         }  
       });
 
@@ -993,11 +996,11 @@ div#sample_1_length {
             console.error(error);
             }
           });
-          // $(document).ajaxStop(function(){
-          //   setTimeout(function(){// wait for 1 secs(2)
-          //     window.location.reload(); // then reload the page.(3)
-          //   }, 1000);
-          // });
+          $(document).ajaxStop(function(){
+            setTimeout(function(){// wait for 1 secs(2)
+              window.location.reload(); // then reload the page.(3)
+            }, 1000);
+          });
         }
       });
       

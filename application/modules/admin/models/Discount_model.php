@@ -14,12 +14,24 @@ class Discount_model extends CI_Model {
 		$this->db->order_by("id", "desc");
 		$fetch_data = $this->db->get();
 		if($fetch_data->num_rows() > 0 ){
-			$gettype = $fetch_data->result_array();	
+			$getdata = $fetch_data->result_array();
+		} else {
+			$getdata = array();
 		}
-		else{
-			$gettype = array();
+
+		foreach ($getdata as $key => $grp) {
+			if ($grp['material_group_code'] != '') {
+				$this->db->select('*');
+				$this->db->from('material_group');
+				$this->db->where("group_code", $grp['material_group_code']);
+				$fetch_grp_qry = $this->db->get();
+				$fetch_grp = $fetch_grp_qry->result_array();
+				$getdata[$key]['group_code'] = $fetch_grp[0]['group_code'];
+				$getdata[$key]['group_description'] = $fetch_grp[0]['group_description'];
+			}
 		}
-		return $gettype;
+
+		return $getdata;
     }
 
 	public function statusChange($id){

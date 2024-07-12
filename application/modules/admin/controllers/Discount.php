@@ -17,6 +17,7 @@ class Discount extends CI_Controller {
     public function list()
     {
         $getGlobalDiscount = $this->Discount_model->get_globaldiscount();
+        echo "<pre>"; print_r($getGlobalDiscount); die();
         $getMaterials = $this->Home_model->get_material();
         $getMaterialGroups = $this->Discount_model->get_all_group();
         
