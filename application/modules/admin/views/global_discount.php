@@ -172,7 +172,7 @@ div#sample_1_length {
                       <th> Minimum Amount </th>
                       <th> From Date </th>
                       <th> To Date &nbsp;&nbsp;&nbsp;&nbsp;</th>
-                      <th> Discount On </th>
+                      <th> Discount On &nbsp;&nbsp;&nbsp;&nbsp;</th>
                       <!-- <th> Material Group </th> -->
                       <th> Status </th>
                       <th> Created At </th>
