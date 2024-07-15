@@ -196,8 +196,8 @@ div#sample_1_length {
                       <td><span id="diso-<?php echo $globaldiscounts['id']; ?>">
                         <?php echo ($globaldiscounts['discount_on'] == 'ALL') ? 'ALL MATERIALS' : $globaldiscounts['group_description'] . ' (' . $globaldiscounts['group_code'] . ')' . $material_all; ?></span>
                       </td>
-                      <!-- <td><span id="dis-mat-grp-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['group_code']) ? $globaldiscounts['group_description'] . ' (' . $globaldiscounts['group_code'] . ')' : ''; ?></span></td>
-                      <td> -->
+                      <!-- <td><span id="dis-mat-grp-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['group_code']) ? $globaldiscounts['group_description'] . ' (' . $globaldiscounts['group_code'] . ')' : ''; ?></span></td> -->
+                      <td>
                         <span id="diss-<?php echo $globaldiscounts['id']; ?>">
                         <?php if($globaldiscounts['status']=='A'){ ?>
                         <label class="switch" data-id="<?php echo $globaldiscounts['id'] ?>">
