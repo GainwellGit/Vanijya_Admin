@@ -172,7 +172,7 @@ div#sample_1_length {
                       <th> Minimum Amount </th>
                       <th> From Date </th>
                       <th> To Date &nbsp;&nbsp;&nbsp;&nbsp;</th>
-                      <th> Discount On &nbsp;&nbsp;&nbsp;&nbsp;</th>
+                      <th style="width: 20% !important;"> Discount On </th>
                       <!-- <th> Material Group </th> -->
                       <th> Status </th>
                       <th> Created At </th>
@@ -184,7 +184,7 @@ div#sample_1_length {
                     <?php if (!empty($globaldiscount)){
                       $counter = 1; 
                       foreach( $globaldiscount as $globaldiscounts){
-                        $material_all = (isset($globaldiscounts['all_select']) && $globaldiscounts['all_select'] == 1) ? ' - (ALL)' : ' - (SELECTED)';
+                        $material_all = (isset($globaldiscounts['all_select']) && $globaldiscounts['all_select'] == 1) ? ' - (ALL)' : ' - (SELECTIVE)';
                     ?>
                       <tr>
                       <td><span><?php echo $counter ;?></span></td>
