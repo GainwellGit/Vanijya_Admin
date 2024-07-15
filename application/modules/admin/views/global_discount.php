@@ -2,7 +2,7 @@
 
 <style type="text/css">
   
-  /* The switch - the box around the slider */
+/* The switch - the box around the slider */
 .switch {
   position: relative;
   display: inline-block;
@@ -66,24 +66,24 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 .content2 {
-    /* min-height: 250px; */
-    padding: 3px;
-    margin-right: auto;
-    margin-left: auto;
-    padding-left: 0;
-    padding-right: 0;
+  /* min-height: 250px; */
+  padding: 3px;
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 0;
+  padding-right: 0;
 }
 .download_sample {margin-top: 10px; display: block;}
 .box2 {
-    position: relative;
-    border-radius: 3px;
-    background: #ffffff;
-    border: 3px solid #d2d6de;
-    margin-top: 15px;
-    margin-bottom: -11px;
-    width: 100%;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-    padding: 10px
+  position: relative;
+  border-radius: 3px;
+  background: #ffffff;
+  border: 3px solid #d2d6de;
+  margin-top: 15px;
+  margin-bottom: -11px;
+  width: 100%;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  padding: 10px
 }
 .exception .dt-buttons {
     display: none;
@@ -107,7 +107,7 @@ div#sample_1_length {
 </style>
 
 <head>
-
+<link rel="stylesheet" href="https://demos.codexworld.com/multi-select-dropdown-list-with-checkbox-jquery/js/multiselect/jquery.multiselect.css">
 </head>
   <!-- BEGIN CONTENT -->
   <div class="page-content-wrapper">
@@ -600,7 +600,7 @@ div#sample_1_length {
           data:'material_group='+val,
           dataType: "json",
           success: function(response){
-            html +='<label for="add_mat"> Materials </label><select class="form-control" id="add_mat" name="material_no" multiple multiselect-search="true">';
+            html +='<label for="add_mat"> Materials </label><select class="form-control" id="add_mat" name="material_no" multiple>';
             $.each(response,function (index, val) {
               html+='<option value="'+val.material_no+'">'+val.material_description+' ('+val.material_no+')</option>';
             });
@@ -1055,5 +1055,16 @@ div#sample_1_length {
 <script src="<?php echo base_url(); ?>assets/pages/scripts/table-datatables-rowreorder.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/group.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/toastr.min.js" type="text/javascript"></script>
-<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script> -->
-<script src="<?php echo base_url(); ?>assets/js/multiselect-dropdown.js"></script>
+<script src="https://demos.codexworld.com/multi-select-dropdown-list-with-checkbox-jquery/js/multiselect/jquery.multiselect.js"></script>
+<script>
+    $(function(){
+        $('#add_mat').multiselect({
+            columns: 1,
+            texts: {
+                placeholder: 'Select Materials',
+                search     : 'Search Materials'
+            },
+            search: true
+        });
+    })
+</script>
