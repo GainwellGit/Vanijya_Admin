@@ -168,11 +168,11 @@ div#sample_1_length {
                     <tr>
                       <th> Sl. No. </th>
                       <th> Discount Type </th>
-                      <th> Discount Percentage </th>
-                      <th> Minimum Amount </th>
+                      <th> Discount % </th>
+                      <th> Min Amount </th>
                       <th> From Date </th>
                       <th> To Date &nbsp;&nbsp;&nbsp;&nbsp;</th>
-                      <th style="width: 20% !important;"> Discount On </th>
+                      <th> Discount On &nbsp;&nbsp;&nbsp;&nbsp;</th>
                       <!-- <th> Material Group </th> -->
                       <th> Status </th>
                       <th> Created At </th>
@@ -209,7 +209,7 @@ div#sample_1_length {
                       </td>
                       <td><span id="disc-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['created_at']) ? date('d-m-Y', strtotime($globaldiscounts['created_at'])) : ''; ?></span></td>
                       <td><span id="disu-<?php echo $globaldiscounts['id']; ?>"><?php echo isset($globaldiscounts['updated_at']) ? date('d-m-Y', strtotime($globaldiscounts['updated_at'])) : ''; ?></span></td>
-                      <td><?php if($globaldiscounts['status']!='A'){ ?>
+                      <td align="center"><?php if($globaldiscounts['status']!='A'){ ?>
                         <a data-id="<?php echo $globaldiscounts['id']; ?>" data-disid="<?php echo $globaldiscounts['id'] ;?>" data-distype="<?php echo $globaldiscounts['discount_type'] ;?>" data-disval="<?php echo $globaldiscounts['discount_value']; ?>" data-dismina="<?php echo $globaldiscounts['min_ammount']; ?>" data-disfrom="<?php echo $globaldiscounts['from_date']; ?>" data-disto="<?php echo $globaldiscounts['to_date']; ?>" data-dison="<?php echo $globaldiscounts['discount_on']; ?>" data-matgrp="<?php echo $globaldiscounts['material_group_code']; ?>" data-allselect="<?php echo $globaldiscounts['all_select']; ?>" data-disstatus="<?php echo $globaldiscounts['status']; ?>" href="#" class="popupDynamic" ><i class="fa fa-clone"></i></a>
                         <?php } ?>
                       </td>
