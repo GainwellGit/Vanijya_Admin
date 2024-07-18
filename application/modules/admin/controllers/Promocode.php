@@ -5,6 +5,7 @@ class Promocode extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('Promocode_model');
+        $this->load->model('Group_model');
         $this->load->model('Home_model');
         $this->load->model('Location_model');
         $this->load->library('excel');
@@ -17,18 +18,40 @@ class Promocode extends CI_Controller {
     public function list()
     {
         $getGlobalPromocode = $this->Promocode_model->get_globalpromocode();
+        $getMaterialGroups = $this->Group_model->getAllGroup();
         $getMaterials = $this->Home_model->get_material();
         $getAllCustomers = $this->Promocode_model->get_allcustomers();
         $getAllRegions = $this->Location_model->getAllLocation();
         $getAllZones = $this->Promocode_model->getAllZone();
         
         $data['globalpromocode'] = $getGlobalPromocode;
+        $data['allmaterialgrps'] = $getMaterialGroups;
         $data['allmaterials'] = $getMaterials;
         $data['allcustomers'] = $getAllCustomers;
         $data['allregions'] = $getAllRegions;
         $data['allzones'] = $getAllZones;
 
         $this->load->ftemplate('global_promocode',$data);
+    }
+
+    public function get_materials(){
+        $matgrp       = $this->input->post('material_group');
+        $getMaterials = $this->Promocode_model->get_material($matgrp);
+        
+        echo json_encode($getMaterials);
+    }
+
+    public function changestatus(){
+        $id             = $this->input->post('promocodeId');
+        $changeStatus   = $this->Promocode_model->statusChange($id);
+        
+        /* $response['success']='true';
+        return $response; */
+
+        $request = array('success'=>$changeStatus); 
+        $response = json_encode($request);
+        header('Content-Type: application/json');
+        echo $response;
     }
 
     public function check_promocode() {
@@ -38,9 +61,11 @@ class Promocode extends CI_Controller {
     }
 
     public function get_discounton_typerecords(){
-        $disid    = $this->input->post('dis_id');
-        $dison    = $this->input->post('dison');
-        $getlists = $this->Promocode_model->get_dison_selectlist($disid, $dison);
+        $disid     = $this->input->post('dis_id');
+        $dison     = $this->input->post('dison');
+        $matgrp    = $this->input->post('group_code');
+        $allselect = $this->input->post('allselect');
+        $getlists  = $this->Promocode_model->get_dison_selectlist($disid, $dison, $matgrp, $allselect);
         echo json_encode($getlists);
     }
 
@@ -53,6 +78,8 @@ class Promocode extends CI_Controller {
         $disfrom   = $this->input->post('disfrom');
         $disto 	   = $this->input->post('disto');
         $dison     = $this->input->post('dison');
+        $dismatgrp = $this->input->post('dismatgrp');
+        $mattype   = $this->input->post('mattype');
         $dismat    = ($dison=='MATERIAL-GROUP')?$this->input->post('dismat'):'';
         $discust   = ($dison=='CUSTOMER')? $this->input->post('discust'):'';
         $disreg    = ($dison=='REGION')? $this->input->post('disreg'):'';
@@ -63,7 +90,22 @@ class Promocode extends CI_Controller {
         $request = array();
         if ( !empty($dispromo) ) {
             // code...
-            $data_1 = $this->Promocode_model->save_promocode($id,$dispromo,$dispdes,$distype,$disval,$dismina,$disfrom,$disto,$dison,$dismat,$discust,$disreg,$diszone,$disstatus); 
+            $data_1 = $this->Promocode_model->save_promocode($id,$dispromo,$dispdes,$distype,$disval,$dismina,$disfrom,$disto,$dison,$dismatgrp,$mattype,$dismat,$discust,$disreg,$diszone,$disstatus); 
+            //echo '<pre>';print_r($data_1);die('94');
+            if(is_array($data_1) && $dison=='CUSTOMER'){
+                $statusMsg = 'The following customers are not exist:<br>';
+                foreach($data_1 as $data){
+                    $statusMsg .= $data['customer_code'].'<br>';
+                }
+                $this->session->set_flashdata('message',$statusMsg);
+            }
+            if(is_array($data_1) && $dison=='MATERIAL-GROUP'){
+                $statusMsg = 'The following materials are not exist in '.$dismatgrp.' group:<br>';
+                foreach($data_1 as $data){
+                    $statusMsg .= $data['material_no'].'<br>';
+                }
+                $this->session->set_flashdata('message',$statusMsg);
+            }
             $request = array('success'=>true , 'data' => $data_1);     
         }else{
             $request = array('success'=>false , 'data' => 'Empty values' , 'dismina'=> $dismina , 'id'=> $id);
@@ -108,17 +150,8 @@ class Promocode extends CI_Controller {
                 $highestRow = $worksheet->getHighestRow();
                 $highestColumn = $worksheet->getHighestColumn();
                 $materials_arr = array();
-                $promocode='';
-                $promo_des='';
-                $discount_type='';
-                $discount_value='';
-                $min_ammount='';
-                $status='';
-                $valid_from='';
-                $valid_to='';
 
-
-                for($row=2; $row<=$highestRow; $row++) {
+                for($row = 2 ; $row <= $highestRow ; $row++) {
                     if($row == 2){
                         $promocode      = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
                         $promo_des      = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
@@ -129,22 +162,21 @@ class Promocode extends CI_Controller {
                         $to_date        = $worksheet->getCellByColumnAndRow(7, $row)->getValue();
                         $status         = $worksheet->getCellByColumnAndRow(8, $row)->getValue();
 
-                        $date_from = PHPExcel_Shared_Date::ExcelToPHP($from_date); //unix
-                        $valid_from= gmdate("Y-m-d", $date_from); //date
+                        $date_from      = PHPExcel_Shared_Date::ExcelToPHP($from_date);
+                        $valid_from     = gmdate("Y-m-d", $date_from);
                         
-                        $date_to = PHPExcel_Shared_Date::ExcelToPHP($to_date); //unix
-                        $valid_to= gmdate("Y-m-d", $date_to); //date
+                        $date_to        = PHPExcel_Shared_Date::ExcelToPHP($to_date);
+                        $valid_to       = gmdate("Y-m-d", $date_to);
                     }
                     
-                    if($worksheet->getCellByColumnAndRow(0, $row)->getValue()){
-                        $materials_arr[] = $worksheet->getCellByColumnAndRow(0, $row)->getValue();continue;
-
+                    $mat = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
+                    if($mat){
+                        $materials_arr[] = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
                     }else{
-                        echo $discount_type.'<br>';die('128');
-                        $bulk_upload= $this->Promocode_model->save_promocode('',$promocode,$promo_des,$discount_type,$discount_value,$min_ammount,$valid_from,$valid_to,'MATERIAL-GROUP',$materials_arr,null,null,null,$status);
+                        echo $discount_type.'<br><pre>';print_r($materials_arr);die('128');
+                        $bulk_upload= $this->Promocode_model->save_promocode('',$promocode,$promo_des,$discount_type,$discount_value,$min_ammount,$valid_from,$valid_to,'MATERIAL-GROUP',$materials_arr,'','','',$status);
                         break;
                     }
-                    echo '<pre>';print_r($materials_arr);die('139');
                 }
             }
 
@@ -307,6 +339,15 @@ class Promocode extends CI_Controller {
                 unlink($path);
             } */
         }
+    }
+
+    public function download_excel()
+    {
+        $file_url =base_url('assets/csv/select_bulk_customers.xlsx');//echo $file_url;die;
+        header('Content-Type: application/octet-stream');
+        header("Content-Transfer-Encoding: Binary"); 
+        header("Content-disposition: attachment; filename=\"" . basename($file_url) . "\""); 
+        readfile($file_url);
     }
 }
 
