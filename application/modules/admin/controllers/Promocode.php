@@ -5,6 +5,7 @@ class Promocode extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('Promocode_model');
+        $this->load->model('Discount_model');
         $this->load->model('Group_model');
         $this->load->model('Home_model');
         $this->load->model('Location_model');
@@ -18,7 +19,8 @@ class Promocode extends CI_Controller {
     public function list()
     {
         $getGlobalPromocode = $this->Promocode_model->get_globalpromocode();
-        $getMaterialGroups = $this->Group_model->getAllGroup();
+        // $getMaterialGroups = $this->Group_model->getAllGroup();
+        $getMaterialGroups = $this->Discount_model->get_all_group();
         $getMaterials = $this->Home_model->get_material();
         $getAllCustomers = $this->Promocode_model->get_allcustomers();
         $getAllRegions = $this->Location_model->getAllLocation();

@@ -346,20 +346,24 @@ div#sample_1_length {
             
           </div>
           <div class="form-group" id="add_excel_file" style="display:none;">
-            <input type='file' name='file' id='file' required accept=".xls, .xlsx">
+            <input type='file' class="form-control" name='file' id='file' required accept=".xls, .xlsx">
             <input type="hidden" class="form-control" id="add_bulk_mats">
             <div class="invalid-feedback-excelfile" style="color:red;" style="display:none;"></div>
           </div>
-          <div class="form-group" id="download_sample" style="display:none;">
+          <div class="form-group" id="download_sample_mat" style="display:none;">
             <a href="<?php echo base_url(); ?>admin/discount/download_excel">
-              <button type="button" class="btn btn-primary downloadquiz" id="btn_downloadquiz" name="btn_downloadquiz"> 
+              <!-- <button type="button" class="btn btn-primary downloadquiz" id="btn_downloadquiz" name="btn_downloadquiz"> 
                 Sample Material Template
-              </button>
-            </a> 
+              </button> -->
+              Sample Material Template
+            </a>
+          </div>
+          <div class="form-group" id="download_sample_cust" style="display:none;">
             <a href="<?php echo base_url(); ?>/admin/promocode/download_excel">
-              <button type="button" class="btn btn-primary downloadquiz" id="btn_downloadquiz" name="btn_downloadquiz"> 
+              <!-- <button type="button" class="btn btn-primary downloadquiz" id="btn_downloadquiz" name="btn_downloadquiz"> 
                 Sample Customer Template
-              </button>
+              </button> -->
+              Sample Customer Template
             </a>
           </div>
           <div class="form-group" id="add_cust_sec">
@@ -633,7 +637,8 @@ div#sample_1_length {
       $('#add_zone_sec').hide();
       $('#add_checkbox_forbulk').hide();
       $('#add_excel_file').hide();
-      $('#download_sample').hide();
+      $('#download_sample_mat').hide();
+      $('#download_sample_cust').hide();
 
       $('.invalid-feedback-distype').text('');
       $('.invalid-feedback-disval').text('');
@@ -840,7 +845,8 @@ div#sample_1_length {
         $('select[name="chose_radio"]:checked').removeAttr('checked');
         $('#add_mat_sec').hide();
         $('#add_excel_file').hide();
-        $('#download_sample').hide();
+        $('#download_sample_mat').hide();
+        $('#download_sample_cust').hide();
       }
 
       if(val == 'CUSTOMER'){
@@ -853,7 +859,8 @@ div#sample_1_length {
         $('#add_checkbox_forbulk').hide();
         $('#add_cust_sec').hide();
         $('#add_excel_file').hide();
-        $('#download_sample').hide();
+        $('#download_sample_mat').hide();
+        $('#download_sample_cust').hide();
       }
 
       if(val == 'REGION'){
@@ -904,7 +911,7 @@ div#sample_1_length {
         var promocodeId = $(this).closest('.switch').data("id");
   
         if (!isChecked) {
-          if (confirm('Are you sure you want to uncheck the checkbox?')) {
+          if (confirm('Are you sure you want to disable the promocode?')) {
             $.ajax({
               method: "POST",
               url: "<?php echo site_url('/admin/promocode/changestatus'); ?>",
@@ -929,7 +936,8 @@ div#sample_1_length {
 
       $('#allopt').on('click', function(e){
         $('#add_excel_file').hide();
-        $('#download_sample').hide();
+        $('#download_sample_mat').hide();
+        $('#download_sample_cust').hide();
         $('.invalid-feedback-excelfile').hide();
         $('#add_mat_sec').hide();
         $('#add_cust_sec').hide();
@@ -937,7 +945,8 @@ div#sample_1_length {
 
       $('#selectopt').on('click', function(e){
         $('#add_excel_file').hide();
-        $('#download_sample').hide();
+        $('#download_sample_mat').hide();
+        $('#download_sample_cust').hide();
         $('.invalid-feedback-excelfile').hide();
         if($('#selectopt').val() == 'Choose Material'){
           $('#add_mat_sec').show();
@@ -955,7 +964,8 @@ div#sample_1_length {
       $('#bulkopt').on('click', function(e){
         $('#add_excel_file').show();
         $('.invalid-feedback-excelfile').show();
-        $('#download_sample').show();
+        $('#download_sample_mat').show();
+        $('#download_sample_cust').show();
         $('#add_mat_sec').hide();
         $('#add_cust_sec').hide();
       });
