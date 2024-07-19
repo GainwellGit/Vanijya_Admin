@@ -1287,7 +1287,8 @@ div#sample_1_length {
           $('.invalid-feedback-excelfile').hide();
         }
         
-        if((distype != '') && (dispromo != '') && (disfrom < disto) && (dispdes != '') && (disval != '') && (dismina != '') && (disfrom != '') && (disto != '') && ((disonusrgrp == 'ALL') || (disonusrgrp == 'CUSTOMER' && (discust != null || file_cust != '' || uploaded_cust != '')) || (disonusrgrp == 'REGION' && disreg != null) || (disonusrgrp == 'ZONE' && diszone != null) || (custtypeid == 'bulk_cust' && file_cust != null)) && ((dison == 'ALL') || (dison == 'MATERIAL-GROUP' && (dismat != null || file != '' || uploaded_mats != '')) || (mattypeid == 'bulk_mat' && file != null))){
+        // if((distype != '') && (dispromo != '') && (disfrom < disto) && (dispdes != '') && (disval != '') && (dismina != '') && (disfrom != '') && (disto != '') && ((disonusrgrp == 'ALL') || (disonusrgrp == 'CUSTOMER' && (discust != null || file_cust != '' || uploaded_cust != '')) || (disonusrgrp == 'REGION' && disreg != null) || (disonusrgrp == 'ZONE' && diszone != null) || (custtypeid == 'bulk_cust' && file_cust != null)) && ((dison == 'ALL') || (dison == 'MATERIAL-GROUP' && (dismat != null || file != '' || uploaded_mats != '')) || (mattypeid == 'bulk_mat' && file != null))){
+        if((distype != '') && (dispromo != '') && (disfrom < disto) && (dispdes != '') && (disval != '') && (dismina != '') && (disfrom != '') && (disto != '') && ((disonusrgrp == 'ALL') || (disonusrgrp == 'REGION' && disreg != null) || (disonusrgrp == 'ZONE' && diszone != null) || (custtypeid == 'bulk_cust' && file_cust != null)) && ((dison == 'ALL') || (dison == 'MATERIAL-GROUP') || (mattypeid == 'bulk_mat' && file != null))){
           var data = {
             distype: distype,
             disval: disval,
