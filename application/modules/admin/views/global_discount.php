@@ -246,21 +246,6 @@ div#sample_1_length {
             <label for="add_distype"> Discount Type </label>
             <input type="text" class="form-control" id="add_distype" name="discount_type" value="PERCENT" disabled>
             <div class="invalid-feedback-distype" style="color:red;"></div>
-
-            <select name="langOpt" multiple id="langOpt">
-                <option value="C++">C++</option>
-                <option value="C#">C#</option>
-                <option value="Java">Java</option>
-                <option value="Objective-C">Objective-C</option>
-                <option value="JavaScript">JavaScript</option>
-                <option value="Perl">Perl</option>
-                <option value="PHP">PHP</option>
-                <option value="Ruby on Rails">Ruby on Rails</option>
-                <option value="Android">Android</option>
-                <option value="iOS">iOS</option>
-                <option value="HTML">HTML</option>
-                <option value="XML">XML</option>
-            </select>
           </div>
           <div class="form-group">
             <label for="add_disval"> Discount Percentage </label>
@@ -546,7 +531,7 @@ div#sample_1_length {
             $("#grp_display_list").html(html1);
 
             if(response.length > 0 && allselect != 1){
-              html +='<label for="add_mat"> Materials </label><select class="form-control" id="dismat" name="material_no" disabled>';
+              html +='<label for="dismat"> Materials </label><select class="form-control" id="dismat" name="material_no" disabled>';
               $.each(response,function (index, val) {
                 html+='<option value="'+val.material_no+'" selected>'+val.material_description+' ('+val.material_no+')</option>';
               });
@@ -615,7 +600,7 @@ div#sample_1_length {
           data:'material_group='+val,
           dataType: "json",
           success: function(response){
-            html +='<label for="add_mat"> Materials </label><select class="form-control" id="add_mat" name="material_no" multiple>';
+            html +='<label for="add_mat"> Materials </label><select id="add_mat" name="material_no" multiple>';
             $.each(response,function (index, val) {
               html+='<option value="'+val.material_no+'">'+val.material_description+' ('+val.material_no+')</option>';
             });
@@ -1073,7 +1058,7 @@ div#sample_1_length {
 <script src="https://demos.codexworld.com/multi-select-dropdown-list-with-checkbox-jquery/js/multiselect/jquery.multiselect.js"></script>
 <script>
     $(function(){
-        $('#langOpt').multiselect({
+        $('#add_mat').multiselect({
             columns: 1,
             texts: {
                 placeholder: 'Select Materials',
