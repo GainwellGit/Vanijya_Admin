@@ -909,7 +909,6 @@ div#sample_1_length {
         $('#add_checkbox_for_cust').hide();
         $('#add_cust_sec').hide();
         $('#add_excel_file_cust').hide();
-        $('#download_sample_mat').hide();
         $('#download_sample_cust').hide();
       }
 
@@ -932,13 +931,12 @@ div#sample_1_length {
       if(val == 'MATERIAL-GROUP'){
         $('#add_mat_grp_sec').show();
       }else{
+        $('#add_checkbox_for_mat').hide();
         $('#add_mat_grp_sec').hide();
         $('#add_mat_grp').val('');
-        $('select[name="chose_radio"]:checked').removeAttr('checked');
         $('#add_mat_sec').hide();
         $('#add_excel_file').hide();
         $('#download_sample_mat').hide();
-        $('#download_sample_cust').hide();
       }
     }
 
