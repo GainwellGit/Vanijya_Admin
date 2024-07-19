@@ -54,7 +54,6 @@ class Promocode_model extends CI_Model {
 	}
 
 	public function statusChange($id){
-
     	$this->db->select('*');
 		$this->db->from('promo_codes');
 		$this->db->where('id',$id);
@@ -265,7 +264,7 @@ class Promocode_model extends CI_Model {
 		return true;
 	} */
 
-	public function save_promocode($id,$dispromo,$dispdes,$distype,$disval,$dismina,$disfrom,$disto,$dison,$dismatgrp,$mattype,$dismat,$discust,$disreg,$diszone,$disstatus){
+	public function save_promocode($id,$dispromo,$dispdes,$distype,$disval,$dismina,$disfrom,$disto,$disonusrgrp,$diszone,$disreg,$custtype,$discust,$dison,$dismatgrp,$mattype,$dismat,$disstatus){
 		if(is_string($dismat) && !empty($dismat)){
 			$string_mat = $dismat;
 			$dismat = explode(',', $string_mat);
@@ -275,7 +274,7 @@ class Promocode_model extends CI_Model {
 			$discust = explode(',', $string_mat);
 		}
 
-		if($dison=='MATERIAL-GROUP'||$dison=='CUSTOMER'){
+		if($dison == 'MATERIAL-GROUP'){
 			if ($mattype == '') {
 				$all_select = 0;
 			} else if ($mattype == 'All') {
@@ -290,14 +289,14 @@ class Promocode_model extends CI_Model {
 		}
 		
 		if($dison == 'ALL' || $mattype == 'All' || !empty($dismat) || !empty($discust) || !empty($disreg) || !empty($diszone)){
-			$data = ['promocode' => $dispromo, 'description' => $dispdes, 'discount_type' => $distype, 'discount_value' => $disval, 'min_ammount' => $dismina, 'from_date' => $disfrom, 'to_date' => $disto, 'discount_on' => $dison, 'material_group_code' => $dismatgrp, 'all_select' => $all_select, 'status' => 'A', 'created_at' => date("Y-m-d h:i:s"), 'updated_at' => null];
+			$data = ['promocode' => $dispromo, 'description' => $dispdes, 'discount_type' => $distype, 'discount_value' => $disval, 'min_ammount' => $dismina, 'from_date' => $disfrom, 'to_date' => $disto, 'discount_on_user_grp' => $disonusrgrp, 'discount_on' => $dison, 'material_group_code' => $dismatgrp, 'material_all_select' => $all_select, 'status' => 'A', 'created_at' => date("Y-m-d h:i:s"), 'updated_at' => null];
 
 			$this->db->insert('promo_codes',$data);
 			$insert_id = $this->db->insert_id();
 		}
 
-		$newArray=array();
-		if($dison=='MATERIAL-GROUP' && $mattype != 'All' && !empty($dismat)){
+		$newArray = array();
+		if($dison == 'MATERIAL-GROUP' && $mattype != 'All' && !empty($dismat)){
 			$newArray = array();
 			$notexist_mat_arr = array();
 			foreach($dismat as $mat){
@@ -337,7 +336,7 @@ class Promocode_model extends CI_Model {
 			}
 		}
 
-		if($dison=='CUSTOMER' && $mattype != 'All' && !empty($discust)){
+		if($dison == 'CUSTOMER' && $mattype != 'All' && !empty($discust)){
 			$newArray = array();
 			$notexist_cust_arr = array();
 			foreach($discust as $cust){
@@ -353,7 +352,7 @@ class Promocode_model extends CI_Model {
 				$notexist_cust_arr[] = $notextcust;
 			}
 
-			$newArray 		   = array_values(array_filter($newArray));
+			$newArray = array_values(array_filter($newArray));
 			$notexist_cust_arr = array_values(array_filter($notexist_cust_arr));
 			
 			if(!empty($newArray)){
@@ -370,7 +369,7 @@ class Promocode_model extends CI_Model {
 			}
 		}
 
-		if($dison=='REGION'){
+		if($dison == 'REGION'){
 			foreach($disreg as $reg){
 				$matdata['discount_id'] = $insert_id;
 				$matdata['region'] = $reg;
@@ -381,7 +380,7 @@ class Promocode_model extends CI_Model {
 			$this->db->insert_batch('promo_codes_region', $newArray);
 		}
 
-		if($dison=='ZONE'){
+		if($dison == 'ZONE'){
 			foreach($diszone as $zone){
 				$matdata['discount_id'] = $insert_id;
 				$matdata['zone'] = $zone;

@@ -1,5 +1,3 @@
-<html>
-
 <style type="text/css">
   
   /* The switch - the box around the slider */
@@ -105,9 +103,6 @@ div#sample_1_length {
     }
 </style>
 
-<head>
-
-</head>
   <!-- BEGIN CONTENT -->
   <div class="page-content-wrapper">
     <!-- BEGIN CONTENT BODY -->
@@ -222,9 +217,9 @@ div#sample_1_length {
                       <td><span id="disc-<?php echo $globalpromocodes['id']; ?>"><?php echo isset($globalpromocodes['created_at']) ? date('d-m-Y', strtotime($globalpromocodes['created_at'])) : ''; ?></span></td>
                       <td><span id="disu-<?php echo $globalpromocodes['id']; ?>"><?php echo isset($globalpromocodes['updated_at']) ? date('d-m-Y', strtotime($globalpromocodes['updated_at'])) : ''; ?></span></td>
                       <td>
-                        <?php if($globalpromocodes['status']!='A'){ ?>
-                        <a data-id="<?php echo $globalpromocodes['id']; ?>" data-disid="<?php echo $globalpromocodes['id'] ;?>" data-distype="<?php echo $globalpromocodes['discount_type'] ;?>" data-disval="<?php echo $globalpromocodes['discount_value']; ?>" data-dismina="<?php echo $globalpromocodes['min_ammount']; ?>" data-disp="<?php echo $globalpromocodes['promocode']; ?>" data-disd="<?php echo $globalpromocodes['description']; ?>" data-disfrom="<?php echo $globalpromocodes['from_date']; ?>" data-disto="<?php echo $globalpromocodes['to_date']; ?>" data-dison="<?php echo $globalpromocodes['discount_on']; ?>" data-matgrp="<?php echo $globalpromocodes['material_group_code']; ?>" data-allselect="<?php echo $globalpromocodes['all_select']; ?>" data-disstatus="<?php echo $globalpromocodes['status']; ?>" href="#" class="popupDynamic" ><i class="fa fa-clone"></i></a>
-                        <?php } ?>
+                        <?php // if($globalpromocodes['status']!='A'){ ?>
+                        <a data-id="<?php echo $globalpromocodes['id']; ?>" data-disid="<?php echo $globalpromocodes['id'] ;?>" data-distype="<?php echo $globalpromocodes['discount_type'] ;?>" data-disval="<?php echo $globalpromocodes['discount_value']; ?>" data-dismina="<?php echo $globalpromocodes['min_ammount']; ?>" data-disp="<?php echo $globalpromocodes['promocode']; ?>" data-disd="<?php echo $globalpromocodes['description']; ?>" data-disfrom="<?php echo $globalpromocodes['from_date']; ?>" data-disto="<?php echo $globalpromocodes['to_date']; ?>" data-disonusrgrp="<?php echo $globalpromocodes['discount_on_user_grp']; ?>" data-dison="<?php echo $globalpromocodes['discount_on']; ?>" data-matgrp="<?php echo $globalpromocodes['material_group_code']; ?>" data-allselect="<?php echo $globalpromocodes['all_select']; ?>" data-disstatus="<?php echo $globalpromocodes['status']; ?>" href="#" class="popupDynamic" ><i class="fa fa-clone"></i></a>
+                        <?php // } ?>
                       </td>
                       </tr>
 
@@ -750,19 +745,20 @@ div#sample_1_length {
 
     $(".popupDynamic").click(function(){
       $("#myModal").validate().resetForm();
-      var id_x      = $(this).data('id');
-      var distype   = $(this).data('distype');
-      var disval    = $(this).data('disval');
-      var dismina   = $(this).data('dismina');
-      var disp      = $(this).data('disp');
-      var disd      = $(this).data('disd');
-      var disfrom   = $(this).data('disfrom');
-      var disto     = $(this).data('disto');
-      var dison     = $(this).data('dison');
-      var disstatus = $(this).data('disstatus');
-      var disid     = $(this).data('disid');
-      var matgrp    = $(this).data('matgrp');
-      var allselect = $(this).data('allselect');
+      var id_x        = $(this).data('id');
+      var distype     = $(this).data('distype');
+      var disval      = $(this).data('disval');
+      var dismina     = $(this).data('dismina');
+      var disp        = $(this).data('disp');
+      var disd        = $(this).data('disd');
+      var disfrom     = $(this).data('disfrom');
+      var disto       = $(this).data('disto');
+      var disonusrgrp = $(this).data('dison');
+      var dison       = $(this).data('dison');
+      var disstatus   = $(this).data('disstatus');
+      var disid       = $(this).data('disid');
+      var matgrp      = $(this).data('matgrp');
+      var allselect   = $(this).data('allselect');
       
       if(disstatus != ''){
         $('.invalid-feedback-edisstatus').hide();
@@ -788,7 +784,7 @@ div#sample_1_length {
         $('.invalid-feedback-edisto').show();
       }  
 
-      if(dison == 'MATERIAL-GROUP' || dison == 'CUSTOMER' || dison == 'REGION' || dison == 'ZONE'){
+      if(dison == 'MATERIAL-GROUP'){
         $("#display_list").show();
 
         $.ajax({
@@ -1448,7 +1444,7 @@ div#sample_1_length {
           }
         }
         
-        if((distype != '') && (disval != '') && (disfrom < disto) && (dismina != '') && (dispromo!='') && (dispdes!='') && (disfrom != '') && (disto != '') && (dison != '')){
+        if((distype != '') && (disval != '') && (disfrom < disto) && (dismina != '') && (dispromo != '') && (dispdes != '') && (disfrom != '') && (disto != '') && (dison != '')){
           var data = {
             distype: distype,
             disval: disval,

@@ -79,38 +79,32 @@ class Promocode extends CI_Controller {
         $dismina   = $this->input->post('dismina');
         $disfrom   = $this->input->post('disfrom');
         $disto 	   = $this->input->post('disto');
+        $disonusrgrp = $this->input->post('disonusrgrp');
+        $diszone   = ($disonusrgrp == 'ZONE') ? $this->input->post('diszone') : '';
+        $disreg    = ($disonusrgrp == 'REGION') ? $this->input->post('disreg') : '';
+        $discust   = ($disonusrgrp == 'CUSTOMER') ? $this->input->post('discust') : '';
+        $custtype  = $this->input->post('custtype');
         $dison     = $this->input->post('dison');
         $dismatgrp = $this->input->post('dismatgrp');
         $mattype   = $this->input->post('mattype');
-        $dismat    = ($dison=='MATERIAL-GROUP')?$this->input->post('dismat'):'';
-        $discust   = ($dison=='CUSTOMER')? $this->input->post('discust'):'';
-        $disreg    = ($dison=='REGION')? $this->input->post('disreg'):'';
-        $diszone   = ($dison=='ZONE')? $this->input->post('diszone'):'';
+        $dismat    = ($dison == 'MATERIAL-GROUP') ? $this->input->post('dismat') : '';
         $disstatus = $this->input->post('disstatus');
-        $id 	   = ($this->input->post('id_x'))?$this->input->post('id_x'):'';
+        $id 	   = ($this->input->post('id_x')) ? $this->input->post('id_x') : '';
         
         $request = array();
-        if ( !empty($dispromo) ) {
+        if (!empty($dispromo)) {
             // code...
-            $data_1 = $this->Promocode_model->save_promocode($id,$dispromo,$dispdes,$distype,$disval,$dismina,$disfrom,$disto,$dison,$dismatgrp,$mattype,$dismat,$discust,$disreg,$diszone,$disstatus); 
-            //echo '<pre>';print_r($data_1);die('94');
-            if(is_array($data_1) && $dison=='CUSTOMER'){
-                $statusMsg = 'The following customers are not exist:<br>';
-                foreach($data_1 as $data){
-                    $statusMsg .= $data['customer_code'].'<br>';
-                }
-                $this->session->set_flashdata('message',$statusMsg);
-            }
-            if(is_array($data_1) && $dison=='MATERIAL-GROUP'){
-                $statusMsg = 'The following materials are not exist in '.$dismatgrp.' group:<br>';
+            $data_1 = $this->Promocode_model->save_promocode($id,$dispromo,$dispdes,$distype,$disval,$dismina,$disfrom,$disto,$disonusrgrp,$diszone,$disreg,$custtype,$discust,$dison,$dismatgrp,$mattype,$dismat,$disstatus);
+            if(is_array($data_1) && $dison == 'MATERIAL-GROUP'){
+                $statusMsg = 'The following materials do not exist in '.$dismatgrp.' group:<br>';
                 foreach($data_1 as $data){
                     $statusMsg .= $data['material_no'].'<br>';
                 }
-                $this->session->set_flashdata('message',$statusMsg);
+                $this->session->set_flashdata('message', $statusMsg);
             }
-            $request = array('success'=>true , 'data' => $data_1);     
-        }else{
-            $request = array('success'=>false , 'data' => 'Empty values' , 'dismina'=> $dismina , 'id'=> $id);
+            $request = array('success' => true, 'data' => $data_1);     
+        } else {
+            $request = array('success' => false, 'data' => 'Empty values', 'dismina' => $dismina, 'id' => $id);
         }
         $response = json_encode($request);
         header('Content-Type: application/json');
