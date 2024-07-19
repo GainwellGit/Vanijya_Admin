@@ -309,7 +309,7 @@ div#sample_1_length {
             <div class="invalid-feedback-disto" style="color:red;"></div>
           </div>
           <div class="form-group">
-            <label for="add_dison"> Discount On User Group </label>
+            <label for="add_disonusrgrp"> Discount On User Group </label>
             <select class="form-control" name="discount_on_user_grp" onChange="showSelectOptionsusrgrp(this.value);" required class="form-control" id="add_disonusrgrp">
                 <option value="">Select</option>
                 <option id="all_usrgrp" value="ALL">ALL</option>
@@ -392,7 +392,7 @@ div#sample_1_length {
             </select>
             <div class="invalid-feedback-dismatgrp" style="color:red;"></div>
           </div>
-          <div class="form-group" id="add_checkbox_forbulk" style="display:none;">
+          <div class="form-group" id="add_checkbox_for_mat" style="display:none;">
             <input type="radio" id="allopt" style="margin-right:5px;" name="chose_radio" value="All" />
             <label style="margin-bottom:auto;" for="allopt">All</label>
             <input type="radio" id="selectopt" style="margin-right:5px;margin-left: 13px;" name="chose_radio" value="Choose Material" />
@@ -651,7 +651,8 @@ div#sample_1_length {
       $('#add_cust_sec').hide();
       $('#add_reg_sec').hide();
       $('#add_zone_sec').hide();
-      $('#add_checkbox_forbulk').hide();
+      $('#add_checkbox_for_mat').hide();
+      $('#add_checkbox_for_cust').hide();
       $('#add_excel_file').hide();
       $('#download_sample_mat').hide();
       $('#download_sample_cust').hide();
@@ -679,9 +680,10 @@ div#sample_1_length {
       $('#add_dispromo').val('');
       $('#add_dispdes').val('');
       $('#add_mat_grp').val('');
-      $('#add_checkbox_forbulk').val('');
+      $('#add_checkbox_for_mat').val('');
+      $('#add_checkbox_for_cust').val('');
       $('input[name="chose_radio"]:checked').removeAttr('checked');
-
+      $('input[name="chose_radio_cust"]:checked').removeAttr('checked');
       
       $("#add_dispromo").on("blur", function() {
         var dispromo = $('#add_dispromo').val();
@@ -878,30 +880,14 @@ div#sample_1_length {
       $('#disstatus').val($('#diss-'+id_x).text());
       $("#myModal").modal('show');
     }); 
-    
-    function showSelectOptions(val) {
-      if(val == 'MATERIAL-GROUP'){
-        $('#add_mat_grp_sec').show();
-        $('#selectopt').val('Choose Material');
-        $("label[for='selectopt']").text('Choose Material');
-      }else{
-        $('#add_mat_grp_sec').hide();
-        $('#add_mat_grp').val('');
-        $('select[name="chose_radio"]:checked').removeAttr('checked');
-        $('#add_mat_sec').hide();
-        $('#add_excel_file').hide();
-        $('#download_sample_mat').hide();
-        $('#download_sample_cust').hide();
-      }
 
+    function showSelectOptionsusrgrp(val) {
       if(val == 'CUSTOMER'){
         //$('#add_cust_sec').show();
-        $('#add_checkbox_forbulk').show();
-        $('#selectopt').val('Choose Customer');
-        $("label[for='selectopt']").text('Choose Customer');
-        $('input[name="chose_radio"]:checked').removeAttr('checked');
+        $('#add_checkbox_for_cust').show();
+        $('input[name="chose_radio_cust"]:checked').removeAttr('checked');
       }else{
-        $('#add_checkbox_forbulk').hide();
+        $('#add_checkbox_for_cust').hide();
         $('#add_cust_sec').hide();
         $('#add_excel_file').hide();
         $('#download_sample_mat').hide();
@@ -918,6 +904,20 @@ div#sample_1_length {
         $('#add_zone_sec').show();
       }else{
         $('#add_zone_sec').hide();
+      }
+    }
+    
+    function showSelectOptions(val) {
+      if(val == 'MATERIAL-GROUP'){
+        $('#add_mat_grp_sec').show();
+      }else{
+        $('#add_mat_grp_sec').hide();
+        $('#add_mat_grp').val('');
+        $('select[name="chose_radio"]:checked').removeAttr('checked');
+        $('#add_mat_sec').hide();
+        $('#add_excel_file').hide();
+        $('#download_sample_mat').hide();
+        $('#download_sample_cust').hide();
       }
     }
 
@@ -937,14 +937,14 @@ div#sample_1_length {
             });
             html+='</select><div class="invalid-feedback-dismat" style="color:red;"></div>';
 
-            $('#add_checkbox_forbulk').show();
+            $('#add_checkbox_for_mat').show();
             $('input[name="chose_radio"]:checked').removeAttr('checked');
             $('#invalid-feedback-radiogrp').show();
             $("#add_mat_sec").html(html); 
           }
         });
       }else{
-        //$('#add_checkbox_forbulk').hide();
+        //$('#add_checkbox_for_mat').hide();
         $('#invalid-feedback-radiogrp').hide();
         $('#invalid-feedback-radiogrp').val('');
       }
@@ -956,7 +956,7 @@ div#sample_1_length {
         var promocodeId = $(this).closest('.switch').data("id");
   
         if (!isChecked) {
-          if (confirm('Are you sure you want to uncheck the checkbox?')) {
+          if (confirm('Are you sure you want to disable the promocode?')) {
             $.ajax({
               method: "POST",
               url: "<?php echo site_url('/admin/promocode/changestatus'); ?>",
@@ -1086,6 +1086,7 @@ div#sample_1_length {
         var dispdes   = $('#add_dispdes').val();
         var disfrom   = $('#add_disfrom').val();
         var disto     = $('#add_disto').val();
+        var disonusrgrp = $('#add_disonusrgrp').val();
         var dison     = $('#add_dison').val();
         var dismatgrp = $('#add_mat_grp').val();
         var mattype   = $('input[name="chose_radio"]:checked').val();
@@ -1176,10 +1177,19 @@ div#sample_1_length {
           $('.invalid-feedback-disto').hide();
         }
 
+        if (disonusrgrp == '') {
+          $('.invalid-feedback-disonusrgrp').fadeIn();
+          $('#add_disonusrgrp').focus();
+          $('.invalid-feedback-disonusrgrp').text('Please select a discount on option');
+        }
+        else{
+          $('.invalid-feedback-disonusrgrp').hide();
+        }
+
         if (dison == '') {
           $('.invalid-feedback-dison').fadeIn();
           $('#add_dison').focus();
-          $('.invalid-feedback-dison').text('Please select discount on option');
+          $('.invalid-feedback-dison').text('Please select a discount on option');
         }
         else{
           $('.invalid-feedback-dison').hide();
@@ -1188,13 +1198,13 @@ div#sample_1_length {
         if(dison == 'MATERIAL-GROUP' && dismatgrp==''){
           $('.invalid-feedback-dismatgrp').fadeIn();
           $('#add_mat_grp').focus();
-          $('.invalid-feedback-dismatgrp').text('Please select atleast one material group');
+          $('.invalid-feedback-dismatgrp').text('Please select one material group');
         }
         else{
           $('.invalid-feedback-dismatgrp').hide();
         }
 
-        if((dison == 'MATERIAL-GROUP' && dismatgrp!=null && mattype == null) || (dison == 'CUSTOMER' && mattype == null)){
+        if((dison == 'MATERIAL-GROUP' && dismatgrp != null && mattype == null)){
           $('.invalid-feedback-radiogrp').fadeIn();
           $('#allmat').focus();
           $('.invalid-feedback-radiogrp').text('Please select atleast one option');
