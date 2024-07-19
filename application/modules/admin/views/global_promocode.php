@@ -327,25 +327,17 @@ div#sample_1_length {
 
             <div class="invalid-feedback-radiogrp-cust" style="color:red;"></div>
           </div>
-          <div class="form-group" id="add_cust_sec">
-            <label for="add_cust"> Customer </label>
-            <select class="form-control" name="cust_no" id="add_cust" multiple>
+          <div class="form-group" id="add_zone_sec">
+            <label for="add_zone"> Zone </label>
+            <select class="form-control" name="zone_no" id="add_zone">
               <option value="">Select</option>
               <?php
-              if (!empty($allcustomers)) {
-                foreach ($allcustomers as $key => $val) { ?>
-                  <option value="<?php echo $val['customer_code'];?>"><?php echo $val["name1"].' ('.$val["customer_code"].')';?></option>
+              if (!empty($allzones)) {
+                foreach ($allzones as $key => $val) { ?>
+                  <option value="<?php echo $val['Zone'];?>"><?php echo $val['Zone'];?></option>
               <?php }} ?>
             </select>
-            <div class="invalid-feedback-discust" style="color:red;"></div>
-          </div>
-          <div class="form-group" id="download_sample_cust" style="display:none;">
-            <a href="<?php echo base_url(); ?>/admin/promocode/download_excel">
-              <!-- <button type="button" class="btn btn-primary downloadquiz" id="btn_downloadquiz" name="btn_downloadquiz"> 
-                Sample Customer Template
-              </button> -->
-              Sample Customer Template
-            </a>
+            <div class="invalid-feedback-diszone" style="color:red;"></div>
           </div>
           <div class="form-group" id="add_reg_sec">
             <label for="add_reg"> Region </label>
@@ -359,17 +351,30 @@ div#sample_1_length {
             </select>
             <div class="invalid-feedback-disreg" style="color:red;"></div>
           </div>
-          <div class="form-group" id="add_zone_sec">
-            <label for="add_zone"> Zone </label>
-            <select class="form-control" name="zone_no" id="add_zone">
+          <div class="form-group" id="add_cust_sec">
+            <label for="add_cust"> Customer </label>
+            <select class="form-control" name="cust_no" id="add_cust" multiple>
               <option value="">Select</option>
               <?php
-              if (!empty($allzones)) {
-                foreach ($allzones as $key => $val) { ?>
-                  <option value="<?php echo $val['Zone'];?>"><?php echo $val['Zone'];?></option>
+              if (!empty($allcustomers)) {
+                foreach ($allcustomers as $key => $val) { ?>
+                  <option value="<?php echo $val['customer_code'];?>"><?php echo $val["name1"].' ('.$val["customer_code"].')';?></option>
               <?php }} ?>
             </select>
-            <div class="invalid-feedback-diszone" style="color:red;"></div>
+            <div class="invalid-feedback-discust" style="color:red;"></div>
+          </div>
+          <div class="form-group" id="add_excel_file_cust" style="display:none;">
+            <input type="file" name="file_cust" id="file_cust" required accept=".xls, .xlsx">
+            <input type="hidden" class="form-control" id="add_bulk_cust">
+            <div class="invalid-feedback-excelfile-cust" style="color:red;" style="display:none;"></div>
+          </div>
+          <div class="form-group" id="download_sample_cust" style="display:none;">
+            <a href="<?php echo base_url(); ?>/admin/promocode/download_excel">
+              <!-- <button type="button" class="btn btn-primary downloadquiz" id="btn_downloadquiz" name="btn_downloadquiz"> 
+                Sample Customer Template
+              </button> -->
+              Sample Customer Template
+            </a>
           </div>
           <div class="form-group">
             <label for="add_dison"> Discount On </label>
@@ -883,9 +888,11 @@ div#sample_1_length {
 
     function showSelectOptionsusrgrp(val) {
       if(val == 'CUSTOMER'){
-        //$('#add_cust_sec').show();
+        $('#add_cust_sec').show();
         $('#add_checkbox_for_cust').show();
         $('input[name="chose_radio_cust"]:checked').removeAttr('checked');
+        $('#add_reg_sec').val('');
+        $('#add_zone_sec').val('');
       }else{
         $('#add_checkbox_for_cust').hide();
         $('#add_cust_sec').hide();
@@ -982,23 +989,36 @@ div#sample_1_length {
       $('#all_mat').on('click', function(e){
         $('#add_excel_file').hide();
         $('#download_sample_mat').hide();
-        $('#download_sample_cust').hide();
         $('.invalid-feedback-excelfile').hide();
         $('#add_mat_sec').hide();
-        $('#add_cust_sec').hide();
       });
 
       $('#select_mat').on('click', function(e){
         $('#add_excel_file').hide();
         $('#download_sample_mat').hide();
         $('.invalid-feedback-excelfile').hide();
+        $('#add_mat_sec').show();
       });
 
       $('#bulk_mat').on('click', function(e){
         $('#add_excel_file').show();
-        $('.invalid-feedback-excelfile').show();
         $('#download_sample_mat').show();
+        $('.invalid-feedback-excelfile').show();
         $('#add_mat_sec').hide();
+      });
+
+      $('#select_cust').on('click', function(e){
+        $('#add_excel_file_cust').hide();
+        $('#download_sample_cust').hide();
+        $('.invalid-feedback-excelfile-cust').hide();
+        $('#add_cust_sec').show();
+      });
+
+      $('#bulk_cust').on('click', function(e){
+        $('#add_excel_file_cust').show();
+        $('#download_sample_cust').show();
+        $('.invalid-feedback-excelfile-cust').show();
+        $('#add_cust_sec').hide();
       });
 
       $('#add_distype').on('change', function(e){
