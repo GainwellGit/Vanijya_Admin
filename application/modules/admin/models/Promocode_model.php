@@ -370,26 +370,28 @@ class Promocode_model extends CI_Model {
 		}
 
 		if($disonusrgrp == 'REGION'){
-			foreach($disreg as $reg){
+			// foreach($disreg as $reg){
 				$matdata['discount_id'] = $insert_id;
 				$matdata['region'] = $reg;
 				$matdata['created_at'] = date("Y-m-d h:i:s");
-				$newArray[] = $matdata;
-			}
+				$newArray = $matdata;
+			// }
 			
-			$this->db->insert_batch('promo_codes_region', $newArray);
+			// $this->db->insert_batch('promo_codes_region', $newArray);
+			$this->db->insert('promo_codes_region', $newArray);
 		}
 
 		if($disonusrgrp == 'ZONE'){
-			foreach($diszone as $zone){
+			// foreach($diszone as $zone){
 				$matdata['discount_id'] = $insert_id;
 				$matdata['zone'] = $zone;
 				$matdata['created_at'] = date("Y-m-d h:i:s");
 				$matdata['updated_at'] = date("Y-m-d h:i:s");
-				$newArray[] = $matdata;
-			}
+				$newArray = $matdata;
+			// }
 			
-			$this->db->insert_batch('promo_codes_zone', $newArray);
+			// $this->db->insert_batch('promo_codes_zone', $newArray);
+			$this->db->insert('promo_codes_zone', $newArray);
 		}
 		return true;
 	}
