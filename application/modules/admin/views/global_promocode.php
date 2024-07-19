@@ -891,8 +891,8 @@ div#sample_1_length {
         $('#add_cust_sec').show();
         $('#add_checkbox_for_cust').show();
         $('input[name="chose_radio_cust"]:checked').removeAttr('checked');
-        $('#add_reg_sec').val('');
-        $('#add_zone_sec').val('');
+        $('#add_reg').val('');
+        $('#add_zone').val('');
       }else{
         $('#add_checkbox_for_cust').hide();
         $('#add_cust_sec').hide();
@@ -903,12 +903,14 @@ div#sample_1_length {
 
       if(val == 'REGION'){
         $('#add_reg_sec').show();
+        $('#add_zone').val('');
       }else{
         $('#add_reg_sec').hide();
       }
 
       if(val == 'ZONE'){
         $('#add_zone_sec').show();
+        $('#add_reg').val('');
       }else{
         $('#add_zone_sec').hide();
       }
