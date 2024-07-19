@@ -49,6 +49,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
         <link href="<?php echo base_url()?>assets/css/custom.css" rel="stylesheet">
         <link href="<?php echo base_url()?>assets/css/toastr.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://demos.codexworld.com/multi-select-dropdown-list-with-checkbox-jquery/js/multiselect/jquery.multiselect.css">
         
    
    <!-- <link href="<?php //echo base_url()?>assets/css/bootstrap.css" rel="stylesheet">  -->

@@ -1,5 +1,3 @@
-<html>
-
 <style type="text/css">
   
 /* The switch - the box around the slider */
@@ -106,9 +104,6 @@ div#sample_1_length {
     }
 </style>
 
-<head>
-<link rel="stylesheet" href="https://demos.codexworld.com/multi-select-dropdown-list-with-checkbox-jquery/js/multiselect/jquery.multiselect.css">
-</head>
   <!-- BEGIN CONTENT -->
   <div class="page-content-wrapper">
     <!-- BEGIN CONTENT BODY -->
