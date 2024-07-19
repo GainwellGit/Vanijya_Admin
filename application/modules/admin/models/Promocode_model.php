@@ -372,7 +372,7 @@ class Promocode_model extends CI_Model {
 		if($disonusrgrp == 'REGION'){
 			// foreach($disreg as $reg){
 				$matdata['discount_id'] = $insert_id;
-				$matdata['region'] = $reg;
+				$matdata['region'] = $disreg;
 				$matdata['created_at'] = date("Y-m-d h:i:s");
 				$newArray = $matdata;
 			// }
@@ -384,7 +384,7 @@ class Promocode_model extends CI_Model {
 		if($disonusrgrp == 'ZONE'){
 			// foreach($diszone as $zone){
 				$matdata['discount_id'] = $insert_id;
-				$matdata['zone'] = $zone;
+				$matdata['zone'] = $diszone;
 				$matdata['created_at'] = date("Y-m-d h:i:s");
 				$matdata['updated_at'] = date("Y-m-d h:i:s");
 				$newArray = $matdata;
