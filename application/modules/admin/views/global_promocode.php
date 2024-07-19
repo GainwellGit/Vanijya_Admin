@@ -313,9 +313,9 @@ div#sample_1_length {
             <select class="form-control" name="discount_on_user_grp" onChange="showSelectOptionsusrgrp(this.value);" required class="form-control" id="add_disonusrgrp">
                 <option value="">Select</option>
                 <option id="all_usrgrp" value="ALL">ALL</option>
-                <option id="cust" value="CUSTOMER">CUSTOMER</option>
-                <option id="reg" value="REGION">REGION</option>
                 <option id="zone" value="ZONE">ZONE</option>
+                <option id="reg" value="REGION">REGION</option>
+                <option id="cust" value="CUSTOMER">CUSTOMER</option>
             </select>
             <div class="invalid-feedback-disonusrgrp" style="color:red;"></div>
           </div>
@@ -998,25 +998,18 @@ div#sample_1_length {
         $('#add_excel_file').show();
         $('.invalid-feedback-excelfile').show();
         $('#download_sample_mat').show();
-        $('#download_sample_cust').show();
         $('#add_mat_sec').hide();
-        $('#add_cust_sec').hide();
       });
 
       $('#add_distype').on('change', function(e){
-        if($('#add_distype').val()=='AMOUNT'){
+        if($('#add_distype').val() == 'AMOUNT'){
           //$('#def_all').attr('selected', true);
           $('#matgrp').hide();
-          $('#cust').hide();
-          $('#reg').hide();
-          $('#zone').hide();
+          $('#add_checkbox_for_mat').hide();
           $('#add_dison').val('ALL').trigger('change');
         }else{
           $('#def_all').attr('selected', false);
           $('#matgrp').show();
-          $('#cust').show();
-          $('#reg').show();
-          $('#zone').show();
         }
       });
 
