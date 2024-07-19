@@ -183,7 +183,7 @@ div#sample_1_length {
                       <th> Sl. No. </th>
                       <th> Discount Type </th>
                       <th> Discount Value </th>
-                      <th> Minimum Amount </th>
+                      <th> Min Amount </th>
                       <th> Promocode </th>
                       <th> Description </th>
                       <th> From Date </th>
@@ -320,12 +320,12 @@ div#sample_1_length {
             <div class="invalid-feedback-disonusrgrp" style="color:red;"></div>
           </div>
           <div class="form-group" id="add_checkbox_for_cust" style="display:none;">
-            <input type="radio" id="select_cust" style="margin-right:5px;margin-left: 13px;" name="chose_radio_cust" value="Choose Customer" />
-            <label style="margin-bottom:auto;" for="select_cust">Choose Material</label>
-            <input type="radio" id="bulk_cust" style="margin-right:5px;margin-left: 13px;" name="chose_radio_cust" value="Bulk upload from Excel" />
+            <input type="radio" id="select_cust" style="margin-right:5px;" name="chose_radio_cust" value="Choose Customer" />
+            <label style="margin-bottom:auto;" for="select_cust">Choose Customer</label>
+            <input type="radio" id="bulk_cust" style="margin-right:5px; margin-left: 13px;" name="chose_radio_cust" value="Bulk upload from Excel" />
             <label style="margin-bottom:auto;" for="bulk_cust">Bulk upload from Excel</label>
 
-            <div class="invalid-feedback-radiogrp" style="color:red;"></div>
+            <div class="invalid-feedback-radiogrp-cust" style="color:red;"></div>
           </div>
           <div class="form-group" id="add_cust_sec">
             <label for="add_cust"> Customer </label>
@@ -381,7 +381,7 @@ div#sample_1_length {
             <div class="invalid-feedback-dison" style="color:red;"></div>
           </div>
           <div class="form-group" id="add_mat_grp_sec" style="display:none;">
-            <label for="add_mat_grp"> Material-Group </label>
+            <label for="add_mat_grp"> Material Group </label>
             <select class="form-control" name="material_grp" id="add_mat_grp" onChange="getMaterials(this.value);">
               <option value="">Select</option>
               <?php
@@ -393,12 +393,12 @@ div#sample_1_length {
             <div class="invalid-feedback-dismatgrp" style="color:red;"></div>
           </div>
           <div class="form-group" id="add_checkbox_for_mat" style="display:none;">
-            <input type="radio" id="allopt" style="margin-right:5px;" name="chose_radio" value="All" />
-            <label style="margin-bottom:auto;" for="allopt">All</label>
-            <input type="radio" id="selectopt" style="margin-right:5px;margin-left: 13px;" name="chose_radio" value="Choose Material" />
-            <label style="margin-bottom:auto;" for="selectopt">Choose Material</label>
-            <input type="radio" id="bulkopt" style="margin-right:5px;margin-left: 13px;" name="chose_radio" value="Bulk upload from Excel" />
-            <label style="margin-bottom:auto;" for="bulkopt">Bulk upload from Excel</label>
+            <input type="radio" id="all_mat" style="margin-right:5px;" name="chose_radio" value="All" />
+            <label style="margin-bottom:auto;" for="all_mat">All</label>
+            <input type="radio" id="select_mat" style="margin-right:5px; margin-left: 13px;" name="chose_radio" value="Choose Material" />
+            <label style="margin-bottom:auto;" for="select_mat">Choose Material</label>
+            <input type="radio" id="bulk_mat" style="margin-right:5px; margin-left: 13px;" name="chose_radio" value="Bulk upload from Excel" />
+            <label style="margin-bottom:auto;" for="bulk_mat">Bulk upload from Excel</label>
 
             <div class="invalid-feedback-radiogrp" style="color:red;"></div>
           </div>
@@ -717,11 +717,11 @@ div#sample_1_length {
 
         var mattypeid = $('input[name="chose_radio"]:checked').attr('id');
         var file      = $('#file').val();
-        if(mattypeid == 'bulkopt' && file == '' ){
+        if(mattypeid == 'bulk_mat' && file == '' ){
           $('.invalid-feedback-excelfile').text('Please upload an excel file')
           $('#submit_addform').attr('disabled','disabled');
         }
-        if(mattypeid != 'bulkopt'){
+        if(mattypeid != 'bulk_mat'){
           $('#submit_addform').removeAttr('disabled');
         }
       });
@@ -825,7 +825,7 @@ div#sample_1_length {
             if (allselect == 1) {
               $("#all_select_radio").show();
 
-              html2 +='<input type="radio" id="disallmat" style="margin-right:5px;" name="chose_radio" value="All" checked disabled /><label style="margin-bottom:auto;" for="allopt">All</label>'
+              html2 +='<input type="radio" id="disallmat" style="margin-right:5px;" name="chose_radio" value="All" checked disabled /><label style="margin-bottom:auto;" for="all_mat">All</label>'
               $("#all_select_radio").html(html2);
             }else{
               $("#all_select_radio").hide();
@@ -979,7 +979,7 @@ div#sample_1_length {
         }
       });
 
-      $('#allopt').on('click', function(e){
+      $('#all_mat').on('click', function(e){
         $('#add_excel_file').hide();
         $('#download_sample_mat').hide();
         $('#download_sample_cust').hide();
@@ -988,25 +988,13 @@ div#sample_1_length {
         $('#add_cust_sec').hide();
       });
 
-      $('#selectopt').on('click', function(e){
+      $('#select_mat').on('click', function(e){
         $('#add_excel_file').hide();
         $('#download_sample_mat').hide();
-        $('#download_sample_cust').hide();
         $('.invalid-feedback-excelfile').hide();
-        if($('#selectopt').val() == 'Choose Material'){
-          $('#add_mat_sec').show();
-        }else{
-          $('#add_mat_sec').hide();
-        }
-
-        if($('#selectopt').val() == 'Choose Customer'){
-          $('#add_cust_sec').show();
-        }else{
-          $('#add_cust_sec').hide();
-        }
       });
 
-      $('#bulkopt').on('click', function(e){
+      $('#bulk_mat').on('click', function(e){
         $('#add_excel_file').show();
         $('.invalid-feedback-excelfile').show();
         $('#download_sample_mat').show();
@@ -1061,14 +1049,14 @@ div#sample_1_length {
               var mattypeid = $('input[name="chose_radio"]:checked').attr('id');
               var file      = $('#file').val();
               var promoerr = $('.invalid-feedback-dispromo').val();
-              if(promoerr == '' && (mattypeid == 'bulkopt' && file != '' && ($('#add_bulk_mats').val()) != '')){
+              if(promoerr == '' && (mattypeid == 'bulk_mat' && file != '' && ($('#add_bulk_mats').val()) != '')){
                 $('#submit_addform').removeAttr('disabled');
               }
             }
             var uploaded_mats = $('#add_bulk_mats').val();
             var mattypeid     = $('input[name="chose_radio"]:checked').attr('id');
             var file          = $('#file').val();
-            if(mattypeid == 'bulkopt' && file != '' && uploaded_mats == ''){
+            if(mattypeid == 'bulk_mat' && file != '' && uploaded_mats == ''){
               $('.invalid-feedback-excelfile').text('Please upload correct excel file');
             }
           },
@@ -1180,7 +1168,7 @@ div#sample_1_length {
         if (disonusrgrp == '') {
           $('.invalid-feedback-disonusrgrp').fadeIn();
           $('#add_disonusrgrp').focus();
-          $('.invalid-feedback-disonusrgrp').text('Please select a discount on option');
+          $('.invalid-feedback-disonusrgrp').text('Please select a "discount on user group" option');
         }
         else{
           $('.invalid-feedback-disonusrgrp').hide();
@@ -1258,7 +1246,7 @@ div#sample_1_length {
           $('.invalid-feedback-diszone').hide();
         }
         
-        if((distype != '') && (dispromo!='') && (disfrom < disto) && (dispdes!='') && (disval != '') && (dismina != '') && (disfrom != '') && (disto != '') && ((dison == 'ALL') || (dison == 'MATERIAL-GROUP' && (dismat != null || file !='' || uploaded_mats!= ''))|| (dison == 'CUSTOMER' && (discust != null || file !='' ||uploaded_mats!= '')) || (dison =='REGION' && disreg != null) || (dison == 'ZONE' && diszone != null) || (mattypeid =='bulkopt' && file != null))){
+        if((distype != '') && (dispromo!='') && (disfrom < disto) && (dispdes!='') && (disval != '') && (dismina != '') && (disfrom != '') && (disto != '') && ((dison == 'ALL') || (dison == 'MATERIAL-GROUP' && (dismat != null || file !='' || uploaded_mats!= ''))|| (dison == 'CUSTOMER' && (discust != null || file !='' ||uploaded_mats!= '')) || (dison =='REGION' && disreg != null) || (dison == 'ZONE' && diszone != null) || (mattypeid =='bulk_mat' && file != null))){
           var data = {
             distype: distype,
             disval: disval,
@@ -1401,12 +1389,14 @@ div#sample_1_length {
           $('.invalid-feedback-edisto').hide();
         }
 
-        if(disfrom >=  disto){
-          $('.invalid-feedback-edisto').fadeIn();
-          $('#disto').focus();
-          $('.invalid-feedback-edisto').text('To Date should be greater than From Date');
-        }else{
-          $('.invalid-feedback-edisto').hide();
+        if (disfrom != '' && disto != '') {
+          if(disfrom >= disto){
+            $('.invalid-feedback-edisto').fadeIn();
+            $('#disto').focus();
+            $('.invalid-feedback-edisto').text('To Date should be greater than From Date');
+          }else{
+            $('.invalid-feedback-edisto').hide();
+          }
         }
         
         if((distype != '') && (disval != '') && (disfrom < disto) && (dismina != '') && (dispromo!='') && (dispdes!='') && (disfrom != '') && (disto != '') && (dison != '')){
