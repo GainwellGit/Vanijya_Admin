@@ -364,7 +364,7 @@ div#sample_1_length {
             <div class="invalid-feedback-discust" style="color:red;"></div>
           </div>
           <div class="form-group" id="add_excel_file_cust" style="display:none;">
-            <input type="file" name="file_cust" id="file_cust" required accept=".xls, .xlsx">
+            <input type="file" name="file_cust" class="form-control" id="file_cust" required accept=".xls, .xlsx">
             <input type="hidden" class="form-control" id="add_bulk_cust">
             <div class="invalid-feedback-excelfile-cust" style="color:red;" style="display:none;"></div>
           </div>
@@ -411,7 +411,7 @@ div#sample_1_length {
             
           </div>
           <div class="form-group" id="add_excel_file" style="display:none;">
-            <input type='file' name='file' id='file' required accept=".xls, .xlsx">
+            <input type="file" name="file" class="form-control" id="file" required accept=".xls, .xlsx">
             <input type="hidden" class="form-control" id="add_bulk_mats">
             <div class="invalid-feedback-excelfile" style="color:red;" style="display:none;"></div>
           </div>
@@ -651,14 +651,15 @@ div#sample_1_length {
   <script type="text/javascript">
     $(".addModal").click(function(){
       $("#addModal").modal('show');
-      $('#add_mat_grp_sec').hide();
-      $('#add_mat_sec').hide();
       $('#add_cust_sec').hide();
       $('#add_reg_sec').hide();
       $('#add_zone_sec').hide();
+      $('#add_mat_grp_sec').hide();
+      $('#add_mat_sec').hide();
       $('#add_checkbox_for_mat').hide();
       $('#add_checkbox_for_cust').hide();
       $('#add_excel_file').hide();
+      $('#add_excel_file_cust').hide();
       $('#download_sample_mat').hide();
       $('#download_sample_cust').hide();
 
@@ -667,6 +668,7 @@ div#sample_1_length {
       $('.invalid-feedback-dismina').text('');
       $('.invalid-feedback-disfrom').text('');
       $('.invalid-feedback-disto').text('');
+      $('.invalid-feedback-disonusrgrp').text('');
       $('.invalid-feedback-dison').text('');
       $('.invalid-feedback-disstatus').text('');
       $('.invalid-feedback-dispromo').text('');
@@ -674,12 +676,14 @@ div#sample_1_length {
       $('.invalid-feedback-dismatgrp').text('');
       $('.invalid-feedback-radiogrp').text('');
       $('.invalid-feedback-excelfile').text('');
+      $('.invalid-feedback-excelfile-cust').text('');
 
       $('#add_distype').val('');
       $('#add_disval').val('');
       $('#add_dismina').val('');
       $('#add_disfrom').val('');
       $('#add_disto').val('');
+      $('#add_disonusrgrp').val('');
       $('#add_dison').val('');
       $('#add_disstatus').val('');
       $('#add_dispromo').val('');
@@ -719,14 +723,26 @@ div#sample_1_length {
 
       $('input[name="chose_radio"]').on('change', function(e){
         $('#add_bulk_mats').val('');
-
         var mattypeid = $('input[name="chose_radio"]:checked').attr('id');
-        var file      = $('#file').val();
+        var file = $('#file').val();
         if(mattypeid == 'bulk_mat' && file == '' ){
           $('.invalid-feedback-excelfile').text('Please upload an excel file')
           $('#submit_addform').attr('disabled','disabled');
         }
         if(mattypeid != 'bulk_mat'){
+          $('#submit_addform').removeAttr('disabled');
+        }
+      });
+
+      $('input[name="chose_radio_cust"]').on('change', function(e){
+        $('#add_bulk_cust').val('');
+        var custtypeid = $('input[name="chose_radio_cust"]:checked').attr('id');
+        var file = $('#file_cust').val();
+        if(custtypeid == 'bulk_cust' && file == ''){
+          $('.invalid-feedback-excelfile-cust').text('Please upload an excel file')
+          $('#submit_addform').attr('disabled','disabled');
+        }
+        if(custtypeid != 'bulk_cust'){
           $('#submit_addform').removeAttr('disabled');
         }
       });
@@ -896,7 +912,7 @@ div#sample_1_length {
       }else{
         $('#add_checkbox_for_cust').hide();
         $('#add_cust_sec').hide();
-        $('#add_excel_file').hide();
+        $('#add_excel_file_cust').hide();
         $('#download_sample_mat').hide();
         $('#download_sample_cust').hide();
       }
@@ -1082,27 +1098,33 @@ div#sample_1_length {
       });
 
       $("#submit_addform").click(function(){
-        var distype   = $('#add_distype').val();
-        var disval    = $('#add_disval').val();
-        var dismina   = $('#add_dismina').val();
-        var dispromo  = $('#add_dispromo').val();
-        var dispdes   = $('#add_dispdes').val();
-        var disfrom   = $('#add_disfrom').val();
-        var disto     = $('#add_disto').val();
+        var distype     = $('#add_distype').val();
+        var disval      = $('#add_disval').val();
+        var dismina     = $('#add_dismina').val();
+        var dispromo    = $('#add_dispromo').val();
+        var dispdes     = $('#add_dispdes').val();
+        var disfrom     = $('#add_disfrom').val();
+        var disto       = $('#add_disto').val();
         var disonusrgrp = $('#add_disonusrgrp').val();
-        var diszone   = $('#add_zone').val();
-        var disreg    = $('#add_reg').val();
-        var custtype  = $('input[name="chose_radio_cust"]:checked').val();
-        var discust   = $('#add_cust').val();
-        var uploaded_cust = $('#add_bulk_cust').val();
-        var dison     = $('#add_dison').val();
-        var dismatgrp = $('#add_mat_grp').val();
-        var mattype   = $('input[name="chose_radio"]:checked').val();
-        var mattypeid = $('input[name="chose_radio"]:checked').attr('id');
-        var dismat    = $('#add_mat').val();
-        var file      = $('#file').val();
+        var diszone     = $('#add_zone').val();
+        var disreg      = $('#add_reg').val();
+        var custtype    = $('input[name="chose_radio_cust"]:checked').val();
+        var custtypeid  = $('input[name="chose_radio_cust"]:checked').attr('id');
+        var discust     = $('#add_cust').val();
+        var file_cust   = $('#file_cust').val();
+        var dison       = $('#add_dison').val();
+        var dismatgrp   = $('#add_mat_grp').val();
+        var mattype     = $('input[name="chose_radio"]:checked').val();
+        var mattypeid   = $('input[name="chose_radio"]:checked').attr('id');
+        var dismat      = $('#add_mat').val();
+        var file        = $('#file').val();
         //var disstatus = $('#add_disstatus').val();
 
+        if(custtype == 'Bulk upload from Excel' && disonusrgrp == 'CUSTOMER'){
+          var discust = $('#add_bulk_cust').val();
+        }
+        var uploaded_cust = $('#add_bulk_cust').val();
+        
         if(mattype == 'Bulk upload from Excel' && dison == 'MATERIAL-GROUP'){
           var dismat = $('#add_bulk_mats').val();
         }
@@ -1219,7 +1241,7 @@ div#sample_1_length {
 
         if(disonusrgrp == 'CUSTOMER' && custtype == 'Bulk upload from Excel' && uploaded_cust == ''){
           $('.invalid-feedback-excelfile-cust').fadeIn();
-          $('#file').focus();
+          $('#file_cust').focus();
           $('.invalid-feedback-excelfile-cust').text('Please upload an excel file').show();
         }
         else{
@@ -1271,7 +1293,7 @@ div#sample_1_length {
           $('.invalid-feedback-excelfile').hide();
         }
         
-        if((distype != '') && (dispromo!='') && (disfrom < disto) && (dispdes!='') && (disval != '') && (dismina != '') && (disfrom != '') && (disto != '') && ((dison == 'ALL') || (dison == 'MATERIAL-GROUP' && (dismat != null || file !='' || uploaded_mats!= ''))|| (dison == 'CUSTOMER' && (discust != null || file !='' ||uploaded_mats!= '')) || (dison =='REGION' && disreg != null) || (dison == 'ZONE' && diszone != null) || (mattypeid =='bulk_mat' && file != null))){
+        if((distype != '') && (dispromo != '') && (disfrom < disto) && (dispdes != '') && (disval != '') && (dismina != '') && (disfrom != '') && (disto != '') && ((disonusrgrp == 'ALL') || (disonusrgrp == 'CUSTOMER' && (discust != null || file_cust != '' || uploaded_cust != '')) || (disonusrgrp == 'REGION' && disreg != null) || (disonusrgrp == 'ZONE' && diszone != null) || (custtypeid == 'bulk_cust' && file_cust != null)) && ((dison == 'ALL') || (dison == 'MATERIAL-GROUP' && (dismat != null || file != '' || uploaded_mats != '')) || (mattypeid == 'bulk_mat' && file != null))){
           var data = {
             distype: distype,
             disval: disval,
@@ -1280,13 +1302,15 @@ div#sample_1_length {
             dispdes: dispdes,
             disfrom: disfrom,
             disto: disto,
+            disonusrgrp: disonusrgrp,
+            diszone: diszone,
+            disreg: disreg,
+            discust: discust,
+            custtype: custtype,
             dison: dison,
             dismatgrp: dismatgrp,
             mattype: mattype,
             dismat: dismat,
-            discust: discust,
-            disreg: disreg,
-            diszone: diszone,
             disstatus: ''
           };
           //console.log(data);
@@ -1317,24 +1341,24 @@ div#sample_1_length {
 
       $("#submit_form").click(function(){
         $('.invalid-feedback').hide();
-        //var disid    = $('#disid').val();console.log(disid);
-        var distype  = $('#distype').val();
-        var disval   = $('#disval').val();
-        var dismina  = $('#dismina').val();
-        var dispromo = $('#dispromo').val();
-        var dispdes  = $('#dispdes').val();
-        var disfrom  = $('#disfrom').val();
-        var disto    = $('#disto').val();
-        var dison    = $('#dison').val();
-        var id_x     = $('#id_x').val();
+        //var disid     = $('#disid').val();console.log(disid);
+        var distype     = $('#distype').val();
+        var disval      = $('#disval').val();
+        var dismina     = $('#dismina').val();
+        var dispromo    = $('#dispromo').val();
+        var dispdes     = $('#dispdes').val();
+        var disfrom     = $('#disfrom').val();
+        var disto       = $('#disto').val();
+        var disonusrgrp = $('#dison').val();
+        var diszone     = $('#diszone').val();
+        var disreg      = $('#disreg').val();
+        var discust     = $('#discust').val();
+        var dison       = $('#dison').val();
+        var dismatgrp   = $('#dismatgrp').val();
+        var mattype     = $('#disallmat').val();
+        var dismat      = $('#dismat').val();
+        var id_x        = $('#id_x').val();
         //var disstatus = $('#disstatus').val();
-        
-        var dismatgrp = $('#dismatgrp').val();
-        var mattype   = $('#disallmat').val();
-        var dismat    = $('#dismat').val();
-        var discust   = $('#discust').val();
-        var disreg    = $('#disreg').val();
-        var diszone   = $('#diszone').val();
 
         if (disval == '') {
           $('.invalid-feedback-edisval').fadeIn();
@@ -1434,13 +1458,15 @@ div#sample_1_length {
             dispdes: dispdes,
             disfrom: disfrom,
             disto: disto,
+            disonusrgrp: disonusrgrp,
+            diszone: diszone,
+            disreg: disreg,
+            discust: discust,
+            custtype: custtype,
             dison: dison,
             dismatgrp: dismatgrp,
             mattype: mattype,
             dismat: dismat,
-            discust: discust,
-            disreg: disreg,
-            diszone: diszone,
             disstatus: ''
           };
 
