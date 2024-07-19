@@ -1088,22 +1088,21 @@ div#sample_1_length {
         var disfrom   = $('#add_disfrom').val();
         var disto     = $('#add_disto').val();
         var disonusrgrp = $('#add_disonusrgrp').val();
+        var diszone   = $('#add_zone').val();
+        var disreg    = $('#add_reg').val();
+        var custtype  = $('input[name="chose_radio_cust"]:checked').val();
+        var discust   = $('#add_cust').val();
+        var uploaded_cust = $('#add_bulk_cust').val();
         var dison     = $('#add_dison').val();
         var dismatgrp = $('#add_mat_grp').val();
         var mattype   = $('input[name="chose_radio"]:checked').val();
         var mattypeid = $('input[name="chose_radio"]:checked').attr('id');
         var dismat    = $('#add_mat').val();
-        var discust   = $('#add_cust').val();
-        var disreg    = $('#add_reg').val();
-        var diszone   = $('#add_zone').val();
         var file      = $('#file').val();
         //var disstatus = $('#add_disstatus').val();
 
-        if(mattype=='Bulk upload from Excel' && dison=='MATERIAL-GROUP'){
+        if(mattype == 'Bulk upload from Excel' && dison == 'MATERIAL-GROUP'){
           var dismat = $('#add_bulk_mats').val();
-        }
-        if(mattype=='Bulk upload from Excel' && dison=='CUSTOMER'){
-          var discust = $('#add_bulk_mats').val();
         }
         var uploaded_mats = $('#add_bulk_mats').val();
 
@@ -1170,12 +1169,14 @@ div#sample_1_length {
           $('.invalid-feedback-disto').hide();
         }
 
-        if(disfrom >=  disto){
-          $('.invalid-feedback-disto').fadeIn();
-          $('#add_disto').focus();
-          $('.invalid-feedback-disto').text('To Date should be greater than From Date');
-        }else{
-          $('.invalid-feedback-disto').hide();
+        if (disfrom != '' && disto != '') {
+          if(disfrom >= disto){
+            $('.invalid-feedback-disto').fadeIn();
+            $('#add_disto').focus();
+            $('.invalid-feedback-disto').text('To Date should be greater than From Date');
+          }else{
+            $('.invalid-feedback-disto').hide();
+          }
         }
 
         if (disonusrgrp == '') {
@@ -1187,6 +1188,42 @@ div#sample_1_length {
           $('.invalid-feedback-disonusrgrp').hide();
         }
 
+        if(disonusrgrp == 'ZONE' && diszone == null){
+          $('.invalid-feedback-diszone').fadeIn();
+          $('#add_diszone').focus();
+          $('.invalid-feedback-diszone').text('Please select atleast one zone');
+        }
+        else{
+          $('.invalid-feedback-diszone').hide();
+        }
+
+        if(disonusrgrp == 'REGION' && disreg == null){
+          $('.invalid-feedback-disreg').fadeIn();
+          $('#add_disreg').focus();
+          $('.invalid-feedback-disreg').text('Please select atleast one region');
+        }
+        else{
+          $('.invalid-feedback-disreg').hide();
+        }
+
+        if(disonusrgrp == 'CUSTOMER' && custtype == 'Choose Customer' && discust == null){
+          $('.invalid-feedback-discust').fadeIn();
+          $('#add_discust').focus();
+          $('.invalid-feedback-discust').text('Please select atleast one customer');
+        }
+        else{
+          $('.invalid-feedback-discust').hide();
+        }
+
+        if(disonusrgrp == 'CUSTOMER' && custtype == 'Bulk upload from Excel' && uploaded_cust == ''){
+          $('.invalid-feedback-excelfile-cust').fadeIn();
+          $('#file').focus();
+          $('.invalid-feedback-excelfile-cust').text('Please upload an excel file').show();
+        }
+        else{
+          $('.invalid-feedback-excelfile-cust').hide();
+        }
+
         if (dison == '') {
           $('.invalid-feedback-dison').fadeIn();
           $('#add_dison').focus();
@@ -1196,7 +1233,7 @@ div#sample_1_length {
           $('.invalid-feedback-dison').hide();
         }
 
-        if(dison == 'MATERIAL-GROUP' && dismatgrp==''){
+        if(dison == 'MATERIAL-GROUP' && dismatgrp == ''){
           $('.invalid-feedback-dismatgrp').fadeIn();
           $('#add_mat_grp').focus();
           $('.invalid-feedback-dismatgrp').text('Please select one material group');
@@ -1214,7 +1251,7 @@ div#sample_1_length {
           $('.invalid-feedback-radiogrp').hide();
         }
 
-        if(dison == 'MATERIAL-GROUP' && mattype == 'Choose Material' && dismat==null){
+        if(dison == 'MATERIAL-GROUP' && mattype == 'Choose Material' && dismat == null){
           $('.invalid-feedback-dismat').fadeIn();
           $('#add_dismat').focus();
           $('.invalid-feedback-dismat').text('Please select atleast one material');
@@ -1223,40 +1260,13 @@ div#sample_1_length {
           $('.invalid-feedback-dismat').hide();
         }
 
-        if(dison == 'CUSTOMER' && mattype == 'Choose Customer' && discust == null){
-          $('.invalid-feedback-discust').fadeIn();
-          $('#add_discust').focus();
-          $('.invalid-feedback-discust').text('Please select atleast one customer');
-        }
-        else{
-          $('.invalid-feedback-discust').hide();
-        }
-
-        if((dison == 'MATERIAL-GROUP' && mattype =='Bulk upload from Excel' && uploaded_mats == '') || (dison == 'CUSTOMER' && mattype == 'Bulk upload from Excel' && uploaded_mats == '')){
+        if(dison == 'MATERIAL-GROUP' && mattype == 'Bulk upload from Excel' && uploaded_mats == ''){
           $('.invalid-feedback-excelfile').fadeIn();
           $('#file').focus();
           $('.invalid-feedback-excelfile').text('Please upload an excel file').show();
         }
         else{
           $('.invalid-feedback-excelfile').hide();
-        }
-
-        if(dison == 'REGION' && disreg == null){
-          $('.invalid-feedback-disreg').fadeIn();
-          $('#add_disreg').focus();
-          $('.invalid-feedback-disreg').text('Please select atleast one region');
-        }
-        else{
-          $('.invalid-feedback-disreg').hide();
-        }
-
-        if(dison == 'ZONE' && diszone == null){
-          $('.invalid-feedback-diszone').fadeIn();
-          $('#add_diszone').focus();
-          $('.invalid-feedback-diszone').text('Please select atleast one zone');
-        }
-        else{
-          $('.invalid-feedback-diszone').hide();
         }
         
         if((distype != '') && (dispromo!='') && (disfrom < disto) && (dispdes!='') && (disval != '') && (dismina != '') && (disfrom != '') && (disto != '') && ((dison == 'ALL') || (dison == 'MATERIAL-GROUP' && (dismat != null || file !='' || uploaded_mats!= ''))|| (dison == 'CUSTOMER' && (discust != null || file !='' ||uploaded_mats!= '')) || (dison =='REGION' && disreg != null) || (dison == 'ZONE' && diszone != null) || (mattypeid =='bulk_mat' && file != null))){
