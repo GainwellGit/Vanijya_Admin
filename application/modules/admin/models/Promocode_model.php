@@ -322,6 +322,12 @@ class Promocode_model extends CI_Model {
 			}else{
 				$this->db->delete('promo_codes', array('id' => $insert_id));
 				//return $notexist_mat_arr;
+				$this->db->select('id');
+				$this->db->from('promo_codes');
+				$this->db->order_by('id', 'desc');
+				$last_id = $this->db->get()->row()->id;
+
+				$this->db->query('ALTER TABLE promo_codes AUTO_INCREMENT '.$last_id);
 			}
 
 			if(!empty($notexist_mat_arr)){

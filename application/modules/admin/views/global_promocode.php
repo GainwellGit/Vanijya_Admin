@@ -309,14 +309,74 @@ div#sample_1_length {
             <div class="invalid-feedback-disto" style="color:red;"></div>
           </div>
           <div class="form-group">
+            <label for="add_dison"> Discount On User Group </label>
+            <select class="form-control" name="discount_on_user_grp" onChange="showSelectOptionsusrgrp(this.value);" required class="form-control" id="add_disonusrgrp">
+                <option value="">Select</option>
+                <option id="all_usrgrp" value="ALL">ALL</option>
+                <option id="cust" value="CUSTOMER">CUSTOMER</option>
+                <option id="reg" value="REGION">REGION</option>
+                <option id="zone" value="ZONE">ZONE</option>
+            </select>
+            <div class="invalid-feedback-disonusrgrp" style="color:red;"></div>
+          </div>
+          <div class="form-group" id="add_checkbox_for_cust" style="display:none;">
+            <input type="radio" id="select_cust" style="margin-right:5px;margin-left: 13px;" name="chose_radio_cust" value="Choose Customer" />
+            <label style="margin-bottom:auto;" for="select_cust">Choose Material</label>
+            <input type="radio" id="bulk_cust" style="margin-right:5px;margin-left: 13px;" name="chose_radio_cust" value="Bulk upload from Excel" />
+            <label style="margin-bottom:auto;" for="bulk_cust">Bulk upload from Excel</label>
+
+            <div class="invalid-feedback-radiogrp" style="color:red;"></div>
+          </div>
+          <div class="form-group" id="add_cust_sec">
+            <label for="add_cust"> Customer </label>
+            <select class="form-control" name="cust_no" id="add_cust" multiple>
+              <option value="">Select</option>
+              <?php
+              if (!empty($allcustomers)) {
+                foreach ($allcustomers as $key => $val) { ?>
+                  <option value="<?php echo $val['customer_code'];?>"><?php echo $val["name1"].' ('.$val["customer_code"].')';?></option>
+              <?php }} ?>
+            </select>
+            <div class="invalid-feedback-discust" style="color:red;"></div>
+          </div>
+          <div class="form-group" id="download_sample_cust" style="display:none;">
+            <a href="<?php echo base_url(); ?>/admin/promocode/download_excel">
+              <!-- <button type="button" class="btn btn-primary downloadquiz" id="btn_downloadquiz" name="btn_downloadquiz"> 
+                Sample Customer Template
+              </button> -->
+              Sample Customer Template
+            </a>
+          </div>
+          <div class="form-group" id="add_reg_sec">
+            <label for="add_reg"> Region </label>
+            <select class="form-control" name="reg_no" id="add_reg">
+              <option value="">Select</option>
+              <?php
+              if (!empty($allregions)) {
+                foreach ($allregions as $key => $val) { ?>
+                  <option value="<?php echo $val['region_code'];?>"><?php echo $val['region_description'];?></option>
+              <?php }} ?>
+            </select>
+            <div class="invalid-feedback-disreg" style="color:red;"></div>
+          </div>
+          <div class="form-group" id="add_zone_sec">
+            <label for="add_zone"> Zone </label>
+            <select class="form-control" name="zone_no" id="add_zone">
+              <option value="">Select</option>
+              <?php
+              if (!empty($allzones)) {
+                foreach ($allzones as $key => $val) { ?>
+                  <option value="<?php echo $val['Zone'];?>"><?php echo $val['Zone'];?></option>
+              <?php }} ?>
+            </select>
+            <div class="invalid-feedback-diszone" style="color:red;"></div>
+          </div>
+          <div class="form-group">
             <label for="add_dison"> Discount On </label>
             <select class="form-control" name="discount_on" onChange="showSelectOptions(this.value);" required class="form-control" id="add_dison">
                 <option value="">Select</option>
                 <option id="def_all" value="ALL">ALL</option>
                 <option id="matgrp" value="MATERIAL-GROUP">MATERIAL-GROUP</option>
-                <option id="cust" value="CUSTOMER">CUSTOMER</option>
-                <option id="reg" value="REGION">REGION</option>
-                <option id="zone" value="ZONE">ZONE</option>
             </select>
             <div class="invalid-feedback-dison" style="color:red;"></div>
           </div>
@@ -346,7 +406,7 @@ div#sample_1_length {
             
           </div>
           <div class="form-group" id="add_excel_file" style="display:none;">
-            <input type='file' class="form-control" name='file' id='file' required accept=".xls, .xlsx">
+            <input type='file' name='file' id='file' required accept=".xls, .xlsx">
             <input type="hidden" class="form-control" id="add_bulk_mats">
             <div class="invalid-feedback-excelfile" style="color:red;" style="display:none;"></div>
           </div>
@@ -356,51 +416,7 @@ div#sample_1_length {
                 Sample Material Template
               </button> -->
               Sample Material Template
-            </a>
-          </div>
-          <div class="form-group" id="download_sample_cust" style="display:none;">
-            <a href="<?php echo base_url(); ?>/admin/promocode/download_excel">
-              <!-- <button type="button" class="btn btn-primary downloadquiz" id="btn_downloadquiz" name="btn_downloadquiz"> 
-                Sample Customer Template
-              </button> -->
-              Sample Customer Template
-            </a>
-          </div>
-          <div class="form-group" id="add_cust_sec">
-            <label for="add_cust"> Customer </label>
-            <select class="form-control" name="cust_no" id="add_cust" multiple>
-              <option value="">Select</option>
-              <?php
-              if (!empty($allcustomers)) {
-                foreach ($allcustomers as $key => $val) { ?>
-                  <option value="<?php echo $val['customer_code'];?>"><?php echo $val["name1"].' ('.$val["customer_code"].')';?></option>
-              <?php }} ?>
-            </select>
-            <div class="invalid-feedback-discust" style="color:red;"></div>
-          </div>
-          <div class="form-group" id="add_reg_sec">
-            <label for="add_reg"> Region </label>
-            <select class="form-control" name="reg_no" id="add_reg" multiple>
-              <option value="">Select</option>
-              <?php
-              if (!empty($allregions)) {
-                foreach ($allregions as $key => $val) { ?>
-                  <option value="<?php echo $val['region_code'];?>"><?php echo $val['region_description'];?></option>
-              <?php }} ?>
-            </select>
-            <div class="invalid-feedback-disreg" style="color:red;"></div>
-          </div>
-          <div class="form-group" id="add_zone_sec">
-            <label for="add_zone"> Zone </label>
-            <select class="form-control" name="zone_no" id="add_zone" multiple>
-              <option value="">Select</option>
-              <?php
-              if (!empty($allzones)) {
-                foreach ($allzones as $key => $val) { ?>
-                  <option value="<?php echo $val['Zone'];?>"><?php echo $val['Zone'];?></option>
-              <?php }} ?>
-            </select>
-            <div class="invalid-feedback-diszone" style="color:red;"></div>
+            </a> 
           </div>
           <!-- <div class="form-group">
             <label for="add_disstatus"> Status </label>
@@ -819,6 +835,37 @@ div#sample_1_length {
         $("#display_list").hide();
       }
 
+      $(".date").on("click", function() {
+        var dispromo = $('#dispromo').val();
+        $.ajax({
+          url: '<?php echo base_url(); ?>admin/promocode/check_promocode', // Replace with your API endpoint
+          type: 'POST',
+          data: {dispromo:dispromo},
+          success: function(response) {
+            // Request successful, do something with the response
+            if (response == 1) {
+              $('.invalid-feedback-edispromo').fadeIn();
+              $('#dispromo').focus();
+              $('.invalid-feedback-edispromo').text('Promocode already exists. Please try another!');
+              $('#submit_form').attr('disabled','disabled');
+              //$('.date').parent().find('input:first').attr('disabled','disabled');
+              //$('.fa-calendar').parent().attr('disabled','disabled');
+            } else {
+              $('.invalid-feedback-edispromo').empty();
+              $('.invalid-feedback-edispromo').hide();
+              $('#submit_form').removeAttr('disabled');
+              //$('.fa-calendar').parent().removeAttr('disabled');
+              //$('.date').parent().find('input:first').removeAttr('disabled');
+            }
+          },
+          error: function(xhr, status, error) {
+            // Request failed, handle the error
+            toastr["error"]("", "Failure : Something went wrong.")
+            console.error(error);
+          }
+        });
+      });
+
       $('#id_x').val(id_x);
 
       $('#disid').val(id_x);
@@ -827,8 +874,6 @@ div#sample_1_length {
       $('#dismina').val($('#disa-'+id_x).text());
       $('#dispromo').val($('#disp-'+id_x).text());
       $('#dispdes').val($('#disd-'+id_x).text());
-      /* $('#disfrom').val($('#disf-'+id_x).text());
-      $('#disto').val($('#disto-'+id_x).text()); */
       $('#dison').val($('#diso-'+id_x).text());
       $('#disstatus').val($('#diss-'+id_x).text());
       $("#myModal").modal('show');
@@ -911,7 +956,7 @@ div#sample_1_length {
         var promocodeId = $(this).closest('.switch').data("id");
   
         if (!isChecked) {
-          if (confirm('Are you sure you want to disable the promocode?')) {
+          if (confirm('Are you sure you want to uncheck the checkbox?')) {
             $.ajax({
               method: "POST",
               url: "<?php echo site_url('/admin/promocode/changestatus'); ?>",
@@ -1016,7 +1061,7 @@ div#sample_1_length {
               var mattypeid = $('input[name="chose_radio"]:checked').attr('id');
               var file      = $('#file').val();
               var promoerr = $('.invalid-feedback-dispromo').val();
-              if(promoerr == '' && (mattypeid == 'bulkopt' && file != '' && ($('#add_bulk_mats').val()) != '')){console.log('706');
+              if(promoerr == '' && (mattypeid == 'bulkopt' && file != '' && ($('#add_bulk_mats').val()) != '')){
                 $('#submit_addform').removeAttr('disabled');
               }
             }
@@ -1123,6 +1168,14 @@ div#sample_1_length {
           $('.invalid-feedback-disto').hide();
         }
 
+        if(disfrom >=  disto){
+          $('.invalid-feedback-disto').fadeIn();
+          $('#add_disto').focus();
+          $('.invalid-feedback-disto').text('To Date should be greater than From Date');
+        }else{
+          $('.invalid-feedback-disto').hide();
+        }
+
         if (dison == '') {
           $('.invalid-feedback-dison').fadeIn();
           $('#add_dison').focus();
@@ -1195,7 +1248,7 @@ div#sample_1_length {
           $('.invalid-feedback-diszone').hide();
         }
         
-        if((distype != '') && (dispromo!='') && (dispdes!='') && (disval != '') && (dismina != '') && (disfrom != '') && (disto != '') && ((dison == 'ALL') || (dison == 'MATERIAL-GROUP' && (dismat != null || file !='' || uploaded_mats!= ''))|| (dison == 'CUSTOMER' && (discust != null || file !='' ||uploaded_mats!= '')) || (dison =='REGION' && disreg != null) || (dison == 'ZONE' && diszone != null) || (mattypeid =='bulkopt' && file != null))){
+        if((distype != '') && (dispromo!='') && (disfrom < disto) && (dispdes!='') && (disval != '') && (dismina != '') && (disfrom != '') && (disto != '') && ((dison == 'ALL') || (dison == 'MATERIAL-GROUP' && (dismat != null || file !='' || uploaded_mats!= ''))|| (dison == 'CUSTOMER' && (discust != null || file !='' ||uploaded_mats!= '')) || (dison =='REGION' && disreg != null) || (dison == 'ZONE' && diszone != null) || (mattypeid =='bulkopt' && file != null))){
           var data = {
             distype: distype,
             disval: disval,
@@ -1287,7 +1340,7 @@ div#sample_1_length {
           $('.invalid-feedback-edispromo').hide();
         }
 
-        if (dispromo != '') {
+        /* if (dispromo != '') {
           $.ajax({
             url: '<?php echo base_url(); ?>admin/promocode/check_promocode', // Replace with your API endpoint
             type: 'POST',
@@ -1309,7 +1362,7 @@ div#sample_1_length {
               console.error(error);
             }
           });
-        }
+        } */
 
         if (dispdes == '') {
           $('.invalid-feedback-edispdes').fadeIn();
@@ -1337,8 +1390,16 @@ div#sample_1_length {
         else{
           $('.invalid-feedback-edisto').hide();
         }
+
+        if(disfrom >=  disto){
+          $('.invalid-feedback-edisto').fadeIn();
+          $('#disto').focus();
+          $('.invalid-feedback-edisto').text('To Date should be greater than From Date');
+        }else{
+          $('.invalid-feedback-edisto').hide();
+        }
         
-        if((distype != '') && (disval != '') && (dismina != '') && (dispromo!='') && (dispdes!='') && (disfrom != '') && (disto != '') && (dison != '')){
+        if((distype != '') && (disval != '') && (disfrom < disto) && (dismina != '') && (dispromo!='') && (dispdes!='') && (disfrom != '') && (disto != '') && (dison != '')){
           var data = {
             distype: distype,
             disval: disval,
@@ -1367,7 +1428,7 @@ div#sample_1_length {
               // Request successful, do something with the response
               $('#myModal').modal('toggle');
               
-              toastr["info"]("", "success : One Promocode Data is Updated Successfully.")
+              toastr["info"]("", "success : One Promocode Data is cloned Successfully.")
               console.log(response);
             },
             error: function(xhr, status, error) {
