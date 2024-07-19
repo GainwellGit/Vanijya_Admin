@@ -247,7 +247,7 @@ div#sample_1_length {
             <input type="text" class="form-control" id="add_distype" name="discount_type" value="PERCENT" disabled>
             <div class="invalid-feedback-distype" style="color:red;"></div>
 
-            <select name="langOpt[]" multiple id="langOpt">
+            <select name="langOpt" multiple id="langOpt">
                 <option value="C++">C++</option>
                 <option value="C#">C#</option>
                 <option value="Java">Java</option>
