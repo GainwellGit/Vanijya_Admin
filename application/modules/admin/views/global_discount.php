@@ -604,7 +604,7 @@ div#sample_1_length {
             $('#add_checkbox_forbulk').show();
             $('#invalid-feedback-radiogrp').show();
             $("#add_mat_sec").html(html); 
-            $("#add_mat").addClass('jqmsLoaded ms-list-1');
+            $("#add_mat").addClass('form-control');
           }
         });
       }else{
