@@ -889,7 +889,7 @@ div#sample_1_length {
     function showSelectOptionsusrgrp(val) {
       if(val == 'CUSTOMER'){
         $('#add_cust_sec').show();
-        $('#add_checkbox_for_cust').show();
+        // $('#add_checkbox_for_cust').show();
         $('input[name="chose_radio_cust"]:checked').removeAttr('checked');
         $('#add_reg').val('');
         $('#add_zone').val('');
