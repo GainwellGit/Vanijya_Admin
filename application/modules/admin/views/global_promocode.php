@@ -217,9 +217,9 @@ div#sample_1_length {
                       <td><span id="disc-<?php echo $globalpromocodes['id']; ?>"><?php echo isset($globalpromocodes['created_at']) ? date('d-m-Y', strtotime($globalpromocodes['created_at'])) : ''; ?></span></td>
                       <td><span id="disu-<?php echo $globalpromocodes['id']; ?>"><?php echo isset($globalpromocodes['updated_at']) ? date('d-m-Y', strtotime($globalpromocodes['updated_at'])) : ''; ?></span></td>
                       <td>
-                        <?php // if($globalpromocodes['status']!='A'){ ?>
+                        <?php if($globalpromocodes['status']!='A'){ ?>
                         <a data-id="<?php echo $globalpromocodes['id']; ?>" data-disid="<?php echo $globalpromocodes['id'] ;?>" data-distype="<?php echo $globalpromocodes['discount_type'] ;?>" data-disval="<?php echo $globalpromocodes['discount_value']; ?>" data-dismina="<?php echo $globalpromocodes['min_ammount']; ?>" data-disp="<?php echo $globalpromocodes['promocode']; ?>" data-disd="<?php echo $globalpromocodes['description']; ?>" data-disfrom="<?php echo $globalpromocodes['from_date']; ?>" data-disto="<?php echo $globalpromocodes['to_date']; ?>" data-disonusrgrp="<?php echo $globalpromocodes['discount_on_user_grp']; ?>" data-dison="<?php echo $globalpromocodes['discount_on']; ?>" data-matgrp="<?php echo $globalpromocodes['material_group_code']; ?>" data-allselect="<?php echo $globalpromocodes['all_select']; ?>" data-disstatus="<?php echo $globalpromocodes['status']; ?>" href="#" class="popupDynamic" ><i class="fa fa-clone"></i></a>
-                        <?php // } ?>
+                        <?php } ?>
                       </td>
                       </tr>
 

@@ -336,7 +336,7 @@ class Promocode_model extends CI_Model {
 			}
 		}
 
-		if($dison == 'CUSTOMER' && $mattype != 'All' && !empty($discust)){
+		if($disonusrgrp == 'CUSTOMER' && !empty($discust)){
 			$newArray = array();
 			$notexist_cust_arr = array();
 			foreach($discust as $cust){
@@ -369,7 +369,7 @@ class Promocode_model extends CI_Model {
 			}
 		}
 
-		if($dison == 'REGION'){
+		if($disonusrgrp == 'REGION'){
 			foreach($disreg as $reg){
 				$matdata['discount_id'] = $insert_id;
 				$matdata['region'] = $reg;
@@ -380,7 +380,7 @@ class Promocode_model extends CI_Model {
 			$this->db->insert_batch('promo_codes_region', $newArray);
 		}
 
-		if($dison == 'ZONE'){
+		if($disonusrgrp == 'ZONE'){
 			foreach($diszone as $zone){
 				$matdata['discount_id'] = $insert_id;
 				$matdata['zone'] = $zone;
