@@ -241,20 +241,6 @@ div#sample_1_length {
             <label for="add_distype"> Discount Type </label>
             <input type="text" class="form-control" id="add_distype" name="discount_type" value="PERCENT" disabled>
             <div class="invalid-feedback-distype" style="color:red;"></div>
-            <select name="langOpt[]" multiple id="langOpt">
-            <option value="C++">C++</option>
-            <option value="C#">C#</option>
-            <option value="Java">Java</option>
-            <option value="Objective-C">Objective-C</option>
-            <option value="JavaScript">JavaScript</option>
-            <option value="Perl">Perl</option>
-            <option value="PHP">PHP</option>
-            <option value="Ruby on Rails">Ruby on Rails</option>
-            <option value="Android">Android</option>
-            <option value="iOS">iOS</option>
-            <option value="HTML">HTML</option>
-            <option value="XML">XML</option>
-        </select>
           </div>
           <div class="form-group">
             <label for="add_disval"> Discount Percentage </label>
@@ -618,6 +604,7 @@ div#sample_1_length {
             $('#add_checkbox_forbulk').show();
             $('#invalid-feedback-radiogrp').show();
             $("#add_mat_sec").html(html); 
+            $("#add_mat").addClass('jqmsLoaded ms-list-1');
           }
         });
       }else{
@@ -1067,7 +1054,7 @@ div#sample_1_length {
 <script src="https://demos.codexworld.com/multi-select-dropdown-list-with-checkbox-jquery/js/multiselect/jquery.multiselect.js"></script>
 <script>
     $(function(){
-        $('#langOpt').multiselect({
+        $('#add_mat').multiselect({
             columns: 1,
             texts: {
                 placeholder: 'Select Materials',
