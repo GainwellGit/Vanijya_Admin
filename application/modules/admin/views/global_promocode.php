@@ -183,6 +183,7 @@ div#sample_1_length {
                       <th> Description </th>
                       <th> From Date </th>
                       <th> To Date &nbsp;&nbsp;&nbsp;&nbsp;</th>
+                      <th> User Group </th>
                       <th> Discount On </th>
                       <th> Status </th>
                       <th> Created At </th>
@@ -193,7 +194,9 @@ div#sample_1_length {
                   <tbody>
                     <?php if (!empty($globalpromocode)){
                       $counter = 1; 
-                      foreach( $globalpromocode as $globalpromocodes){ ?>
+                      foreach( $globalpromocode as $globalpromocodes){
+                        $material_all = (isset($globalpromocodes['all_select']) && $globalpromocodes['all_select'] == 1) ? ' - (ALL)' : ' - (SELECTIVE)';
+                    ?>
                       <tr>
                       <td><span><?php echo $counter ;?></span></td>
                       <td><span id="dist-<?php echo $globalpromocodes['id']; ?>"><?php echo isset($globalpromocodes['discount_type']) ? $globalpromocodes['discount_type'] : ''; ?></span></td>
@@ -203,7 +206,10 @@ div#sample_1_length {
                       <td><span id="disd-<?php echo $globalpromocodes['id']; ?>"><?php echo isset($globalpromocodes['description']) ? $globalpromocodes['description'] : ''; ?></span></td>
                       <td><span id="disf-<?php echo $globalpromocodes['id']; ?>"><?php echo isset($globalpromocodes['from_date']) ? date('d-m-Y', strtotime($globalpromocodes['from_date'])) : ''; ?></span></td>
                       <td><span id="disto-<?php echo $globalpromocodes['id']; ?>"><?php echo isset($globalpromocodes['to_date']) ? date('d-m-Y', strtotime($globalpromocodes['to_date'])) : ''; ?></span></td>
-                      <td><span id="diso-<?php echo $globalpromocodes['id']; ?>"><?php echo isset($globalpromocodes['discount_on']) ? $globalpromocodes['discount_on'] : ''; ?></span></td>
+                      <td><span id="disa-<?php echo $globalpromocodes['id']; ?>"><?php echo isset($globalpromocodes['discount_on_user_grp']) ? $globalpromocodes['discount_on_user_grp'] : ''; ?></span></td>
+                      <td><span id="diso-<?php echo $globalpromocodes['id']; ?>">
+                        <?php echo ($globalpromocodes['discount_on'] == 'ALL') ? 'ALL MATERIALS' : $globalpromocodes['group_description'] . ' (' . $globalpromocodes['group_code'] . ')' . $material_all; ?>
+                      </span></td>
                       <td>
                         <span id="diss-<?php echo $globalpromocodes['id']; ?>">
                           <?php if($globalpromocodes['status']=='A'){ ?>
