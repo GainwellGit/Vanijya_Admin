@@ -342,14 +342,10 @@ class Promocode_model extends CI_Model {
 
 			if(!empty($notexist_mat_arr)){
 				return $notexist_mat_arr;
-			}else{
-				return true;
 			}
 		}
 
-		echo "<pre>"; print_r($discust); die();
 		if($disonusrgrp == 'CUSTOMER' && !empty($discust)){
-			die('351');
 			$newArray = array();
 			$notexist_cust_arr = array();
 			foreach($discust as $cust){
@@ -379,8 +375,6 @@ class Promocode_model extends CI_Model {
 
 			if(!empty($notexist_cust_arr)){
 				return $notexist_cust_arr;
-			}else{
-				return true;
 			}
 		}
 
