@@ -350,10 +350,10 @@ class Promocode_model extends CI_Model {
 			$notexist_cust_arr = array();
 			foreach($discust as $cust){
 				if ($this->validate_customer_exist($cust) == 1) {
-					$matdata['discount_id'] = $insert_id;
-					$matdata['customer_code'] = $cust;
-					$matdata['created_at'] = date("Y-m-d h:i:s");
-					$newArray[] = $matdata;
+					$custdata['discount_id'] = $insert_id;
+					$custdata['customer_code'] = $cust;
+					$custdata['created_at'] = date("Y-m-d h:i:s");
+					$newArray[] = $custdata;
 				} else {
 					$notextcust['customer_code'] = $cust;
 				}
@@ -378,10 +378,10 @@ class Promocode_model extends CI_Model {
 
 		if($disonusrgrp == 'REGION'){
 			// foreach($disreg as $reg){
-				$matdata['discount_id'] = $insert_id;
-				$matdata['region'] = $disreg;
-				$matdata['created_at'] = date("Y-m-d h:i:s");
-				$newArray = $matdata;
+				$regdata['discount_id'] = $insert_id;
+				$regdata['region'] = $disreg;
+				$regdata['created_at'] = date("Y-m-d h:i:s");
+				$newArray = $regdata;
 			// }
 			
 			// $this->db->insert_batch('promo_codes_region', $newArray);
@@ -390,11 +390,11 @@ class Promocode_model extends CI_Model {
 
 		if($disonusrgrp == 'ZONE'){
 			// foreach($diszone as $zone){
-				$matdata['discount_id'] = $insert_id;
-				$matdata['zone'] = $diszone;
-				$matdata['created_at'] = date("Y-m-d h:i:s");
-				$matdata['updated_at'] = date("Y-m-d h:i:s");
-				$newArray = $matdata;
+				$zonedata['discount_id'] = $insert_id;
+				$zonedata['zone'] = $diszone;
+				$zonedata['created_at'] = date("Y-m-d h:i:s");
+				$zonedata['updated_at'] = date("Y-m-d h:i:s");
+				$newArray = $zonedata;
 			// }
 			
 			// $this->db->insert_batch('promo_codes_zone', $newArray);
