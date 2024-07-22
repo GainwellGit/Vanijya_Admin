@@ -348,6 +348,7 @@ class Promocode_model extends CI_Model {
 		}
 
 		if($disonusrgrp == 'CUSTOMER' && !empty($discust)){
+			die('351');
 			$newArray = array();
 			$notexist_cust_arr = array();
 			foreach($discust as $cust){
