@@ -183,7 +183,7 @@ div#sample_1_length {
                       <th> Description </th>
                       <th> From Date </th>
                       <th> To Date &nbsp;&nbsp;&nbsp;&nbsp;</th>
-                      <th> User Group </th>
+                      <th> Discount To </th>
                       <th> Discount On &nbsp;&nbsp;&nbsp;&nbsp;</th>
                       <th> Status </th>
                       <th> Created At </th>
@@ -1294,7 +1294,7 @@ div#sample_1_length {
         }
         
         // if((distype != '') && (dispromo != '') && (disfrom < disto) && (dispdes != '') && (disval != '') && (dismina != '') && (disfrom != '') && (disto != '') && ((disonusrgrp == 'ALL') || (disonusrgrp == 'CUSTOMER' && (discust != null || file_cust != '' || uploaded_cust != '')) || (disonusrgrp == 'REGION' && disreg != null) || (disonusrgrp == 'ZONE' && diszone != null) || (custtypeid == 'bulk_cust' && file_cust != null)) && ((dison == 'ALL') || (dison == 'MATERIAL-GROUP' && (dismat != null || file != '' || uploaded_mats != '')) || (mattypeid == 'bulk_mat' && file != null))){
-        if((distype != '') && (dispromo != '') && (disfrom < disto) && (dispdes != '') && (disval != '') && (dismina != '') && (disfrom != '') && (disto != '') && ((disonusrgrp == 'ALL') || (disonusrgrp == 'REGION' && disreg != null) || (disonusrgrp == 'ZONE' && diszone != null) || (custtypeid == 'bulk_cust' && file_cust != null)) && ((dison == 'ALL') || (dison == 'MATERIAL-GROUP') || (mattypeid == 'bulk_mat' && file != null))){
+        if((distype != '') && (dispromo != '') && (disfrom < disto) && (dispdes != '') && (disval != '') && (dismina != '') && (disfrom != '') && (disto != '') && (disonusrgrp != '') && (dison != '')){
           var data = {
             distype: distype,
             disval: disval,
