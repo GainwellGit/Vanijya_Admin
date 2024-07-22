@@ -184,7 +184,7 @@ div#sample_1_length {
                       <th> From Date </th>
                       <th> To Date &nbsp;&nbsp;&nbsp;&nbsp;</th>
                       <th> User Group </th>
-                      <th> Discount On </th>
+                      <th> Discount On &nbsp;&nbsp;&nbsp;&nbsp;</th>
                       <th> Status </th>
                       <th> Created At </th>
                       <th> Updated At </th>
