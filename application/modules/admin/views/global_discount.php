@@ -315,8 +315,8 @@ div#sample_1_length {
             <input type="hidden" id="add_bulk_mats">
             <div class="invalid-feedback-excelfile" style="color:red;" style="display:none;"></div>
 
-            <!-- <a href="<?php echo base_url(); ?>admin/discount/download_excel" class="download_sample">Download Sample Template -->
-            <a href="<?php echo base_url('assets/csv/select_bulk_materials.xlsx'); ?>" class="download_sample">Download Sample Template
+            <a href="<?php echo base_url(); ?>admin/discount/download_excel" class="download_sample">Download Sample Template
+            <!-- <a href="<?php echo base_url('assets/csv/select_bulk_materials.xlsx'); ?>" class="download_sample">Download Sample Template -->
               <!-- <button type="button" class="btn btn-primary downloadquiz" id="btn_downloadquiz" name="btn_downloadquiz"> 
                 Download Sample Template
               </button> -->

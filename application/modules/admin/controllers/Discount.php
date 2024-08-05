@@ -122,6 +122,9 @@ class Discount extends CI_Controller {
         // header("Content-Transfer-Encoding: Binary"); 
         // header("Content-Transfer-Encoding: utf-8");
         header("Content-disposition: attachment; filename=\"" . basename($file_url) . "\""); 
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
         readfile($file_url);
     }
 
