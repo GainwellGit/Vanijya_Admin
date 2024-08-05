@@ -370,7 +370,8 @@ div#sample_1_length {
             <div class="invalid-feedback-excelfile-cust" style="color:red;" style="display:none;"></div>
           </div>
           <div class="form-group" id="download_sample_cust" style="display:none;">
-            <a href="<?php echo base_url(); ?>/admin/promocode/download_excel">
+            <!-- <a href="<?php echo base_url(); ?>/admin/promocode/download_excel"> -->
+            <a href="<?php echo base_url('assets/csv/select_bulk_customers.xlsx'); ?>">
               <!-- <button type="button" class="btn btn-primary downloadquiz" id="btn_downloadquiz" name="btn_downloadquiz"> 
                 Sample Customer Template
               </button> -->
@@ -417,7 +418,8 @@ div#sample_1_length {
             <div class="invalid-feedback-excelfile" style="color:red;" style="display:none;"></div>
           </div>
           <div class="form-group" id="download_sample_mat" style="display:none;">
-            <a href="<?php echo base_url(); ?>admin/discount/download_excel">
+            <!-- <a href="<?php echo base_url(); ?>admin/discount/download_excel"> -->
+            <a href="<?php echo base_url('assets/csv/select_bulk_materials.xlsx'); ?>">
               <!-- <button type="button" class="btn btn-primary downloadquiz" id="btn_downloadquiz" name="btn_downloadquiz"> 
                 Sample Material Template
               </button> -->
