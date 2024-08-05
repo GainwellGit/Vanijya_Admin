@@ -117,9 +117,10 @@ class Discount extends CI_Controller {
     {
         $file_url = base_url('assets/csv/select_bulk_materials.xlsx');
         // echo $file_url; die;
-        header('Content-Type: application/octet-stream');
+        // header('Content-Type: application/octet-stream');
+        header('Content-Type: application/vnd.ms-excel');
         // header("Content-Transfer-Encoding: Binary"); 
-        header("Content-Transfer-Encoding: utf-8");
+        // header("Content-Transfer-Encoding: utf-8");
         header("Content-disposition: attachment; filename=\"" . basename($file_url) . "\""); 
         readfile($file_url);
     }
