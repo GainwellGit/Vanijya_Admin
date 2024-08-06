@@ -326,6 +326,8 @@ class Promocode_model extends CI_Model {
 
 			$newArray = array_values(array_filter($newArray));
 			$notexist_mat_arr = array_values(array_filter($notexist_mat_arr));
+
+			echo "<pre>"; print_r($newArray); print_r($notexist_mat_arr); die();
 			
 			if(!empty($newArray)){
 				$this->db->insert_batch('promo_codes_material_group', $newArray);
