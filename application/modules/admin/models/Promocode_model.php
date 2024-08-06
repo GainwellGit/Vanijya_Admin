@@ -345,6 +345,8 @@ class Promocode_model extends CI_Model {
 			if(!empty($notexist_mat_arr)){
 				return $notexist_mat_arr;
 			}
+		} else {
+			echo "hiii 349"; die();
 		}
 
 		if($disonusrgrp == 'CUSTOMER' && !empty($discust)){
