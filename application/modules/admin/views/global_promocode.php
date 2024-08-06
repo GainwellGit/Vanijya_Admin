@@ -195,7 +195,7 @@ div#sample_1_length {
                     <?php if (!empty($globalpromocode)){
                       $counter = 1; 
                       foreach( $globalpromocode as $globalpromocodes){
-                        $material_all = (isset($globalpromocodes['all_select']) && $globalpromocodes['all_select'] == 1) ? ' - (ALL)' : ' - (SELECTIVE)';
+                        $material_all = (isset($globalpromocodes['material_all_select']) && $globalpromocodes['material_all_select'] == 1) ? ' - (ALL)' : ' - (SELECTIVE)';
                     ?>
                       <tr>
                       <td><span><?php echo $counter ;?></span></td>
