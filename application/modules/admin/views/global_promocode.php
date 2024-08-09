@@ -966,7 +966,7 @@ div#sample_1_length {
           data:'material_group='+val,
           dataType: "json",
           success: function(response){
-            html +='<label for="add_mat"> Materials </label><select class="form-control" id="add_mat" name="material_no" multiple>';
+            html +='<label for="add_mat"> Materials </label><select class="material-select form-control" id="add_mat" name="material_no" multiple>';
             $.each(response,function (index, val) {
               html+='<option value="'+val.material_no+'">'+val.material_description+' ('+val.material_no+')</option>';
             });
@@ -976,6 +976,11 @@ div#sample_1_length {
             $('input[name="chose_radio"]:checked').removeAttr('checked');
             $('#invalid-feedback-radiogrp').show();
             $("#add_mat_sec").html(html); 
+            $(".material-select").chosen({
+              width: '100%'
+            });
+            var dropHolder = document.getElementById("add_mat_sec");
+            dropHolder.appendChild("material-select");
           }
         });
       }else{
