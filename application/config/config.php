@@ -23,9 +23,7 @@ date_default_timezone_set('Asia/Kolkata');
 | a PHP script and you can easily do that on your own.
 |
 */
-
-
-
+/* This is base url */
 
 $config['base_url'] = 'https://uatwebapps.gainwellindia.com/'; 
 
