@@ -443,7 +443,7 @@ div#sample_1_length {
       display: none;
     }
   </style>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
   <script type="text/javascript">
     $(".addModal").click(function(){
       $("#addModal").modal('show');
@@ -603,10 +603,13 @@ div#sample_1_length {
             });
             html+='</select><div class="invalid-feedback-dismat" style="color:red;"></div>';
 
-            $('#add_mat').trigger("chosen:updated");
+            // $('#add_mat').trigger("chosen:updated");
             $('#add_checkbox_forbulk').show();
             $('#invalid-feedback-radiogrp').show();
             $("#add_mat_sec").html(html); 
+            $(".chosen-select").chosen();
+            var dropHolder= document.getElementById("add_mat_sec");
+            dropHolder.appendChild("chosen-select");
             // $("#add_mat").addClass('form-control');
           }
         });
@@ -1055,7 +1058,7 @@ div#sample_1_length {
 <script src="<?php echo base_url(); ?>assets/js/group.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/toastr.min.js" type="text/javascript"></script>
 <!-- <script src="https://demos.codexworld.com/multi-select-dropdown-list-with-checkbox-jquery/js/multiselect/jquery.multiselect.js"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+
 <script>
     // $(function(){
     //     $('#add_mat').multiselect({
@@ -1067,9 +1070,9 @@ div#sample_1_length {
     //         search: true
     //     });
     // });
-    $(document).ready(function(e) {
-      $('.chosen-select').chosen( {
-        width : '200px'
-      });
-    });
+    // $(document).ready(function(e) {
+    //   $('.chosen-select').chosen( {
+    //     width : '200px'
+    //   });
+    // });
 </script>
