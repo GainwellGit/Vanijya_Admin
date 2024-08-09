@@ -354,8 +354,8 @@ div#sample_1_length {
           </div>
           <div class="form-group" id="add_cust_sec">
             <label for="add_cust"> Customer </label>
-            <select class="form-control" name="cust_no" id="add_cust" class="customer-select" multiple>
-              <option value="">Select</option>
+            <select class="customer-select form-control" name="cust_no" id="add_cust" multiple>
+              <!-- <option value="">Select</option> -->
               <?php
               if (!empty($allcustomers)) {
                 foreach ($allcustomers as $key => $val) { ?>
