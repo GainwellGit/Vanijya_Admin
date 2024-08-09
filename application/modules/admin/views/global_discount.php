@@ -610,7 +610,9 @@ div#sample_1_length {
             $('#invalid-feedback-radiogrp').show();
             $("#add_mat_sec").html(html); 
             $("#add_mat").addClass('form-control');
-            $(".chosen-select").chosen();
+            $(".chosen-select").chosen({
+              width: '100%'
+            });
             var dropHolder= document.getElementById("add_mat_sec");
             dropHolder.appendChild("chosen-select");
           }
@@ -1059,22 +1061,3 @@ div#sample_1_length {
 <script src="<?php echo base_url(); ?>assets/pages/scripts/table-datatables-rowreorder.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/group.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/toastr.min.js" type="text/javascript"></script>
-<!-- <script src="https://demos.codexworld.com/multi-select-dropdown-list-with-checkbox-jquery/js/multiselect/jquery.multiselect.js"></script> -->
-
-<script>
-    // $(function(){
-    //     $('#add_mat').multiselect({
-    //         columns: 1,
-    //         texts: {
-    //             placeholder: 'Select Materials',
-    //             search     : 'Search Materials'
-    //         },
-    //         search: true
-    //     });
-    // });
-    // $(document).ready(function(e) {
-    //   $('.chosen-select').chosen( {
-    //     width : '200px'
-    //   });
-    // });
-</script>
