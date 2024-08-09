@@ -443,7 +443,9 @@ div#sample_1_length {
       display: none;
     }
   </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.css" rel="stylesheet" type="text/css" />
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
   <script type="text/javascript">
     $(".addModal").click(function(){
       $("#addModal").modal('show');
