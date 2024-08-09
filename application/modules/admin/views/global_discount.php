@@ -609,10 +609,10 @@ div#sample_1_length {
             $('#add_checkbox_forbulk').show();
             $('#invalid-feedback-radiogrp').show();
             $("#add_mat_sec").html(html); 
+            $("#add_mat").addClass('form-control');
             $(".chosen-select").chosen();
             var dropHolder= document.getElementById("add_mat_sec");
             dropHolder.appendChild("chosen-select");
-            // $("#add_mat").addClass('form-control');
           }
         });
       }else{
