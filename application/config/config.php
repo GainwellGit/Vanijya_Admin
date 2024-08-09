@@ -24,6 +24,7 @@ date_default_timezone_set('Asia/Kolkata');
 |
 */
 
+
 $config['base_url'] = 'https://uatwebapps.gainwellindia.com/'; 
 
 $config['sap_base_url'] = 'http://10.131.45.4:8080/';
