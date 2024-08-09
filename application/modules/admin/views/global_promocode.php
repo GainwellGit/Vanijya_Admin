@@ -354,7 +354,7 @@ div#sample_1_length {
           </div>
           <div class="form-group" id="add_cust_sec">
             <label for="add_cust"> Customer </label>
-            <select class="form-control" name="cust_no" id="add_cust" multiple>
+            <select class="form-control" name="cust_no" id="add_cust" class="customer-select" multiple>
               <option value="">Select</option>
               <?php
               if (!empty($allcustomers)) {
@@ -651,6 +651,10 @@ div#sample_1_length {
     }
   </style>
 
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.css" rel="stylesheet" type="text/css" />
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+
   <script type="text/javascript">
     $(".addModal").click(function(){
       $("#addModal").modal('show');
@@ -696,6 +700,10 @@ div#sample_1_length {
       $('#add_checkbox_for_cust').val('');
       $('input[name="chose_radio"]:checked').removeAttr('checked');
       $('input[name="chose_radio_cust"]:checked').removeAttr('checked');
+
+      $(".customer-select").chosen({
+        width: '100%'
+      });
       
       $("#add_dispromo").on("blur", function() {
         var dispromo = $('#add_dispromo').val();

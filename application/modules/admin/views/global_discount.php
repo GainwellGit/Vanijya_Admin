@@ -613,7 +613,7 @@ div#sample_1_length {
             $(".chosen-select").chosen({
               width: '100%'
             });
-            var dropHolder= document.getElementById("add_mat_sec");
+            var dropHolder = document.getElementById("add_mat_sec");
             dropHolder.appendChild("chosen-select");
           }
         });
