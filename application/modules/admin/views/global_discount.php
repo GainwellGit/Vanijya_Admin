@@ -603,10 +603,11 @@ div#sample_1_length {
             });
             html+='</select><div class="invalid-feedback-dismat" style="color:red;"></div>';
 
+            $('#add_mat').trigger("chosen:updated");
             $('#add_checkbox_forbulk').show();
             $('#invalid-feedback-radiogrp').show();
             $("#add_mat_sec").html(html); 
-            $("#add_mat").addClass('form-control');
+            // $("#add_mat").addClass('form-control');
           }
         });
       }else{
