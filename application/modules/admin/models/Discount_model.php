@@ -245,11 +245,11 @@ class Discount_model extends CI_Model {
 						"updated_at" => date("Y-m-d h:i:s")
 					);
 				} else {
-					// $extmatdata['material_no'] = $mat;
-					// $extmatdata[] = array(
+					$extmatdata['material_no'] = $mat;
+					// $extmatdata = array(
 					// 	"material_no" => $mat
 					// );
-					array_push($extmatdata['material_no'], $mat);
+					// array_push($extmatdata['material_no'], $mat);
 					break;
 				}
 
