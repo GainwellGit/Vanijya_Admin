@@ -245,25 +245,25 @@ class Discount_model extends CI_Model {
 						"updated_at" => date("Y-m-d h:i:s")
 					);
 				} else {
-					echo $mat;
 					// $extmatdata['material_no'] = $mat;
-					$extmatdata[] = array(
-						"material_no" => $mat
-					);
+					// $extmatdata[] = array(
+					// 	"material_no" => $mat
+					// );
+					array_push($extmatdata['material_no'], $mat);
 					break;
 				}
 
-				echo "<pre>"; print_r($extmatdata);
+				echo "<pre>"; print_r($extmatdata); die();
 
 				$new_mat_arr[] = $matdata;
 				$exist_mat_arr[] = $extmatdata;
 			}
-			echo "<pre>"; print_r($new_mat_arr); print_r($exist_mat_arr);
+			// echo "<pre>"; print_r($new_mat_arr); print_r($exist_mat_arr);
 
 			$new_mat_arr = array_values(array_filter($new_mat_arr));
 			$exist_mat_arr = array_values(array_filter($exist_mat_arr));
 
-			echo "<pre>"; print_r($new_mat_arr); print_r($exist_mat_arr); die();
+			// echo "<pre>"; print_r($new_mat_arr); print_r($exist_mat_arr); die();
 
 			if (empty($exist_mat_arr)) {
 				$this->db->insert_batch('global_discount_materials', $new_mat_arr);
