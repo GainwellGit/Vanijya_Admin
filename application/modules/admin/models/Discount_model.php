@@ -253,6 +253,7 @@ class Discount_model extends CI_Model {
 					break;
 				}
 
+				echo "matdata = <pre>"; print_r($matdata);
 				echo "extmatdata = <pre>"; print_r($extmatdata);
 
 				$new_mat_arr[] = $matdata;
