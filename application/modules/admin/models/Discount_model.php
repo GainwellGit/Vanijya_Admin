@@ -180,6 +180,7 @@ class Discount_model extends CI_Model {
 	}
 
 	public function save_discount($id,$distype,$disval,$dismina,$disfrom,$disto,$dison,$dismatgrp,$mattype,$dismat,$disstatus){
+		// ini_set('MAX_EXECUTION_TIME', 0);
 		if (is_string($dismat)) {
 			$dismat = explode(',', $dismat);
 		}
@@ -244,6 +245,7 @@ class Discount_model extends CI_Model {
 						"updated_at" => date("Y-m-d h:i:s")
 					);
 				} else {
+					echo $mat;
 					// $extmatdata['material_no'] = $mat;
 					$extmatdata = array(
 						"material_no" => $mat
