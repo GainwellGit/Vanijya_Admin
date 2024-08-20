@@ -234,7 +234,8 @@ class Discount_model extends CI_Model {
 			$extmatdata = array();
 			foreach ($dismat as $mat) {
 				if ($this->validate_material_exist($mat, $dismatgrp, $insert_id) == 0) {
-					// echo "<br /> ----- ".$mat;
+					echo $dismatgrp;
+					echo "<br /> ----- ".$mat;
 					$matdata['discount_id'] = $insert_id;
 					$matdata['material_no'] = $mat;
 					$matdata['created_at'] = date("Y-m-d h:i:s");
@@ -246,6 +247,8 @@ class Discount_model extends CI_Model {
 					// 	"updated_at" => date("Y-m-d h:i:s")
 					// );
 				} else {
+					echo $dismatgrp;
+					echo "<br /> ----- ".$mat;
 					$extmatdata['material_no'] = $mat;
 					// $extmatdata = array(
 					// 	"material_no" => $mat
@@ -260,12 +263,12 @@ class Discount_model extends CI_Model {
 				$new_mat_arr[] = $matdata;
 				$exist_mat_arr[] = $extmatdata;
 			}
-			// echo "<pre>"; print_r($new_mat_arr); print_r($exist_mat_arr);
+			echo "<pre>"; print_r($new_mat_arr); print_r($exist_mat_arr);
 
 			$new_mat_arr = array_values(array_filter($new_mat_arr));
 			$exist_mat_arr = array_values(array_filter($exist_mat_arr));
 
-			// echo "<pre>"; print_r($new_mat_arr); print_r($exist_mat_arr); die();
+			echo "<pre>"; print_r($new_mat_arr); print_r($exist_mat_arr); die();
 
 			if (empty($exist_mat_arr)) {
 				$this->db->insert_batch('global_discount_materials', $new_mat_arr);
