@@ -247,7 +247,7 @@ class Discount_model extends CI_Model {
 				} else {
 					echo $mat;
 					// $extmatdata['material_no'] = $mat;
-					$extmatdata = array(
+					$extmatdata[] = array(
 						"material_no" => $mat
 					);
 					break;
