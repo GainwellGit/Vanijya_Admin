@@ -235,7 +235,7 @@ class Discount_model extends CI_Model {
 			foreach ($dismat as $mat) {
 				if ($this->validate_material_exist($mat, $dismatgrp, $insert_id) == 0) {
 					echo $dismatgrp;
-					echo "<br /> ----- ".$mat;
+					echo "sss <br /> ----- ".$mat;
 					$matdata['discount_id'] = $insert_id;
 					$matdata['material_no'] = $mat;
 					$matdata['created_at'] = date("Y-m-d h:i:s");
@@ -248,7 +248,7 @@ class Discount_model extends CI_Model {
 					// );
 				} else {
 					echo $dismatgrp;
-					echo "<br /> ----- ".$mat;
+					echo "ddd <br /> ----- ".$mat;
 					$extmatdata['material_no'] = $mat;
 					// $extmatdata = array(
 					// 	"material_no" => $mat
