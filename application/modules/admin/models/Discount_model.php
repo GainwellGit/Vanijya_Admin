@@ -298,7 +298,7 @@ class Discount_model extends CI_Model {
 			$where = '(to_date > now())';
 			$this->db->where($where);
 			$fetch_query1 = $this->db->get();
-			// echo $this->db->last_query();
+			echo $this->db->last_query();
 			if ($fetch_query1->num_rows() == 0) {
 				$mat_arr = array();
 				$this->db->select('material_no');
