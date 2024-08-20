@@ -279,20 +279,7 @@ class Discount_model extends CI_Model {
 			$fetch_query1 = $this->db->get();
 			// echo $this->db->last_query();
 			if ($fetch_query1->num_rows() == 0) {
-				$mat_arr = array();
-				$this->db->select('material_no');
-				$this->db->from('global_discount_materials');
-				$fetch_mat_query = $this->db->get();
-				// echo $this->db->last_query();
-				$fetch_mat_data = $fetch_mat_query->result_array();
-				for ($j = 0; $j < count($fetch_mat_data); $j++) {
-					array_push($mat_arr, $fetch_mat_data[$j]['material_no']);
-				}
-				if (in_array($material_no, $mat_arr)) {
-					$exist = 1;
-				} else {
-					$exist = 0;
-				}
+				$exist = 0;
 			} else {
 				$exist = 1;
 			}
