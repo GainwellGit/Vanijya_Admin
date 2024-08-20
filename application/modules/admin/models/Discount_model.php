@@ -225,7 +225,7 @@ class Discount_model extends CI_Model {
 
 		$this->db->insert('global_discounts', $data);
 
-		if($dison == 'MATERIAL' && $all_select == 0){
+		if ($dison == 'MATERIAL' && $all_select == 0) {
 			$insert_id = $this->db->insert_id();
 			$exist_mat_arr = array();
 			$new_mat_arr = array();
@@ -245,6 +245,7 @@ class Discount_model extends CI_Model {
 				$new_mat_arr[] = $matdata;
 				$exist_mat_arr[] = $extmatdata;
 			}
+			echo "<pre>"; print_r($new_mat_arr); print_r($exist_mat_arr);
 
 			$new_mat_arr = array_values(array_filter($new_mat_arr));
 			$exist_mat_arr = array_values(array_filter($exist_mat_arr));
@@ -268,6 +269,7 @@ class Discount_model extends CI_Model {
 		$this->db->where('material_group',$mat_grp);
 		$this->db->where('material_no',$material_no);
 		$fetch_data = $this->db->get();
+		echo $this->db->last_query();
 		if ($fetch_data->num_rows() > 0) {
 			$this->db->select('id');
 			$this->db->from('global_discounts');
@@ -278,12 +280,13 @@ class Discount_model extends CI_Model {
 			$where = '(to_date > now())';
 			$this->db->where($where);
 			$fetch_query1 = $this->db->get();
-			// echo $this->db->last_query();
+			echo $this->db->last_query();
 			if ($fetch_query1->num_rows() == 0) {
 				$mat_arr = array();
 				$this->db->select('material_no');
 				$this->db->from('global_discount_materials');
 				$fetch_mat_query = $this->db->get();
+				echo $this->db->last_query();
 				$fetch_mat_data = $fetch_mat_query->result_array();
 				for ($j = 0; $j < count($fetch_mat_data); $j++) {
 					array_push($mat_arr, $fetch_mat_data[$j]['material_no']);
