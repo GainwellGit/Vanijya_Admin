@@ -240,9 +240,13 @@ class History_model extends CI_Model {
 
             $this->db->group_by('order_master.order_number'); 
             $this->db->where("order_master.payment_status", "N");
+            $this->db->where("order_master.datetime >=", "2024-05-01");
+            $this->db->order_by("order_master.datetime DESC");
             //$this->db->limit(50, 0);
 
-            $fetch_data = $this->db->get();
+            
+
+           $fetch_data = $this->db->get(); //print_r($this->db->last_query()); die('in2');
 
             if(isset($fetch_data) && $fetch_data->num_rows() > 0 ){
             $getcoupon = $fetch_data->result_array();   

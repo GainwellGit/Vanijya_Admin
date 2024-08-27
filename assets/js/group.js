@@ -1,4 +1,4 @@
-var baseurl=window.location.origin+"/";
+var baseurl=window.location.origin+"/vanijya/";
 $(document).ready(function()
 {
 	if($('.alert').is(':visible')){
