@@ -10,7 +10,7 @@
         <meta content="" name="description" />
         <meta content="" name="author"/>
         <!-- BEGIN GLOBAL MANDATORY STYLES -->
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
         <link href="<?php echo base_url()?>assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <link href="<?php echo base_url()?>assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
         <link href="<?php echo base_url()?>assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -49,6 +49,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
         <link href="<?php echo base_url()?>assets/css/custom.css" rel="stylesheet">
         <link href="<?php echo base_url()?>assets/css/toastr.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://demos.codexworld.com/multi-select-dropdown-list-with-checkbox-jquery/js/multiselect/jquery.multiselect.css">
         
    
    <!-- <link href="<?php //echo base_url()?>assets/css/bootstrap.css" rel="stylesheet">  -->
@@ -190,7 +191,7 @@ $planthubvalue=array("hublist","plantlist");
                            </a>
                         </li> 
 						
-						<li class="nav-item <?php echo (!empty(array_intersect($uervalue,$link_array))  && !in_array('order', $link_array) && !in_array('mapping', $link_array) && !in_array('surcharge', $link_array) && !in_array('empaccess', $link_array) && !in_array('orderSearch', $link_array) && !in_array('createmapping', $link_array) )?'active':'';?> ">
+						<li class="nav-item <?php echo (!empty(array_intersect($uervalue,$link_array))  && !in_array('order', $link_array) && !in_array('mapping', $link_array) && !in_array('orderSearch', $link_array) && !in_array('createmapping', $link_array) )?'active':'';?> ">
                             <a href="javascript:;" class="nav-link nav-toggle">
                                 <i class="icon-settings"></i>
                                 <span class="title">Order Managment </span>
@@ -354,6 +355,25 @@ $planthubvalue=array("hublist","plantlist");
                                         <span class="title">Promotion</span>
                                         <span class="selected"></span>
 
+                            </a>
+                        </li>
+						
+						<?php $a2=array("discount"); ?>
+                        <li class="nav-item <?php echo (!empty(array_intersect($a2,$link_array)))?'active':'';?>">
+                            <a href="<?php echo base_url('admin/discount/list'); ?>" class="nav-link ">
+                                        <i class="fa fa-puzzle-piece"></i>
+                                        <span class="title">Global Discount</span>
+                                        <span class="selected"></span>
+
+                            </a>
+                        </li>
+
+                        <?php $a3=array("promocode"); ?>
+                        <li class="nav-item <?php echo (!empty(array_intersect($a3,$link_array)))?'active':'';?>">
+                            <a href="<?php echo base_url('admin/promocode/list'); ?>" class="nav-link ">
+                                <i class="fa fa-puzzle-piece"></i>
+                                <span class="title">Promocode</span>
+                                <span class="selected"></span>
                             </a>
                         </li>
 
