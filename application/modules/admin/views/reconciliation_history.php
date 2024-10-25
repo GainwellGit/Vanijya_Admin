@@ -454,20 +454,25 @@ $(document).ready(function(){
 				datatype : "json",
 				success: function(response) //we're calling the response json array 'states'
 				{
+                    console.log(response)
                     if (response.status == 'Failure') {
                         //console.log(response);
                         console.log('Failure');
                         toastr["error"]("", "Failure : Payment not done.") 
-                    }else if(response.status == 'Success') {
-                        
-                        console.log(response);                       
+                    }else if(response.status == 'Success') {                       
+                                            
                         $.ajax({
                             method: "GET",
                             url: response.url,
                             success: function(response) //we're calling the response json array 'states'
 				            {
+                                console.log('SuccessAPI',response)
                                 toastr["error"]("", response) 
                                 $('#hide-'+idx).hide();
+                            },
+                            error: function( error )
+                            {              
+                                console.log('FailedAPI',error);
                             }
                         });
                         
@@ -476,7 +481,7 @@ $(document).ready(function(){
 				},
 				error: function( error )
 				{              
-					console.log('Failed');
+					console.log('Failed',error);
 				}
 
 			});
