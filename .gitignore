@@ -69,5 +69,5 @@ system/sessions-/
 /mysql.php
 upload/part_pics/*
 
-application/config/config.php
-application/config/database.php
+/application/config/config.php
+/application/config/database.php
