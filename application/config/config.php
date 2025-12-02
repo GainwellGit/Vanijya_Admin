@@ -29,7 +29,7 @@ $config['base_url'] = 'https://appportal.gainwellindia.com/';
 
 //$config['sap_base_url'] = 'http://10.131.45.4:8080/';
 
-$config['sap_base_url'] = 'https://vanijyaapi.gainwellindia.com:3040/';
+$config['sap_base_url'] = 'https://vanijyaapi.gainwellindia.com:3030/';
 
 /*
 |--------------------------------------------------------------------------
